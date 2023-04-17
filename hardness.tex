@@ -1,0 +1,86 @@
+\section{Hardness at order five}
+\label{section:hardness}
+We shall prove Theorem \ref{thm:hardness} in this section. That is, given $\theta \in \mathcal{T}$ as defined in equation \ref{eq:keyset}, we shall give rational $\mathbf{a}, \mathbf{c}$ such that varying $r$ while invoking $r$-Robust Positivity decision procedures will enable us to approximate $L(t)$ and $L_\infty(t)$ to arbitrary precision.
+
+\subsection{The hard sequence}
+We assume $\theta$ is specified by $p \in \rationals$, $0 < |p| < 1$, such that $\theta = \frac{\arccos p}{2\pi}$. Our LRR $\mathbf{a}$ is such that the roots of the characteristic polynomial are $1, 1, 1, e^{2\pi i\theta}, e^{-2\pi i \theta}$, i.e. the characteristic polynomial is 
+\begin{equation}
+\label{eq:hardcharpoly}
+(X- 1)^3(X^2 - 2pX + 1)
+\end{equation}
+
+Here, 
+\begin{equation}
+u_n = \begin{bmatrix}
+n^2 & n & 1 & \cos 2\pi n\theta & \sin 2\pi n\theta
+\end{bmatrix}
+\mathbf{p}
+\end{equation}
+
+We note that since both $p, q$ from the root $p + qi$ are rational, the linear map $\tau$ from the space of initialisations to the space of real exponential polynomial coefficients is also rational. In the solution space, we consider a ball of radius $r$ around $(r, 0, 1+\frac{r}{2}, -1, 0)$, i.e. by equation \ref{eq:crux}, we ask whether for all (but finitely many) $n$
+\begin{align*}
+&~~~~ rn^2 + \frac{r}{2} + 1 - \cos 2\pi n\theta \ge r\sqrt{n^4 + n^2 + 2} \\
+&\Leftrightarrow \frac{r}{2} + 1 - \cos 2\pi n\theta \ge r\left(\frac{n^2 + 2}{n^2 + \sqrt{n^4 + n^2 + 2}}\right) \\
+&\Leftrightarrow 1 - \cos 2\pi n\theta \ge \frac{r}{2}\left(\frac{n^2 + 4 - \sqrt{n^4 + n^2 + 2}}{n^2 + \sqrt{n^4 + n^2 + 2}}\right)
+\end{align*}
+Simplifying to a slightly more indicative form, we ask whether for all (but finitely many) $n$
+\begin{equation}
+\label{eq:pivotal}
+1 - \cos 2\pi n\theta \ge \frac{r}{2}\left(\frac{7n^2 + 14}{(n^2 + \sqrt{n^4 + n^2 + 2})(n^2 +4+  \sqrt{n^4 + n^2 + 2})}\right) = r\cdot Q(n)
+\end{equation}
+
+\subsection{Numerical analysis}
+Inequality \ref{eq:pivotal} is pivotal to our reduction. We note that in the limit, the ratio of $Q(n)$ to $7/8n^2$ tends to $1$ from below. On the other hand, for small values of $[2\pi n\theta]_{2\pi}$, we shall approximate $1 -\cos 2\pi n \theta$ by $\frac{[2\pi n\theta]_{2\pi}^2}{2}$, which itself is tightly lower bounded by a constant multiple of $L(\theta)/n^2$. Thus, the universal validity of inequality \ref{eq:pivotal} hinges on how $r$ relates to $L$. We capture the crucial interdependence in the following technical lemma.
+
+\begin{lemma}
+\label{lemma:numerical}
+Let $r < 100$. For every $\varepsilon > 0$, we can compute $N$ such that for all $n \ge N$,
+\begin{enumerate}
+\item $Q(n) > \frac{7(1-\varepsilon)^2}{8n^2}$
+\item $1 - \cos x < \frac{7r}{8n^2} < \frac{700}{8N^2}  \Rightarrow 1- \cos x \ge (1 - \varepsilon)^2\frac{x^2}{2}$
+\end{enumerate}
+\end{lemma}
+
+\subsection{Computing the Lagrange constant}
+We use the purported decidability of $r$-Robust Uniform Ultimate Positivity (does inequality \ref{eq:pivotal} hold for all but finitely many $n$?) to approximate $L_\infty(\theta)$ to arbitrary precision. 
+
+\textbf{Case YES:} \\
+Suppose indeed, for all but finitely many $n$,
+$$
+1 - \cos 2\pi n\theta \ge r \cdot Q(n)
+$$
+$1 - \cos 2\pi n\theta$ is always upper bounded by $\frac{[2\pi n\theta]_{2\pi}^2}{2}$. In this case, we use Part 1 of Lemma \ref{lemma:numerical} to argue that for every $\varepsilon$, there exists an $N$ such that for all $n \ge N$,
+$$
+\frac{[2\pi n \theta]_{2\pi}^2}{2} > \frac{7r(1 - \varepsilon)^2}{8n^2}
+$$
+Rearranging, we get that for every $\varepsilon$, there exists $N$ such that for all $n \ge N$
+$$
+n[n\theta] > (1 - \varepsilon)\frac{\sqrt{7r}}{4\pi}
+$$
+This allows us to conclude that $L_\infty(\theta) \ge \frac{\sqrt{7r}}{4\pi}$.
+
+\textbf{Case NO:} \\
+Suppose there exist infinitely many $n$ such that 
+$$
+1 - \cos 2\pi n\theta < r \cdot Q(n)
+$$
+$r \cdot Q(n)$ is always upper bounded by $7r/8n^2$. In this case, we use the second part of Lemma \ref{lemma:numerical} on the infinitely many times $1 - \cos 2\pi n\theta$ is small enough. Here, for any $\varepsilon$, we will have infinitely many $n$ such that
+$$
+(1 - \varepsilon)^2 \frac{[2\pi n \theta]_{2\pi}^2}{2} < \frac{7r}{8n^2}
+$$ 
+Rearranging as before, we get that for any $\varepsilon$, there exist infinitely many $n$ such that
+$$
+n[n\theta] < \left(\frac{1}{1-\varepsilon}\right)\frac{\sqrt{7r}}{4\pi}
+$$
+Thus, we can conclude that $L_\infty(\theta) \le \frac{\sqrt{7r}}{4\pi}$.
+
+\subsection{Computing the Diophantine approximation type}
+Here, we choose a precision $\varepsilon$, and compute the $N$ in Lemma \ref{lemma:numerical}. We supply this $N$ along with an $r$ to the hard LRS. Reasoning as in the previous subsection, 
+$$
+\text{YES} \Rightarrow \inf_{n \ge N} n[n\theta] \ge (1 - \varepsilon)\frac{\sqrt{7r}}{4\pi}
+$$
+and
+$$
+\text{NO} \Rightarrow \inf_{n \ge N} n[n\theta] \le \left(\frac{1}{1-\varepsilon}\right)\frac{\sqrt{7r}}{4\pi}
+$$
+For the finite prefix $1$ to $N-1$, we can compute $n[n\theta]$ to arbitrary precision and compare with the purported lower/upper bounds for $L(\theta) = \inf_{n \in \naturals} n[n\theta]$.

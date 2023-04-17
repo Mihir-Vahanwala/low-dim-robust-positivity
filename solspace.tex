@@ -1,0 +1,89 @@
+\section{The (exponential polynomial) solution space}
+\label{section:solspace}
+
+We start approaching robustness by decoupling the elements of an LRS: namely, the recurrence relation, and the initialisation.
+
+\begin{definition}[Linear Recurrence Relation (LRR)]
+\label{def:LRR}
+A real algebraic LRR $\mathbf{a}$ of order $\kappa$ is a $\kappa+1$-ary relation, specified by $\kappa$ numbers, $a_0, \dots, a_{\kappa-1} \in \realalgebraics$, with $a_0 \ne 0$. $\mathbf{a}(Y_0, Y_1, \dots, Y_\kappa)$ is interpreted as 
+$$
+Y_\kappa = \sum_{j=0}^{\kappa-1} a_j Y_j
+$$
+\end{definition}
+
+\begin{definition}[Characteristic polynomial and spectrum of an LRR]
+\label{def:charpoly}
+Given an LRR $\mathbf{a}$, its characteristic polynomial is
+$$
+X^{\kappa} - \sum_{j=0}^{\kappa-1}a_j X^j
+$$
+\end{definition}
+
+\begin{definition}[Linear Recurrence Sequence (LRS)]
+\label{def:LRS}
+A real algebraic LRS $\mathbf{u}$ of order $\kappa$ is an infinite sequence $\seq{u_n}_{n=0}^\infty$, given by a real algebraic order $\kappa$ LRR $\mathbf{a}$ and the initialisation $\mathbf{c} = (u_0, u_1, \dots, u_{\kappa-1}) \in \realalgebraics^\kappa$. For all $n \in \naturals$, $\mathbf{a}(u_n, u_{n+1}, \dots, u_{n+\kappa})$ holds.
+\end{definition}
+
+One can encode the recurrence $\mathbf{a}$ as a $\kappa \times \kappa$ companion matrix $\mathbf{A}$, and interpret the initialisation $\mathbf{c}$ as a vector. Then, $u_n$ is given by the first coordinate of $\mathbf{A}^n\mathbf{c}$. Expressing $\mathbf{A}$ in Jordan Normal Form yields the following closed form for $u_n$:
+\begin{equation}
+\label{eq:exppoly}
+u_n = \sum_{j}\sum_{\ell=0}^{m_j - 1}p_{j\ell}\gamma_j^n n^\ell
+\end{equation}
+where $\gamma_j$ is a root of the characteristic polynomial with multiplicity $m_j$. We note that each $p_{j\ell}$ is linear in $\mathbf{c}$. The above is called the \textbf{exponential polynomial} solution of $\mathbf{u}$. We note that we are working with a real algebraic LRS: thus, all $\gamma$ are algebraic, and if complex, occur in conjugate pairs. Moreover, the corresponding complex coefficients $p_{j\ell}$ must also occur in conjugate pairs to make $u_n$ real. Thus, we can also express $u_n$ as:
+\begin{equation}
+\label{eq:realexppoly}
+u_n = \left(\sum_{j=1}^{k_1}\sum_{\ell = 0}^{m_j-1} z_{j\ell}\rho_j^n n^\ell\right) + \left(\sum_{j=k_1 + 1}^{k_2}  (x_{j\ell} \cos n\theta_j + y_{j\ell}\sin n\theta_j)\rho_j^n n^\ell\right)
+\end{equation}
+where each $\rho_j \in \reals$. Note that $\gamma_j$, if not real, is written as $\rho_j(\cos \theta_j + i\sin \theta_j)$. We call the above the \textbf{real exponential polynomial} solution of the LRS $\mathbf{u}$. Roots with the maximum modulus are called \textbf{dominant}.
+
+Given an order $\kappa$ LRR $\mathbf{a}$, $\reals^\kappa$ can either be interpreted as the space of all initialisations, or the space of all coefficients in the real exponential polynomial \ref{eq:realexppoly}. While these are interchangeable via linear maps, the latter, having captured the spectrum (roots of the characteristic polynomial) of $\mathbf{a}$, explicitly gives more information about the behaviour of the sequences. It is the solution space interpretation that naturally features in decision procedures. 
+
+
+Thus, we formulate our precise robustness queries in terms of the solution space. 
+
+Given $\mathbf{a}$, define $\tau: \reals^\kappa \rightarrow \reals^\kappa$ to be the linear transform that takes an initialisation $\mathbf{c}$ to the real exponential polynomial coefficients $\mathbf{p}$. In the following, $||.||$ denotes the standard L2 norm.
+
+\begin{problem}[Positivity]
+\label{prob:pos}
+An LRS $\seq{u_n}_{n=0}^\infty$ is given as $\seq{\mathbf{a}, \mathbf{c}}$. Decide whether, for all $n \in \naturals$, $u_n \ge 0$.
+\end{problem}
+
+\begin{problem}[Ultimate Postivity]
+\label{prob:ultpos}
+Given an LRS $\seq{\mathbf{a}, \mathbf{c}}$, decide whether there exists an $N$ such that for all $n \ge N$, $u_n \ge 0$.
+\end{problem}
+
+\begin{problem}[$r$-Robust Positivity]
+\label{prob:rrobpos}
+Given $N$, an LRS $\seq{\mathbf{a}, \mathbf{c}}$ and $r > 0$, decide whether for all $\mathbf{c'}$ such that \\$||\tau(\mathbf{c'}) - \tau(\mathbf{c})|| \le r$, the LRS $\seq{\mathbf{a}, \mathbf{c'}}$ is positive from the $N^{th}$ term onwards.
+\end{problem}
+
+This specification is slightly different from the traditional Positivity problem, where $N$ is always $0$. In the non-robust setting, this does not make a difference: one can explicitly obtain a new LRS by moving forward $N$ steps. However, this does not preserve the shape of the neighbourhood in the robust setting: thus we specify $N$ as part of the input.
+
+\begin{problem}[$r$-Robust Uniform Ultimate Positivity]
+\label{prob:rrobuniultpos}
+Given an LRS $\seq{\mathbf{a}, \mathbf{c}}$ and $r > 0$, decide whether there exists an $N$ such that for all $\mathbf{c'}$ with $||\tau(\mathbf{c'}) - \tau(\mathbf{c})|| \le r$, the LRS $\seq{\mathbf{a}, \mathbf{c'}}$ is positive from the $N^{th}$ term onwards.
+\end{problem}
+
+In this text, we shall focus on the latter two problems. Given $\seq{\mathbf{a}, \mathbf{c}}$, one can compute $\tau$, and hence $\mathbf{p} = \tau(\mathbf{c})$. From equation \ref{eq:realexppoly}, we have that 
+\begin{equation}
+\label{eq:innerprod}
+u_n = \mathbf{x_n}^T\mathbf{p} = 
+\begin{bmatrix}
+\rho_1^n & n \rho_1^n & \dots & n^{m_{k_1}-1}\rho_{k_1}^n & \rho_{k_1+1}\cos n\theta_{k_1+1} & \rho_{k_1+1}\sin n\theta_{k_1+1} & \dots
+\end{bmatrix}\mathbf{p}
+\end{equation}
+
+Consider Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}. They boil down to asking whether for all $\mathbf{p'}$ with $||\mathbf{p'} - \mathbf{p}|| = r$, for all (but finitely many $n$) $\mathbf{x_n}^T\mathbf{p'} \ge 0$. $\mathbf{p'}$, in turn, can be expressed as $\mathbf{p} + r\mathbf{d}$, where $\mathbf{d}$ is a unit vector. Thus, it is equivalent to ask whether
+\begin{equation}
+\label{eq:crux}
+\mathbf{x_n}^T\mathbf{p} \ge r\max_{\mathbf{d}}\mathbf{x_n}^T\mathbf{d} = r ||\mathbf{x_n}|| = r \sqrt{\sum_{j} \sum_{\ell=0}^{m_j-1} \rho_j^n n^{2\ell}}
+\end{equation}
+
+Note the independence from $\theta_j$ in the right hand side of the inequality, which can only be achieved in the solution space. In the rest of this text, we consider the problem of deciding this inequality for all (but finitely many) $n$.
+
+\begin{theorem}[Main Decidability Result]
+\label{thm:decide}
+Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable up to order 4.
+\end{theorem}
+

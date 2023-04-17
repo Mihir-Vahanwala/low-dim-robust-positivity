@@ -1,0 +1,41 @@
+\section{Diophantine Approximation}
+\label{section:diophantine}
+
+Diophantine Approximation is a vast and active number-theoretic field of research concerned, among other things, with the approximation of reals by rational numbers. In this section, we follow Lagarias and Shallit’s terminology \cite{dio-constants} and briefly introduce classes of constants whose computation is an open problem. In what follows, $[x]$ denotes the shortest distance from $x$ to an integer; while $[x]_b$ denotes the shortest distance from $x$ to an integer multiple of $b$. $[x]_b = b[x/b]$
+
+\begin{definition}[Diophantine Approximation Type]
+\label{def:L}
+The homogenous Diophantine approximation type $L(t)$ is defined to be $\inf_{n \in \naturals} n[nt]$. The inhomogeneous Diophantine approximation type $L(t, s)$ is defined to be $\inf_{n \in \naturals} n[nt - s]$, $s \notin \integers + t\integers$. 
+\end{definition} 
+
+\begin{definition}[Lagrange constant]
+\label{def:Linfty}
+The homogenous Lagrange constant $L_\infty(t)$ is defined to be \\ $\liminf_{n \in \naturals} n[nt]$. The inhomogeneous Lagrange constant $L_\infty(t, s)$ is defined to be\\ $\liminf_{n \in \naturals} n[nt - s]$, $s \notin \integers + t\integers$.
+\end{definition} 
+
+It is folklore that these constants lie between $0$ and $1$. As an immediate corollary, one observes that
+\begin{equation}
+\label{eq:quadraticdecay}
+\exists c.~\forall t, s.~ \exists^\infty n. ~ 1 - \cos(nt - s) \le \frac{1}{2}\left[nt-s\right]_{2\pi}^2 \le \frac{c}{n^2}
+\end{equation}
+
+Following \cite{joeljames3}, we note that the Diophantine approximation type and Lagrange constant of most transcendental numbers are unknown, and define
+\begin{equation}
+\mathcal A=\{p+q i \in \mathbb{C} \mid p,q \in \mathbb{Q} \setminus \{0\}, p^2+q^2=1\}
+\end{equation}
+i.e., the set of points on the unit circle of $\mathbb{C}$ with rational real and imaginary parts, excluding $1,-1, i$ and $-i$. The set $\mathcal A$ consists of algebraic numbers of degree 2, none of which are roots of unity. In particular, writing $p+q i= 2^{i 2 \pi \theta}=(-1)^{2\theta}$, we have that $\theta \notin \mathbb{Q}$. We denote:
+\begin{equation}
+\label{eq:keyset}
+\mathcal{T} = \left\{ \theta \in (- 1/2, 1/2] \mid e^{2 \pi i \theta} \in \mathcal{A}\right\}
+\end{equation}
+The set $\mathcal{T}$ is dense in $(- \frac 1 2, \frac 1 2]$, and consists solely of transcendental numbers. In general, we don't have a method to compute $L(\theta)$ or $L_\infty(\theta)$ for $\theta \in \mathcal{T}$, or approximate them with arbitrary precision.
+
+\begin{definition}[Number-theoretic hardness]
+\label{def:hardness}
+Let $\mathcal{T}$ be as above. A decision problem is said to be $\mathcal{T}$-Diophantine hard (resp.\ $\mathcal{T}$-Lagrange hard), if its decidability entails that given any $\theta \in \mathcal{T}$ and $\varepsilon > 0$, one can compute $\ell$ such that $|\ell - L(t)| < \varepsilon$ (resp.\  $|\ell - L_\infty(t)| < \varepsilon$).
+\end{definition}
+
+\begin{theorem}[Main Hardness Result]
+\label{thm:hardness}
+Problem \ref{prob:rrobpos} (resp.\ Problem \ref{prob:rrobuniultpos}) is $\mathcal{T}$-Diophantine hard (resp.\ $\mathcal{T}$-Lagrange hard) at order 5. 
+\end{theorem}
