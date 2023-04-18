@@ -1,4 +1,4 @@
-\section{The (exponential polynomial) solution space}
+\section{Linear Recurrences, The Solution Space, and Robustness}
 \label{section:solspace}
 
 We start approaching robustness by decoupling the elements of an LRS: namely, the recurrence relation, and the initialisation.
@@ -6,23 +6,35 @@ We start approaching robustness by decoupling the elements of an LRS: namely, th
 \begin{definition}[Linear Recurrence Relation (LRR)]
 \label{def:LRR}
 A real algebraic LRR $\mathbf{a}$ of order $\kappa$ is a $\kappa+1$-ary relation, specified by $\kappa$ numbers, $a_0, \dots, a_{\kappa-1} \in \realalgebraics$, with $a_0 \ne 0$. $\mathbf{a}(Y_0, Y_1, \dots, Y_\kappa)$ is interpreted as 
-$$
+$
 Y_\kappa = \sum_{j=0}^{\kappa-1} a_j Y_j
-$$
+$
 \end{definition}
 
 \begin{definition}[Characteristic polynomial and spectrum of an LRR]
 \label{def:charpoly}
 Given an LRR $\mathbf{a}$, its characteristic polynomial is
-$$
+$
 X^{\kappa} - \sum_{j=0}^{\kappa-1}a_j X^j
-$$
+$
 \end{definition}
 
 \begin{definition}[Linear Recurrence Sequence (LRS)]
 \label{def:LRS}
 A real algebraic LRS $\mathbf{u}$ of order $\kappa$ is an infinite sequence $\seq{u_n}_{n=0}^\infty$, given by a real algebraic order $\kappa$ LRR $\mathbf{a}$ and the initialisation $\mathbf{c} = (u_0, u_1, \dots, u_{\kappa-1}) \in \realalgebraics^\kappa$. For all $n \in \naturals$, $\mathbf{a}(u_n, u_{n+1}, \dots, u_{n+\kappa})$ holds.
 \end{definition}
+
+\begin{problem}[Positivity]
+\label{prob:pos}
+An LRS $\seq{u_n}_{n=0}^\infty$ is given as $\seq{\mathbf{a}, \mathbf{c}}$. Decide whether, for all $n \in \naturals$, $u_n \ge 0$.
+\end{problem}
+
+\begin{problem}[Ultimate Positivity]
+\label{prob:ultpos}
+Given an LRS $\seq{\mathbf{a}, \mathbf{c}}$, decide whether there exists an $N$ such that for all $n \ge N$, $u_n \ge 0$.
+\end{problem}
+
+In the general case, \cite{joeljames3} shows both Positivity and Ultimate Positivity to be decidable up to order 5, while demonstrating number-theoretic hardness in the sense Definition \ref{def:hardness} at order $6$. On restricting our attention to \textit{simple} LRS (the characteristic polynomial has no repeated root), Positivity is decidable up to order nine \cite{ouaknine2014positivity}, while Ultimate Positivity is decidable \cite{ouaknine2014ultimate}. In this text, however, we shall focus on defining and tackling robust versions of these problems.
 
 One can encode the recurrence $\mathbf{a}$ as a $\kappa \times \kappa$ companion matrix $\mathbf{A}$, and interpret the initialisation $\mathbf{c}$ as a vector. Then, $u_n$ is given by the first coordinate of $\mathbf{A}^n\mathbf{c}$. Expressing $\mathbf{A}$ in Jordan Normal Form yields the following closed form for $u_n$:
 \begin{equation}
@@ -36,26 +48,14 @@ u_n = \left(\sum_{j=1}^{k_1}\sum_{\ell = 0}^{m_j-1} z_{j\ell}\rho_j^n n^\ell\rig
 \end{equation}
 where each $\rho_j \in \reals$. Note that $\gamma_j$, if not real, is written as $\rho_j(\cos \theta_j + i\sin \theta_j)$. We call the above the \textbf{real exponential polynomial} solution of the LRS $\mathbf{u}$. Roots with the maximum modulus are called \textbf{dominant}.
 
-Given an order $\kappa$ LRR $\mathbf{a}$, $\reals^\kappa$ can either be interpreted as the space of all initialisations, or the space of all coefficients in the real exponential polynomial \ref{eq:realexppoly}. While these are interchangeable via linear maps, the latter, having captured the spectrum (roots of the characteristic polynomial) of $\mathbf{a}$, explicitly gives more information about the behaviour of the sequences. It is the solution space interpretation that naturally features in decision procedures. 
-
-
-Thus, we formulate our precise robustness queries in terms of the solution space. 
+Given an order $\kappa$ LRR $\mathbf{a}$, $\reals^\kappa$ can either be interpreted as the space of all initialisations, or the space of all coefficients in the real exponential polynomial \ref{eq:realexppoly}. While these are interchangeable via linear maps, the latter, having captured the spectrum (roots of the characteristic polynomial) of $\mathbf{a}$, explicitly gives more information about the behaviour of the sequences. It is the solution space interpretation that naturally features in decision procedures. Thus, we formulate our precise robustness queries in terms of the solution space. 
 
 Given $\mathbf{a}$, define $\tau: \reals^\kappa \rightarrow \reals^\kappa$ to be the linear transform that takes an initialisation $\mathbf{c}$ to the real exponential polynomial coefficients $\mathbf{p}$. In the following, $||.||$ denotes the standard L2 norm.
 
-\begin{problem}[Positivity]
-\label{prob:pos}
-An LRS $\seq{u_n}_{n=0}^\infty$ is given as $\seq{\mathbf{a}, \mathbf{c}}$. Decide whether, for all $n \in \naturals$, $u_n \ge 0$.
-\end{problem}
-
-\begin{problem}[Ultimate Postivity]
-\label{prob:ultpos}
-Given an LRS $\seq{\mathbf{a}, \mathbf{c}}$, decide whether there exists an $N$ such that for all $n \ge N$, $u_n \ge 0$.
-\end{problem}
 
 \begin{problem}[$r$-Robust Positivity]
 \label{prob:rrobpos}
-Given $N$, an LRS $\seq{\mathbf{a}, \mathbf{c}}$ and $r > 0$, decide whether for all $\mathbf{c'}$ such that \\$||\tau(\mathbf{c'}) - \tau(\mathbf{c})|| \le r$, the LRS $\seq{\mathbf{a}, \mathbf{c'}}$ is positive from the $N^{th}$ term onwards.
+Given $N$, an LRS $\seq{\mathbf{a}, \mathbf{c}}$ and $r > 0$, decide whether for all $\mathbf{c'}$ such that $||\tau(\mathbf{c'}) - \tau(\mathbf{c})|| \le r$, the LRS $\seq{\mathbf{a}, \mathbf{c'}}$ is positive from the $N^{th}$ term onwards.
 \end{problem}
 
 This specification is slightly different from the traditional Positivity problem, where $N$ is always $0$. In the non-robust setting, this does not make a difference: one can explicitly obtain a new LRS by moving forward $N$ steps. However, this does not preserve the shape of the neighbourhood in the robust setting: thus we specify $N$ as part of the input.
@@ -65,7 +65,13 @@ This specification is slightly different from the traditional Positivity problem
 Given an LRS $\seq{\mathbf{a}, \mathbf{c}}$ and $r > 0$, decide whether there exists an $N$ such that for all $\mathbf{c'}$ with $||\tau(\mathbf{c'}) - \tau(\mathbf{c})|| \le r$, the LRS $\seq{\mathbf{a}, \mathbf{c'}}$ is positive from the $N^{th}$ term onwards.
 \end{problem}
 
-In this text, we shall focus on the latter two problems. Given $\seq{\mathbf{a}, \mathbf{c}}$, one can compute $\tau$, and hence $\mathbf{p} = \tau(\mathbf{c})$. From equation \ref{eq:realexppoly}, we have that 
+We can alternate quantifiers, and query a weaker notion of Robust Ultimate Positivity:
+\begin{problem}[$r$-Robust Non-uniform Ultimate Positivity]
+\label{prob:rrobnonuniultpos}
+Given an LRS $\seq{\mathbf{a}, \mathbf{c}}$ and $r > 0$, decide whether for all $\mathbf{c'}$ with $||\tau(\mathbf{c'}) - \tau(\mathbf{c})|| \le r$, there exists an $N$ such that the LRS $\seq{\mathbf{a}, \mathbf{c'}}$ is positive from the $N^{th}$ term onwards.
+\end{problem}
+
+Given $\seq{\mathbf{a}, \mathbf{c}}$, one can compute $\tau$, and hence $\mathbf{p} = \tau(\mathbf{c})$. From equation \ref{eq:realexppoly}, we have that 
 \begin{equation}
 \label{eq:innerprod}
 u_n = \mathbf{x_n}^T\mathbf{p} = 
@@ -82,8 +88,28 @@ Consider Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}. They boil dow
 
 Note the independence from $\theta_j$ in the right hand side of the inequality, which can only be achieved in the solution space. In the rest of this text, we consider the problem of deciding this inequality for all (but finitely many) $n$.
 
-\begin{theorem}[Main Decidability Result]
+\begin{theorem}[First Main Decidability Result]
 \label{thm:decide}
 Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable up to order 4.
 \end{theorem}
+
+To tackle Problem \ref{prob:rrobnonuniultpos}, we consider the following rearrangement of equation \ref{eq:innerprod}:
+\begin{equation}
+\label{eq:grouping}
+u_n/n^d\rho^n = \begin{bmatrix}
+{\color{red!70!black} \mathbf{q}_{dom}^T(n) } & \mathbf{q}_{res}^T(n)
+\end{bmatrix}
+\begin{bmatrix}
+{\color{red!70!black} \mathbf{p}_{dom}} \\
+\mathbf{p}_{res}
+\end{bmatrix}
+\end{equation}
+We split the inner product into a dominant ({\color{red!70!black}red}) and a residual (black) part. In the limit, the latter becomes negligible relative to the former. We have normalised the inner product, so the dominant part is $\Theta(1)$. Let $\mu = \liminf_{n\in \naturals}\mathbf{q}_{dom}^T(n)\mathbf{p}_{dom}$. If $\mu < 0$, then Ultimate Positivity is impossible. If $\mu > 0$, then we can provide an $N$ such that $u_n > 0$ beyond the $N^{th}$ term. Thus, the core idea is to ensure that the interior of the given ball lies entirely in the region where $\mu > 0$. Decidability hinges on whether we can solve Ultimate Positivity for all the instances where the surface of the ball intersects the $\mu = 0$ region.
+
+\begin{theorem}[Second Main Decidability Result]
+\label{thm:decide2}
+Problem \ref{prob:rrobnonuniultpos} is decidable up to order 5.
+\end{theorem}
+
+As \cite{originalarxiv} notes, Lagrange hardness (Definition \ref{def:hardness}) at order 6 is obvious in view of \cite{joeljames3}: Ultimate Positivity is itself Lagrange hard, so one can simply query a ball that has a hard instance of Ultimate Positivity on its surface.
 

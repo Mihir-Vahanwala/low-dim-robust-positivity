@@ -1,4 +1,4 @@
-\section{Decidability at order four}
+\section{Uniform Robustness: Decidability at order four}
 \label{section:decidability}
 In this section, we prove Theorem \ref{thm:decide}. Recall that we must show how to check the validity of inequality \ref{eq:crux} for all (but finitely many) $n$:
 $$
@@ -8,6 +8,7 @@ $$
 Our main case distinction is on the number of pairs of complex conjugates among the roots. Thanks to the following old result \cite[Thm. 2]{positive-dominant}, the answer to Ultimate Positivity is trivially NO if there are two pairs of complex conjugates.
 
 \begin{proposition}[Folklore]
+\label{prop:folklore}
 If the characteristic polynomial has no real root of maximum modulus, then for any initialisation to the sequence, there are infinitely many positive terms, and infinitely many negative terms.
 \end{proposition}
 
@@ -19,15 +20,15 @@ Thus, we shall concern ourselves with the case there is one pair of complex conj
 Ultimate Positivity is a necessary condition for Positivity. Fortunately, it is a a problem that is more amenable to growth arguments. In this subsection, we shall study the exponential polynomial solution, and characterise a set of points in the solution (real exponential polynomial coefficient) space that are guaranteed to result in an Ultimately Positive LRS. The following are major cases we consider:
 \begin{align}
 \label{eq:unityrep}
-u_n &= {\color{red!50!black} z_1 n} + z_0 + \rho^n (x \cos n\theta + y \sin n \theta), ~~ 0< \rho \le 1 \\
+u_n &= {\color{red!70!black} z_1 n} + z_0 + \rho^n (x \cos n\theta + y \sin n \theta), ~~ 0< \rho \le 1 \\
 \label{eq:fourdom}
-u_n &= {\color{red!50!black} z + x\cos n\theta + y\sin n\theta + w(-1)^n} \\
+u_n &= {\color{red!70!black} z + x\cos n\theta + y\sin n\theta + w(-1)^n} \\
 \label{eq:threedom}
-u_n &= {\color{red!50!black} z + x\cos n\theta + y\sin n\theta} + w\alpha^n, ~~|\alpha| < 1 \\
+u_n &= {\color{red!70!black} z + x\cos n\theta + y\sin n\theta} + w\alpha^n, ~~|\alpha| < 1 \\
 \label{eq:twodom}
-u_n &= {\color{red!50!black}z + w(-1)^n} + \rho^n(x\cos n\theta + y\sin n\theta), ~~ 0< \rho < 1 \\
+u_n &= {\color{red!70!black}z + w(-1)^n} + \rho^n(x\cos n\theta + y\sin n\theta), ~~ 0< \rho < 1 \\
 \label{eq:onedom}
-u_n &= {\color{red!50!black}z} + w\alpha^n + \rho^n(x\cos n\theta + y\sin n\theta), ~~ 0< \rho < 1, |\alpha| < 1
+u_n &= {\color{red!70!black}z} + w\alpha^n + \rho^n(x\cos n\theta + y\sin n\theta), ~~ 0< \rho < 1, |\alpha| < 1
 \end{align}
 
 The terms in black become negligibly small relative to the terms in dark red. The cases we draw are based on whether $1$ is a repeated dominant root, or whether there are four, three, two, or one (distinct) dominant roots.
@@ -41,6 +42,7 @@ In each of the cases, we have to decide the universal validity of the correspond
 \end{enumerate}
 
 \subsection{Mathematical tools}
+\label{arsenal}
 Multiplicative dependencies among algebraic numbers can be efficiently elicited. 
  \begin{theorem}[Masser \cite{Masser}]
   \label{thm:abelian}
@@ -145,7 +147,11 @@ We can detect if $\theta$ is a rational multiple of $2\pi$ (Theorem \ref{thm:abe
 \begin{equation}
 \forall q_1, q_2, q_3. \left(q_1^2 + q_2^2 = 1 \land q_3^2 = 1\right) \Rightarrow z + xq_1 + yq_2 + wq_3 - r\sqrt{3} \ge 0
 \end{equation}
-Of course, the above form doesn't fit the grammar, but $z, x, y, w, r, \sqrt{3}$ are all algebraic constants, and accessible in this theory. The truth of this sentence can be evaluated in $\mathsf{PSPACE}$.
+Of course, the above form doesn't fit the grammar, but $z, x, y, w, r, \sqrt{3}$ are all algebraic constants, and accessible in this theory. The truth of this sentence can be evaluated: in fact, it is equivalent to
+\begin{equation}
+\label{eq:cone}
+z - |w| - \sqrt{x^2 + y^2} - r\sqrt{3} \ge 0
+\end{equation}
 
 \subsection{One dominant root}
 This corresponds to equation \ref{eq:onedom}. Our critical inequality here is
@@ -194,3 +200,32 @@ Rearranging,
 q(1 - \cos(n\theta - \varphi)) \ge -w\alpha^n + r\left(\frac{\alpha^{2n}}{\sqrt{2}+\sqrt{2 + \alpha^{2n}}}\right)
 \end{equation}
 As in the previous case, we use equation \ref{eq:baker} due to Baker to argue a lower bound on the LHS that is much tighter than the RHS, that holds from a computable $N$ onwards. We finish off by explicitly checking the original inequality explicitly up to $N$.
+
+\section{Non-uniform Robustness: Decidability at order five}
+\label{section:decidability}
+In this section, we redeploy the sophisticated arsenal we invoked in \S\ref{arsenal} to prove Theorem \ref{thm:decide2}. Recall equation \ref{eq:grouping} and the surrounding discussion:
+\begin{equation}
+u_n/n^d\rho^n = \begin{bmatrix}
+{\color{red!70!black} \mathbf{q}_{dom}^T(n) } & \mathbf{q}_{res}^T(n)
+\end{bmatrix}
+\begin{bmatrix}
+{\color{red!70!black} \mathbf{p}_{dom}} \\
+\mathbf{p}_{res}
+\end{bmatrix}
+\end{equation}
+The crucial first task is to check whether for all points in the neighbourhood, \\$\liminf_{n\in\naturals}\mathbf{q}_{dom}^T(n)\mathbf{p}_{dom} = \mu \ge 0$. Observe that through Theorems \ref{thm:abelian}, \ref{thm:kronecker}, \ref{thm:renegar} (Masser, Kronecker, and Renegar) we have already discussed the means to check the inequality for a particular $\mathbf{p}$, through the First Order Theory of Reals. Let $\psi(\mathbf{p})$ (resp.\ $\psi_0(\mathbf{p})$) be the quantifier free formula that expresses $\mu > 0$ (resp.\ $\mu = 0$). We simply query the truth of
+\begin{equation}
+\label{eq:firsttask}
+\forall \mathbf{p'}.~||\mathbf{p'} - \mathbf{p}|| \le r \Rightarrow (\psi(\mathbf{p'}) \lor \psi_0(\mathbf{p'}))
+\end{equation}
+If there are no residual terms, we are already done at this point. In the event residual terms have non-zero contribution, decidability hinges on whether we can handle points where $\mu = 0$. If there are two pairs of complex conjugates among the dominant roots, then all five terms are dominant (recall Proposition \ref{prop:folklore}!)
+
+Hence, we consider that there is at most one complex conjugate pair among the dominant roots. This requires slightly more insight of the geometrical nature of the solution set of $\psi_0$. If there are just one or two dominant terms, they are necessarily real. The region $\mu(\mathbf{p}) = 0$ will simply be the union of at most two hyperplanes. ($z = 0$, or $z - |w| = 0$). Here, the intersection of the ball with $\mu = 0$ consists of at most two points. Since Ultimate Positivity is decidable up to order $5$ \cite{joeljames3}, it can explicitly be checked.
+
+Finally, let there be one pair of complex conjugates $e^{\pm i\theta}$ among the dominant roots. It is clear that if $\theta$ is a rational multiple of $2\pi$, $\mu = 0$ will be a union of finitely many hyperplanes (of the form $z - |w| - x\cos \theta_0 - y\sin \theta_0 = 0$). Here again, the finite intersection can be explicitly checked. In the case when $e^{i\theta}$ is not a root of unity, we recall equation \ref{eq:cone}: the set of $\mathbf{p}$ for which $\mu = 0$ is given by
+\begin{equation}
+z - |w| - \sqrt{x^2 + y^2} = 0
+\end{equation}
+In this case, it is a union of \textit{infinitely} many hyperplanes of the form $z - |w| - x \cos \phi - y\sin \phi = 0$. As established by the validity of equation \ref{eq:firsttask}, the centre of the neighbourhood is distance at least $r$ away from each of these hyperplanes. If the surface of the $r$-ball touches any of these hyperplanes, the point must be obtained by traversing along the normal from the centre. Thus, the point must be $(z_0 - \frac{r}{\sqrt{3}}, w_0 \pm \frac{r}{\sqrt{3}}, x_0 + \frac{r}{\sqrt{3}}\cos\phi, y_0 +  \frac{r}{\sqrt{3}}\sin\phi, v_0)$. Note that the residual coordinate is unchanged! Substituting this into the hyperplane equation gives us a quadratic equation in $\cos \phi$: this holds for zero, one, two, or all $\phi$. We already know how to handle a finite intersection.
+
+If this holds for all $\phi$, then we use Theorem \ref{thm:kronecker} (Kronecker's density) to argue that for every $n$, there exists a point on the surface of the ball such that the dominant contribution is zero. As observed, the residual part is the same as the centre for such points. Thus, in this case, it is entirely up to the residual terms of the centre to guarantee Robust Ultimate Positivity. This is a decidable instance of regular Ultimate Positivity at lower order, and we are done.
