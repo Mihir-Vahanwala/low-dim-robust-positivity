@@ -1,26 +1,20 @@
-\section{Prerequisites}
-\label{section:prelims}
-\subsection{Algebraic Numbers}
-We make a few remarks regarding the representation of numbers. $\naturals$, $\integers$, $\rationals$, $\reals$, and $\complexes$ respectively denote the natural numbers, integers, rationals, reals, and complex numbers. 
+\section{Appendix: Prerequisites}
+\label{appendix:prelims}
 
-A complex number $\alpha$ is said to be algebraic if it is a root of a polynomial with integer coefficients. Algebraic numbers form an algebraically closed field, denoted by $\algebraics$. We denote the field of real algebraic numbers by $\realalgebraics$. In this paper, we work with real algebraic LRS: this section assures us that the underlying arithmetic can indeed be done with perfect precision.
-
+\subsection{Algebraic Numbers: Arithmetic}
 For an algebraic number $\alpha$, its defining polynomial $p_\alpha$ is the unique polynomial in $\integers[X]$ of least degree such that the GCD of its coefficients is $1$ and $\alpha$ is one of its roots.
 Given a polynomial $p \in \integers[X]$, we denote the length of its representation by $\text{size}(p)$; its height, denoted by $H(p)$, is the maximum absolute value of the coefficients of $p$; $d(p)$ denotes the degree of $p$. The height $H(\alpha)$ and degree $d(\alpha)$ of $\alpha$ are defined to be the height and degree of $p_\alpha$.
 
-A separation bound provided in \cite{mignottecon} establishes that for distinct roots $\alpha$ and $\beta$ of a polynomial $p \in \mathbb{Z}[x]$,
-$|\alpha - \beta| > \frac{\sqrt{6}}{d^{(d+1)/2}H^{d-1}}$.
-This bound allows one to represent an algebraic number $\alpha$ as a 4-tuple $(p,a,b,r)$ where $\alpha$ is the only root of $p$ at distance $\leq r$ if $a+ib$, and we use $\text{size}{\alpha}$ to denote the size of this representation, i.e., number of bits needed to write down this 4-tuple.
+For any $p \in \integers[X]$, the distance between distinct roots is effectively lower bounded in terms of its degree and height \cite{mignottecon}.
+This bound allows one to represent an algebraic number $\alpha$ as a 4-tuple $(p,a,b,r)$ where $p$ is the defining polynomial, and $a+bi$ is a rational approximation of sufficient precision $r\in\rationals$. We use $\text{size}{\alpha}$ to denote the size of this representation, i.e., number of bits needed to write down this 4-tuple.
 
-Further, we note that two distinct algebraic numbers $\alpha$ and $\beta$, are always roots of $p_\alpha p_\beta$, and we can thus use the root separation bound above to lower bound their distance.
-
-Given a polynomial $p\in \integers[X]$, one can compute its roots in polynomial time \cite{findroots1operate1}. Recently, implementations of algorithms to factor polynomials in $\algebraics[X]$ have been verified \cite{factor-algebraic}. Given $\alpha$, $\beta$ two algebraic numbers, one can always compute the representations of $\alpha+\beta$, $\alpha\beta$, $\frac 1 \alpha$, $\Re(\alpha)$, $\Im(\alpha)$ in polynomial time wrt the size of their representations. \cite{findroots1operate1,findroots2operate2}.
+Given a polynomial $p\in \integers[X]$, one can compute its roots in polynomial time \cite{findroots1operate1}. Recently, implementations of algorithms to factor polynomials in $\algebraics[X]$ have been verified \cite{factor-algebraic}. Given $\alpha$, $\beta$ two algebraic numbers, one can always compute the representations of $\alpha+\beta$, $\alpha\beta$, $\frac 1 \alpha$, $\Re(\alpha)$, $\Im(\alpha), |\alpha|$, and decide $\alpha = \beta$, $\alpha > \beta$ in polynomial time wrt the size of their representations. \cite{findroots1operate1,findroots2operate2}.
 
 \subsection{First Order Theory of the Reals}
-This logical theory reasons about the universe of real numbers, and is denoted $\seq{\reals; +, \cdot, \ge, 0, 1}$. That is, variables take real values; terms can be added and multiplied, we have the comparison predicate, and direct access to the constants $0$ and $1$. With existential quantifiers and polynomials, we can thus express algebraic constants too. Formally, we have access to only the existential quantifier, negation, and disjunction; however, this can express the universal quantifier and all other Boolean connectives as well.
+This logical theory reasons about the universe of real numbers, and is denoted $\seq{\reals; +, \cdot, \ge, 0, 1}$. That is, variables take real values; terms can be added and multiplied, we have the comparison predicate, and direct access to the constants $0$ and $1$. Thus, our propositional atoms are inequalities involving polynomials with integer coefficients. With existential quantifiers and polynomials, we can thus express algebraic constants too. Formally, we have access to only the existential quantifier, negation, and disjunction; however, this can express the universal quantifier and all other Boolean connectives as well.
 
 Variables are either quantified or free. Remarkably, the First Order Theory of the Reals admits quantifier elimination: for any formula $\chi(\mathbf{x})$, whose free variables are $\mathbf{x}$, there exists an \textbf{equivalent} formula $\psi(\mathbf{x})$ that does not contain any quantified variables. The following result is relevant to us.
 \begin{theorem}[Renegar \cite{renegar}]
-\label{thm:renegar}
+\label{thm:renegar2}
 Let $M \in \naturals$ be fixed. Let $\chi(\mathbf{x})$ be a formula with fewer than $M$ variables in total. There exists a procedure that returns an equivalent quantifier-free formula $\psi(\mathbf{x})$ in disjunctive normal form. This procedure runs in time polynomial in the size of the representation of $\chi$.
 \end{theorem} 
