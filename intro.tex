@@ -1,6 +1,6 @@
 \section{Introduction}
 \label{section:intro}
-A real Linear Recurrence Sequence (LRS) of order $\kappa$ is an infinite sequence of real numbers $\seq{u_0, u_1, u_2, \dots}$ having the following property: there exist $\kappa$ real constants $a_{0}, \dots a_{\kappa-1}$, with $a_0 \ne 0$ such that for all $n \ge 0$:
+A real Linear Recurrence Sequence (LRS) of order $\kappa$ is an infinite sequence of real numbers $\seq{u_0, u_1, u_2, \dots}$ having the following property: there exist $\kappa$ real constants $a_{0}, \dots, a_{\kappa-1}$, with $a_0 \ne 0$ such that for all $n \ge 0$:
 \begin{equation}
 u_{n+\kappa} = a_{\kappa-1}u_{n+\kappa-1} + \dots a_0 u_n
 \end{equation}
@@ -14,24 +14,26 @@ In contrast, the \textit{uninitialised} variants of these problems are far more 
 In this paper, we focus on the neighbourhood-of-initialisation notion of robustness, which was first introduced in \cite{originalstacs}, and more comprehensively treated in \cite{originalarxiv}. There are, however, different approaches to tackle imprecision: \cite{N21} considers a model of computation that can take arbitrary real numbers as input. Works with a more control-theoretic flavour include \cite{rounding20}, which allows for rounding at every step before applying the recurrence; in the same vein, \cite{pseudo21} allows for $\varepsilon$-disturbances at every step. Our notion of robustness has been considered in \cite{originalstacs,originalarxiv,pseudo21}, however, these works primarily concern themselves with simply deciding whether there \textit{exists} a neighbourhood around the given point that satisfies Positivity. Although they do identify that robust problems are hard when the neighbourhood is given as input, their hardness results are not sharp.
 
 \subsubsection*{Our contribution}
-We address the gap in the robustness state-of-the-art by exploring the frontiers of decidability when the neighbourhood is given as input. In \S\ref{section:solspace} we define the robustness problems we consider, and how neighbourhoods are specified. A reader with a critical disposition might not find the definition general enough; however, this is necessary to give what are, to the best of our knowledge, the \textbf{first sharp decidability results} for robustness problems given explicitly specified full-dimensional neighbourhoods. We prove these results in \S\ref{section:decidability} and \S\ref{section:decidability2}. Even with the simplifications we make, we show how the number-theoretic hardness we formalise in \S\ref{section:diophantine} rears its head in \S\ref{section:hardness}. Our contributions are summarised in the table below.
+We address the gap in the robustness state-of-the-art by exploring the frontiers of decidability when the neighbourhood is given as input. In \S\ref{section:solspace} we define the robustness problems we consider: we use the Mahalanobis distance to specify neighbourhoods. Our parameter is the positive definite matrix $\mathbf{S}$, and the neighbourhood of $\mathbf{c}$ it specifies is the set of all points $\mathbf{c'} \in \reals^{\kappa}$ such that $\sqrt{(\mathbf{c'} - \mathbf{c})^T\mathbf{S}(\mathbf{c'} - \mathbf{c})} \le 1$. In the statistical context, $\mathbf{S}$ is the inverse of a covariance matrix; and thus, our formulation is a rather natural way of capturing noise and measurement errors in the input. Our \textbf{novelty}, to the best of our knowledge, lies in identifying a general and practical way of explicitly specifying neighbourhoods, and establishing the \textbf{first decidability results} in such a setting, albeit at low orders. We prove these results in \S\ref{section:decidability} and \S\ref{section:decidability2}. In \S\ref{section:hardness}, we show how the number-theoretic hardness we formalise in \S\ref{section:diophantine} rears its head at immediately higher orders. Our contributions are summarised in the table below.
 \begin{table}[H]
 \begin{tabular}{|l|c|r|}
   \hline
    \textbf{Robust Problem}& \textbf{Decidability }& {\bf Hardness} \\
   \hline
-  $r$-Robust Positivity & Up to order 4 & Diophantine hard at order 5\\
-  $r$-Robust Uniform Ultimate Positivity & Up to order 4 & Lagrange hard at order 5 \\
-  $r$-Robust Non-uniform Ultimate Positivity & Up to order 5 & (\cite{originalarxiv,joeljames3}) Lagrange hard at order 6 
+  $\mathbf{S}$-Robust Positivity & Up to order 4 & Diophantine hard at order 5\\
+  $\mathbf{S}$-Robust Uniform Ultimate Positivity & Up to order 4 & Lagrange hard at order 5 \\
+  $\mathbf{S}$-Robust Non-uniform Ultimate Positivity & Up to order 5 & (\cite{originalarxiv,joeljames3}) Lagrange hard at order 6 
   \\
   \hline
 \end{tabular}
 
-\caption{Problems are as formally defined in \S\ref{section:solspace}. $r$ denotes the input parametrising the size of the neighbourhood. The distinction between uniform and non-uniform refers to whether the threshold index for certifying Ultimate Positivity must be common for the entire neighbourhood. Hardness results are in the sense of Definition \ref{def:hardness}.}% 
+\caption{Problems are as formally defined in \S\ref{section:solspace}. The distinction between uniform and non-uniform refers to whether the threshold index for certifying Ultimate Positivity must be common for the entire neighbourhood. Hardness results are in the sense of Definition \ref{def:hardness}.}% 
   \label{tab:results}
 \end{table}
 
 \subsubsection*{Notation and Prerequisites}
+For the purposes of discussing robustness, we shall use $\ball$ to denote the unit ball in $\reals^\kappa$, centred at the origin. Similarly, we use $\ball_{\mathbf{S}}$ to denote the set of $\mathbf{d}$ such that $\mathbf{d}^T\mathbf{Sd} \le 1$. For real column vectors $\mathbf{x}, \mathbf{y}$, we use $\seq{\mathbf{x}, \mathbf{y}}$ to denote the inner product $\mathbf{x}^T\mathbf{y} = \mathbf{y}^T\mathbf{x}$. $||\mathbf{x}||$ denotes the standard L2 norm $\sqrt{\seq{\mathbf{x}, \mathbf{x}}}$
+
 Throughout this paper,  $\naturals$, $\integers$, $\rationals$, $\reals$, and $\complexes$ respectively denote the natural numbers, integers, rationals, reals, and complex numbers. $\alpha \in \complexes$ is said to be algebraic if it is a root of a polynomial with integer coefficients. Algebraic numbers form an algebraically closed field, denoted by $\algebraics$. We denote the field of real algebraic numbers by $\realalgebraics$.
 
 In this paper, we assume our input consists of real algebraic numbers. Appendix \ref{appendix:prelims} contains a brief initiation to this number field. The key takeaways are that the usual arithmetic can be carried out with perfect precision, and that the First Order Theory of the Reals $\seq{\reals; +, \cdot, \ge, 0, 1}$ is a decidable logical system powerful enough to fit our purposes.
@@ -40,4 +42,5 @@ In this paper, we assume our input consists of real algebraic numbers. Appendix 
 \label{thm:renegar}
 Let $M \in \naturals$ be fixed. Let $\chi(\mathbf{x})$ be a First Order Logic formula interpreted over the reals with fewer than $M$ variables in total. There exists a procedure that returns an equivalent quantifier-free formula $\psi(\mathbf{x})$ in disjunctive normal form. This procedure runs in time polynomial in the size of the representation of $\chi$.
 \end{theorem} 
+
 

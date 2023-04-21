@@ -1,4 +1,4 @@
-\section{Linear Recurrences, The Solution Space, and Robustness}
+\section{Linear Recurrences, Robustness, and convenient bases}
 \label{section:solspace}
 
 We start approaching robustness by decoupling the elements of an LRS: namely, the recurrence relation, and the initialisation.
@@ -24,71 +24,73 @@ $
 A real algebraic LRS $\mathbf{u}$ of order $\kappa$ is an infinite sequence $\seq{u_n}_{n=0}^\infty$, given by a real algebraic order $\kappa$ LRR $\mathbf{a}$ and the initialisation $\mathbf{c} = (u_0, u_1, \dots, u_{\kappa-1}) \in \realalgebraics^\kappa$. For all $n \in \naturals$, $\mathbf{a}(u_n, u_{n+1}, \dots, u_{n+\kappa})$ holds.
 \end{definition}
 
+One can also encode the recurrence $\mathbf{a}$ as a $\kappa \times \kappa$ companion matrix $\mathbf{A}$, and interpret the initialisation $\mathbf{c}$ as a vector. Then, $u_n$ is given by the first coordinate of $\mathbf{A}^n\mathbf{c}$.
+
+We now list decision problems: recall that in this paper, we consider that our input consists of real algebraic numbers.
+
 \begin{problem}[Positivity]
 \label{prob:pos}
-An LRS $\seq{u_n}_{n=0}^\infty$ is given as $\seq{\mathbf{a}, \mathbf{c}}$. Decide whether, for all $n \in \naturals$, $u_n \ge 0$.
+An LRS $\seq{u_n}_{n=0}^\infty$ is given as $(\mathbf{a}, \mathbf{c})$. Decide whether, for all $n \in \naturals$, $u_n \ge 0$.
 \end{problem}
 
 \begin{problem}[Ultimate Positivity]
 \label{prob:ultpos}
-Given an LRS $\seq{\mathbf{a}, \mathbf{c}}$, decide whether there exists an $N$ such that for all $n \ge N$, $u_n \ge 0$.
+Given an LRS $(\mathbf{a}, \mathbf{c})$, decide whether there exists an $N$ such that for all $n \ge N$, $u_n \ge 0$.
 \end{problem}
 
-In the general case, \cite{joeljames3} shows both Positivity and Ultimate Positivity to be decidable up to order 5, while demonstrating number-theoretic hardness in the sense Definition \ref{def:hardness} at order $6$. On restricting our attention to \textit{simple} LRS (the characteristic polynomial has no repeated root), Positivity is decidable up to order nine \cite{ouaknine2014positivity}, while Ultimate Positivity is decidable \cite{ouaknine2014ultimate}. In this text, however, we shall focus on defining and tackling robust versions of these problems.
+Ultimate Positivity is obviously necessary for Positivity. In the general case, \cite{joeljames3} shows both Positivity and Ultimate Positivity to be decidable up to order 5, while demonstrating number-theoretic hardness in the sense Definition \ref{def:hardness} at order $6$. On restricting our attention to \textit{simple} LRS (the characteristic polynomial has no repeated root), Positivity is decidable up to order nine \cite{ouaknine2014positivity}, while Ultimate Positivity is decidable \cite{ouaknine2014ultimate}. In this text, however, we shall focus on defining and tackling robust versions of these problems.
 
-One can encode the recurrence $\mathbf{a}$ as a $\kappa \times \kappa$ companion matrix $\mathbf{A}$, and interpret the initialisation $\mathbf{c}$ as a vector. Then, $u_n$ is given by the first coordinate of $\mathbf{A}^n\mathbf{c}$. Expressing $\mathbf{A}$ in Jordan Normal Form yields the following closed form for $u_n$:
-\begin{equation}
-\label{eq:exppoly}
-u_n = \sum_{j}\sum_{\ell=0}^{m_j - 1}p_{j\ell}\gamma_j^n n^\ell
-\end{equation}
-where $\gamma_j$ is a root of the characteristic polynomial with multiplicity $m_j$. We note that each $p_{j\ell}$ is linear in $\mathbf{c}$. The above is called the \textbf{exponential polynomial} solution of $\mathbf{u}$. We note that we are working with a real algebraic LRS: thus, all $\gamma$ are algebraic, and if complex, occur in conjugate pairs. Moreover, the corresponding complex coefficients $p_{j\ell}$ must also occur in conjugate pairs to make $u_n$ real. Thus, we can also express $u_n$ as:
-\begin{equation}
-\label{eq:realexppoly}
-u_n = \left(\sum_{j=1}^{k_1}\sum_{\ell = 0}^{m_j-1} z_{j\ell}\rho_j^n n^\ell\right) + \left(\sum_{j=k_1 + 1}^{k_2}  (x_{j\ell} \cos n\theta_j + y_{j\ell}\sin n\theta_j)\rho_j^n n^\ell\right)
-\end{equation}
-where each $\rho_j \in \reals$. Note that $\gamma_j$, if not real, is written as $\rho_j(\cos \theta_j + i\sin \theta_j)$. We call the above the \textbf{real exponential polynomial} solution of the LRS $\mathbf{u}$. Roots with the maximum modulus are called \textbf{dominant}.
-
-Given an order $\kappa$ LRR $\mathbf{a}$, $\reals^\kappa$ can either be interpreted as the space of all initialisations, or the space of all coefficients in the real exponential polynomial \ref{eq:realexppoly}. While these are interchangeable via linear maps, the latter, having captured the spectrum (roots of the characteristic polynomial) of $\mathbf{a}$, explicitly gives more information about the behaviour of the sequences. It is the solution space interpretation that naturally features in decision procedures. Thus, we formulate our precise robustness queries in terms of the solution space. 
-
-Given $\mathbf{a}$, define $\tau: \reals^\kappa \rightarrow \reals^\kappa$ to be the linear transform that takes an initialisation $\mathbf{c}$ to the real exponential polynomial coefficients $\mathbf{p}$. In the following, $||.||$ denotes the standard L2 norm.
-
-
-\begin{problem}[$r$-Robust Positivity]
+\begin{problem}[$\mathbf{S}$-Robust Positivity]
 \label{prob:rrobpos}
-Given $N$, an LRS $\seq{\mathbf{a}, \mathbf{c}}$ and $r > 0$, decide whether for all $\mathbf{c'}$ such that $||\tau(\mathbf{c'}) - \tau(\mathbf{c})|| \le r$, the LRS $\seq{\mathbf{a}, \mathbf{c'}}$ is positive from the $N^{th}$ term onwards.
+Given $N$, an LRS $(\mathbf{a}, \mathbf{c})$, and positive definite $\mathbf{S}$, decide whether for all $\mathbf{c'}$ such that $\sqrt{(\mathbf{c'} - \mathbf{c})^T\mathbf{S}(\mathbf{c'} - \mathbf{c})} \le 1$, the LRS $(\mathbf{a}, \mathbf{c'})$ is positive from the $N^{th}$ term onwards.
 \end{problem}
 
 This specification is slightly different from the traditional Positivity problem, where $N$ is always $0$. In the non-robust setting, this does not make a difference: one can explicitly obtain a new LRS by moving forward $N$ steps. However, this does not preserve the shape of the neighbourhood in the robust setting: thus we specify $N$ as part of the input.
 
-\begin{problem}[$r$-Robust Uniform Ultimate Positivity]
+\begin{problem}[$\mathbf{S}$-Robust Uniform Ultimate Positivity]
 \label{prob:rrobuniultpos}
-Given an LRS $\seq{\mathbf{a}, \mathbf{c}}$ and $r > 0$, decide whether there exists an $N$ such that for all $\mathbf{c'}$ with $||\tau(\mathbf{c'}) - \tau(\mathbf{c})|| \le r$, the LRS $\seq{\mathbf{a}, \mathbf{c'}}$ is positive from the $N^{th}$ term onwards.
+Given an LRS $(\mathbf{a}, \mathbf{c})$, and positive definite $\mathbf{S}$, decide whether there exists an $N$ such that for all $\mathbf{c'}$ with\\ $\sqrt{(\mathbf{c'} - \mathbf{c})^T\mathbf{S}(\mathbf{c'} - \mathbf{c})} \le 1$, the LRS $(\mathbf{a}, \mathbf{c'})$ is positive from the $N^{th}$ term onwards.
 \end{problem}
 
 We can alternate quantifiers, and query a weaker notion of Robust Ultimate Positivity:
-\begin{problem}[$r$-Robust Non-uniform Ultimate Positivity]
+\begin{problem}[$\mathbf{S}$-Robust Non-uniform Ultimate Positivity]
 \label{prob:rrobnonuniultpos}
-Given an LRS $\seq{\mathbf{a}, \mathbf{c}}$ and $r > 0$, decide whether for all $\mathbf{c'}$ with $||\tau(\mathbf{c'}) - \tau(\mathbf{c})|| \le r$, there exists an $N$ such that the LRS $\seq{\mathbf{a}, \mathbf{c'}}$ is positive from the $N^{th}$ term onwards.
+Given an LRS $(\mathbf{a}, \mathbf{c})$, and positive definite $\mathbf{S}$, decide whether for all $\mathbf{c'}$ with $\sqrt{(\mathbf{c'} - \mathbf{c})^T\mathbf{S}(\mathbf{c'} - \mathbf{c})} \le 1$ , there exists an $N$ such that the LRS $(\mathbf{a}, \mathbf{c'})$ is positive from the $N^{th}$ term onwards.
 \end{problem}
 
 The attentive reader might have already noticed that we depart from convention and specify neighbourhoods as \textit{closed} balls. \cite{originalarxiv} extensively treats the distinction: for Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}, there is no difference, while Problem \ref{prob:rrobnonuniultpos} becomes considerably easier with open balls, and its decidability is tackled in \cite{originalarxiv} itself.
 
-Given $\seq{\mathbf{a}, \mathbf{c}}$, one can compute $\tau$, and hence $\mathbf{p} = \tau(\mathbf{c})$. From equation \ref{eq:realexppoly}, we have that 
+For any LRS $\seq{\mathbf{a}, \mathbf{c}}$, the $n^{th}$ term $u_n$ has the following closed form:
+\begin{equation}
+\label{eq:exppoly}
+u_n = \sum_{j}\sum_{\ell=0}^{m_j - 1}p_{j\ell}\gamma_j^n n^\ell
+\end{equation}
+where $\gamma_j$ is a root of the characteristic polynomial with multiplicity $m_j$. We note that each $p_{j\ell}$ is linear in $\mathbf{c}$. This can be seen in two ways: (a) express the companion matrix $\mathbf{a}$ in Jordan Normal form, and use it to compute $\mathbf{A}^n\mathbf{c}$ explicitly; (b) observe that sequences satisfying the linear recurrence $\mathbf{a}$ form a vector space, and note (by taking derivatives of the characteristic polynomial) that the sequences $\seq{\gamma_j^n}_n$, $\seq{n\gamma_j^n}_n, \dots, \seq{n^{m_j-1}\gamma_j^n}_n$ all satisfy the recurrence. 
+
+The above form \ref{eq:exppoly} is called the \textbf{exponential polynomial} solution of $\mathbf{u}$. Roots of the characteristic polynomial with the maximum modulus are called \textbf{dominant}. We note that we are working with a real algebraic LRS: thus, all $\gamma$ are algebraic, and if complex, occur in conjugate pairs. Moreover, the corresponding complex coefficients $p_{j\ell}$ must also occur in conjugate pairs to make $u_n$ real. Thus, we can also express $u_n$ as:
+\begin{equation}
+\label{eq:realexppoly}
+u_n = \left(\sum_{j=1}^{k_1}\sum_{\ell = 0}^{m_j-1} z_{j\ell}\rho_j^n n^\ell\right) + \left(\sum_{j=k_1 + 1}^{k_2}  (x_{j\ell} \cos n\theta_j + y_{j\ell}\sin n\theta_j)\rho_j^n n^\ell\right)
+\end{equation}
+where each $\rho_j \in \reals$. Note that $\gamma_j$, if not real, is written as $\rho_j(\cos \theta_j + i\sin \theta_j)$. We call the above the \textbf{real exponential polynomial} solution of the LRS $\mathbf{u}$. 
+
+Let $\mathbf{p}$ be the vector of coefficients in equation \ref{eq:realexppoly}. We can thus write
 \begin{equation}
 \label{eq:innerprod}
-u_n = \mathbf{x_n}^T\mathbf{p} = 
+u_n = \seq{\mathbf{p}, \mathbf{x_n}}= 
 \begin{bmatrix}
 \rho_1^n & n \rho_1^n & \dots & n^{m_{k_1}-1}\rho_{k_1}^n & \rho_{k_1+1}\cos n\theta_{k_1+1} & \rho_{k_1+1}\sin n\theta_{k_1+1} & \dots
 \end{bmatrix}\mathbf{p}
 \end{equation}
 
-Consider Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}. They boil down to asking whether for all $\mathbf{p'}$ with $||\mathbf{p'} - \mathbf{p}|| = r$, for all (but finitely many $n$) $\mathbf{x_n}^T\mathbf{p'} \ge 0$. $\mathbf{p'}$, in turn, can be expressed as $\mathbf{p} + r\mathbf{d}$, where $\mathbf{d}$ is a unit vector. Thus, it is equivalent to ask whether
+From the discussion surrounding equation \ref{eq:exppoly}, it is clear that we can easily compute an invertible linear map $\mathbf{V}$ such that $\mathbf{Vp} = \mathbf{c}$. Thus, we can equivalently consider our robust problems in the coefficient space, replacing $\mathbf{S}$ with $\mathbf{M} = \mathbf{V}^T\mathbf{SV}$, which is also positive definite. We can also decompose $\mathbf{M}$ as $\mathbf{B}\mathbf{B}^T$: indeed, $\mathbf{M}$, being symmetric positive definite, is unitarily diagonalisable with positive eigenvalues, so there is an algebraic unitary matrix $\mathbf{U}$ and algebraic diagonal matrix $\mathbf{D}$ such that $\mathbf{M} = \mathbf{U}\mathbf{D}^2\mathbf{U}^T$.
+
+Consider Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}. They boil down to asking whether for all $\mathbf{p'}$ with\\ 
+$\sqrt{(\mathbf{p'}-\mathbf{p})^T\mathbf{BB}^T(\mathbf{p'} - \mathbf{p})} = 1$, for all (but finitely many $n$) $\mathbf{x_n}^T\mathbf{p'} \ge 0$. $\mathbf{p'}$, in turn, can be expressed as $\mathbf{p} + \mathbf{d}$. Let $\mathbf{f} = \mathbf{B}^T\mathbf{d}$. Thus, it is equivalent to ask whether
 \begin{equation}
 \label{eq:crux}
-\mathbf{x_n}^T\mathbf{p} \ge r\max_{\mathbf{d}}\mathbf{x_n}^T\mathbf{d} = r ||\mathbf{x_n}|| = r \sqrt{\sum_{j} \sum_{\ell=0}^{m_j-1} \rho_j^n n^{2\ell}}
+\seq{\mathbf{p}, \mathbf{x_n}} \ge \max_{\mathbf{f} \in \ball}\mathbf{x_n}^T\left(\mathbf{B}^{-1}\right)^T\mathbf{f} = ||\mathbf{B}^{-1}\mathbf{x_n}|| = \sqrt{\seq{\mathbf{b_1}, \mathbf{x_n}}^2 +\dots+\seq{\mathbf{b_\kappa}, \mathbf{x_n}}^2}
 \end{equation}
-
-Note the independence from $\theta_j$ in the right hand side of the inequality, which can only be achieved in the solution space. In the rest of this text, we consider the problem of deciding this inequality for all (but finitely many) $n$.
 
 \begin{theorem}[First Main Decidability Result]
 \label{thm:decide}
@@ -106,7 +108,7 @@ u_n/n^d\rho^n = \begin{bmatrix}
 \mathbf{p}_{res}
 \end{bmatrix}
 \end{equation}
-We split the inner product into a dominant ({\color{red!70!black}red}) and a residual (black) part. In the limit, the latter becomes negligible relative to the former. We have normalised the inner product, so the dominant part is $\Theta(1)$. Let $\mu = \liminf_{n\in \naturals}\mathbf{q}_{dom}^T(n)\mathbf{p}_{dom}$. If $\mu < 0$, then Ultimate Positivity is impossible. If $\mu > 0$, then we can provide an $N$ such that $u_n > 0$ beyond the $N^{th}$ term. Thus, the core idea is to ensure that the interior of the given ball lies entirely in the region where $\mu > 0$. Decidability hinges on whether we can solve Ultimate Positivity for all the instances where the surface of the ball intersects the $\mu = 0$ region.
+We split the inner product into a dominant ({\color{red!70!black}red}) and a residual (black) part. In the limit, the latter becomes negligible relative to the former. We have normalised the inner product, so the dominant part is $\Theta(1)$. Let $\mu = \liminf_{n\in \naturals}\seq{ \mathbf{q}_{dom}(n), \mathbf{p}_{dom}}$. If $\mu < 0$, then Ultimate Positivity is impossible. If $\mu > 0$, then we can provide an $N$ such that $u_n > 0$ beyond the $N^{th}$ term. Thus, the core idea is to ensure that the (relative) interior of the given neighbourhood lies entirely in the region where $\mu > 0$. Decidability hinges on whether we can solve Ultimate Positivity for all the instances where the surface of the neighbourhood intersects the $\mu = 0$ region.
 
 \begin{theorem}[Second Main Decidability Result]
 \label{thm:decide2}

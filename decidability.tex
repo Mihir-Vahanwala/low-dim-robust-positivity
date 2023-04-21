@@ -2,49 +2,134 @@
 \label{section:decidability}
 In this section, we prove Theorem \ref{thm:decide}. The techniques naturally apply to lower orders, and we omit their explicit treatment. Recall that we must show how to check the validity of inequality \ref{eq:crux} for all (but finitely many) $n$:
 $$
-\mathbf{x_n}^T\mathbf{p} \ge r\max_{\mathbf{d}}\mathbf{x_n}^T\mathbf{d} = r ||\mathbf{x_n}|| = r \sqrt{\sum_{j} \sum_{\ell=0}^{m_j-1} \rho_j^n n^{2\ell}}
+\seq{\mathbf{p}, \mathbf{x_n}} \ge \max_{\mathbf{f} \in \ball}\mathbf{x_n}^T\left(\mathbf{B}^{-1}\right)^T\mathbf{f} = ||\mathbf{B}^{-1}\mathbf{x_n}|| = \sqrt{\seq{\mathbf{b_1}, \mathbf{x_n}}^2 +\dots+\seq{\mathbf{b_\kappa}, \mathbf{x_n}}^2}
 $$
 
-Our main case distinction is on the number of pairs of complex conjugates among the roots. Thanks to the following old result \cite[Thm. 2]{positive-dominant}, the answer to Ultimate Positivity is trivially NO if there are two pairs of complex conjugates.
+Our main case distinction is on the number of pairs of complex conjugates among the roots. In each case, the plan is to first decide whether a threshold index $N$ beyond which the LHS is always positive exists, and compute it. This can always be done for order four LRS \cite{joeljames3}. We then square throughout, and transfer all terms to the LHS, thus obtaining a new instance of (Ultimate) Positivity. This plan is trivial to execute when all characteristic roots are real.
+
+Thanks to the following old result \cite[Thm. 2]{positive-dominant}, the answer to Ultimate Positivity is trivially NO if there are two pairs of complex conjugates.
 
 \begin{proposition}[Folklore]
 \label{prop:folklore}
-If the characteristic polynomial has no real root of maximum modulus, then for any initialisation to the sequence, there are infinitely many positive terms, and infinitely many negative terms.
+If the characteristic polynomial has no real dominant root, then for any initialisation to the sequence, there are infinitely many positive terms, and infinitely many negative terms.
 \end{proposition}
 
-On the other hand, if all the roots are real, then again checking the inequality above is trivial: one can simply first check the positivity of the LHS, and then square throughout and use growth arguments, as before. 
+Thus, we shall concern ourselves with the case there is one pair of complex conjugate roots. Without loss of generality, we also assume that the real dominant root is $1$. 
 
-Thus, we shall concern ourselves with the case there is one pair of complex conjugate roots. Without loss of generality, we also assume that the real dominant root is $1$.
+If our LRS is \textit{simple}, i.e. it has distinct characteristic roots $1, \alpha, \gamma, \bar{\gamma}$, then decidability is rather immediate, considering the state-of-the-art. On squaring throughout after the initial Positivity check, and transferring all terms to the LHS, we get a Positivity (Problem \ref{prob:pos}) instance for a new simple LRS, this time of order at most $10$ (we get at most four roots from squaring the original roots, while there are at most six more roots from pairwise products). We assume $\alpha \ne -1$: if it were, the resulting LRS could be decomposed into two LRS of lower order, and Positivity for simple LRS is known to be decidable for order up to nine \cite{ouaknine2014positivity}. For the same reason, we can also assume $\gamma/\bar{\gamma}$ is not a root of unity: this can be efficiently detected, see Theorem \ref{thm:abelian}. Thus, the resulting LRS has at most five dominant roots, $1, \gamma, \bar{\gamma}, \gamma^2, \bar{\gamma}^2$. In this case, Positivity can be deciding for simple LRS using the techniques in \cite{ouaknine2014positivity}, regardless of the order.
 
-\subsection{High Level Synopsis}
-Ultimate Positivity is a necessary condition for Positivity. Fortunately, it is a a problem that is more amenable to growth arguments. In this subsection, we shall study the exponential polynomial solution, and characterise a set of points in the solution (real exponential polynomial coefficient) space that are guaranteed to result in an Ultimately Positive LRS. The following are major cases we consider:
+The only remaining possibility, therefore, is that the characteristic roots are $1, 1, \gamma, \bar{\gamma}$. Let $0 < |\gamma| = \rho \le 1$, and we again assume that $\gamma/\bar{\gamma}$ is not a root of unity, for reasons described above. On squaring after the initial check, our LRS is of the form
+\begin{align*}
+&z_2n^2 + z_1n + z_0  \\
+&+ x_2 n \rho^n \cos n\theta + y_2 n \rho^n \sin n\theta  \\
+&+ x_1\rho^n\cos n\theta + y_1\rho^n\sin n\theta  \\
+&+ x_0 \rho^{2n}\cos 2n\theta + y_0 \rho^{2n} \sin 2n\theta + w\rho^{2n} \ge 0
+\end{align*}
+If $\rho < 1$, the above can trivially be resolved with growth arguments, or is an easy order $3$ LRS. Thus, we assume $\rho = 1$. If $z_2 \ne 0$, then decidability is trivial; hence we assume $z_2 = 0$. In this case, our inequality can be arranged as
+\begin{equation}
+\label{eq:groundtruth}
+{\color{red!70!black} n(z_1 + x_2\cos n\theta + y_2\sin n\theta)} + (z_0 + x_1\cos n\theta + y_1\sin n\theta + x_0\cos 2n\theta + y_0\sin 2n\theta) \ge 0
+\end{equation}
+
+Since we assume $\theta$ is not a rational approximation of $2\pi$, we can argue by Theorem \ref{thm:kronecker} (Kronecker) that $n\theta$ modulo ${2\pi}$ is dense in $[0, 2\pi]$. Define
 \begin{align}
-\label{eq:unityrep}
-u_n &= {\color{red!70!black} z_1 n} + z_0 + \rho^n (x \cos n\theta + y \sin n \theta), ~~ 0< \rho \le 1 \\
-\label{eq:fourdom}
-u_n &= {\color{red!70!black} z + x\cos n\theta + y\sin n\theta + w(-1)^n} \\
-\label{eq:threedom}
-u_n &= {\color{red!70!black} z + x\cos n\theta + y\sin n\theta} + w\alpha^n, ~~|\alpha| < 1 \\
-\label{eq:twodom}
-u_n &= {\color{red!70!black}z + w(-1)^n} + \rho^n(x\cos n\theta + y\sin n\theta), ~~ 0< \rho < 1 \\
-\label{eq:onedom}
-u_n &= {\color{red!70!black}z} + w\alpha^n + \rho^n(x\cos n\theta + y\sin n\theta), ~~ 0< \rho < 1, |\alpha| < 1
+f(t) &= z_1 + x_2\cos t + y_2\sin t \\
+g(t) &= z_0 + x_1\cos t + y_1\sin t + x_0\cos 2t + y_0\sin 2t
 \end{align}
 
-The terms in black become negligibly small relative to the terms in dark red. The cases we draw are based on whether $1$ is a repeated dominant root, or whether there are four, three, two, or one (distinct) dominant roots.
+If $\min f(t) < 0$, then Robust Ultimate Positivity trivially does not hold; if $\min f(t) > 0$, then it can trivially be certified. Thus, we shall consider that $\min f(t) = 0$, equivalently, $z_1^2 = x_2^2 + y_2^2$. Let the minimum be attained at $\varphi$, i.e., $f(\varphi) = 0$. We have that $\varphi = \arccos(-x_2/z_1)$. Decidability is most clearly seen through a slight shift in perspective: we rotate the basis.
+First, note that inequality \ref{eq:groundtruth} can easily be rewritten as (we use $t_n$ as shorthand for $n\theta - \varphi$)
+\begin{equation}
+\label{eq:groundtruthrewrite}
+{\color{red!70!black}n(z_1 + x_2' \cos t_n)} + (z_0 + x_1'\cos t_n + y_1'\sin t_n + x_0'\cos 2t_n + y_0'\sin 2t_n) \ge 0
+\end{equation}
 
-In each of the cases, we have to decide the universal validity of the corresponding version of inequality \ref{eq:crux}. This often entails asking whether some $F(\mathbf{p}, \cos n\theta, \sin n\theta, (-1)^n) \ge G(n)$. The high-level approach is to:
+Observe that there is nothing special about the particular representation of inequality \ref{eq:groundtruth}. The common proposition that both \ref{eq:groundtruth} and \ref{eq:groundtruthrewrite} convey is that 
+$$
+\left(\mathbf{e_1}^T\mathbf{A}^n\mathbf{c}\right)^2 - \left(\max_{\mathbf{d} \in \ball_{\mathbf{S}}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d}\right)^2 \ge 0
+$$
+
+On retracing our steps back to the discussion surrounding equation \ref{eq:innerprod}, we could well have chosen our basis of solutions to be $\mathbf{x_n'}\begin{bmatrix}n & 1 & \cos(n\theta - \varphi) & \sin(n\theta - \varphi) \end{bmatrix}$. This would have given us different $\mathbf{V'}, \mathbf{M'}$, and hence $\mathbf{B'}$ in equation \ref{eq:crux}, but importantly, it would generate inequality \ref{eq:groundtruthrewrite} for the same original input. We define 
+\begin{align}
+f_\varphi(t) &= z_1 + x_2'\cos t  \\
+g_\varphi(t) &= z_0 + x_1'\cos t + y_1'\sin t + x_0'\cos 2t + y_0'\sin 2t
+\end{align}
+Here, $z_1 + x_2' = 0$, since the minimal $f_\varphi(0) = 0$. If $g_\varphi(0) > 0$, we are done: we can easily get a positive lower bound $f_\varphi$ for values where $g_\varphi < 0$, and get an $N$ beyond which the validity of inequality \ref{eq:groundtruthrewrite} is guaranteed. On the other hand, if $g_\varphi(0) < 0$, we argue that inequality \ref{eq:groundtruthrewrite} is violated for infinitely many $n$. Recall inequality \ref{eq:quadraticdecay}. It tells us that there are infinitely many $n$ for which $f_\varphi(n\theta + \varphi) < c/n^2$. Thus, the terms in red are infinitely often lower bounded by $c/n$, while the terms in black, for the same $n$, would be close to a negative constant. Thus, we can return NO for robust Ultimate Positivity.
+
+The final case that remains is $g_\varphi(0) = 0$. We argue that remarkably, it does not arise at all!
+\begin{lemma}
+The scenario where $z_2 = 0$, $z_1 + x_2' = 0$, and $z_0 + x_1'+ x_0' = 0$ is impossible.
+\end{lemma}
+\begin{proof}
+Suppose that $\mathbf{b_1}^T, \dots, \mathbf{b_4}^T$ are the rows of the matrix $(\mathbf{B'})^{-1}$, and $\mathbf{u_1}, \dots, \mathbf{u_4}$ are the columns. Our inequality is:
+\begin{align*}
+(p_1 n + p_2 + p_3\cos(n\theta - \varphi) + p_4\sin(n\theta - \varphi))^2 \\
+- \left( \dots + (b_{i1} n + b_{i2} + b_{i3}\cos(n\theta - \varphi) + b_{i4}\sin(n\theta - \varphi))^2 + \dots \right) \ge 0
+\end{align*}
+In the table, we explicitly give each coefficient of inequality \ref{eq:groundtruthrewrite}.
+\begin{table}[H]
+\begin{tabular}{|l|l|l|}
+  \hline
+   \textbf{Term}& \textbf{Coefficient}& {\bf Explicitly} \\
+  \hline
+  $n^2$ & $z_2 = 0$ & $p_1^2 - \seq{\mathbf{u_1}, \mathbf{u_1}}$ \\
+   \hline
+  $n$ & $z_1$ & $2p_1p_2 - 2\seq{\mathbf{u_1}, \mathbf{u_2}}$ \\
+   \hline
+  $n\cos (n\theta - \varphi)$ & $x_2'$ & $2p_1p_3 - 2\seq{\mathbf{u_1}, \mathbf{u_3}}$ \\
+   \hline
+  $n\sin (n\theta - \varphi)$ & $y_2' = 0$ & $2p_1p_4 - 2\seq{\mathbf{u_1}, \mathbf{u_4}}$ \\
+   \hline
+  $1$ & $z_0$ & $p_2^2 + \frac{1}{2}(p_3^2 + p_4^2) - \seq{\mathbf{u_2}, \mathbf{u_2}} - \frac{1}{2}
+ (\seq{\mathbf{u_3}, \mathbf{u_3}} + \seq{\mathbf{u_4}, \mathbf{u_4}})$ \\
+  \hline
+  $\cos (n\theta-\varphi)$ & $x_1'$ & $2p_2p_3 - 2\seq{\mathbf{u_2}, \mathbf{u_3}}$ \\
+   \hline
+  $\sin (n\theta-\varphi)$ & $y_1'$ & $2p_2p_4 - 2\seq{\mathbf{u_2}, \mathbf{u_4}}$ \\
+   \hline
+  $\cos (2n\theta - 2\varphi)$ & $x_0'$ & $\frac{1}{2}(p_3^2 - p_4^2) - \frac{1}{2}(\seq{\mathbf{u_3}, \mathbf{u_3}} - \seq{\mathbf{u_4}, \mathbf{u_4}})$ \\
+   \hline
+  $\sin (2n\theta - 2\varphi)$ & $y_0'$ & $2p_3p_4 - 2\seq{\mathbf{u_3}, \mathbf{u_4}}$ \\
+  \hline
+\end{tabular}
+\end{table}
+Suppose, for the sake of contradiction, the scenario actually occurs. We then respectively have
+\begin{align*}
+p_1^2 &= \seq{\mathbf{u_1}, \mathbf{u_1}} \\
+p_1(p_2 + p_3) &= \seq{\mathbf{u_1}, \mathbf{u_2} + \mathbf{u_3}} \\
+(p_2 + p_3)^2 &= \seq{\mathbf{u_2} + \mathbf{u_3}, \mathbf{u_2} + \mathbf{u_3}}
+\end{align*}
+This implies that $|\seq{\mathbf{u_1}, \mathbf{u_2} + \mathbf{u_3}}| = ||\mathbf{u_1}||\cdot||\mathbf{u_2} + \mathbf{u_3}||$, i.e. $\mathbf{u_1}$ is a scaled multiple of $\mathbf{u_2} + \mathbf{u_3}$. This contradicts the fact that the columns of the invertible $(\mathbf{B'})^{-1}$ are linearly independent, and we're done.
+\end{proof}
+
+\section{Non-uniform Robustness: Decidability at order five}
+\label{section:decidability2}
+In this section, we deploy sophisticated mathematical arsenal to prove Theorem \ref{thm:decide2}. As before, the techniques naturally apply to lower orders, and we omit their explicit treatment. Recall equation \ref{eq:grouping} and the surrounding discussion:
+\begin{equation}
+u_n/n^d\rho^n = \begin{bmatrix}
+{\color{red!70!black} \mathbf{q}_{dom}^T(n) } & \mathbf{q}_{res}^T(n)
+\end{bmatrix}
+\begin{bmatrix}
+{\color{red!70!black} \mathbf{p}_{dom}} \\
+\mathbf{p}_{res}
+\end{bmatrix}
+\end{equation}
+The crucial first task is to check whether for all points $\mathbf{p'}$ in the neighbourhood, \\$\liminf_{n\in\naturals}\seq{\mathbf{q}_{dom}(n), \mathbf{p'}_{dom}} = \mu(\mathbf{p'}) \ge 0$. For an arbitrary point $\mathbf{p'}$, the high-level approach to do this is to:
+
 \begin{enumerate}
-\item Replace $F(\mathbf{p}, \cos n\theta, \sin n\theta, (-1)^n)$ by $F(\mathbf{p}, \cos \phi, \sin \phi, b)$ (Masser)
-\item Argue that $\liminf_n F = \min_{\phi \in [0, 2\pi); b\in\{-1, 1\}} F = \mu$ (Kronecker)
-\item Query $\mu$ (First Order Theory of Reals)
-\item Give a tighter lower bound on $F(\mathbf{p}, \cos n\theta, \sin n\theta, (-1)^n) - \mu$ than $G$ (Baker) 
-\item Based on this, identify an upper bound $N$, beyond which inequality \ref{eq:crux} cannot be violated.
+\item Replace $\mathbf{q}_{dom}$ by $\mathbf{g}(\boldsymbol{\phi})$, such that $\mathbf{q}_{dom}(n) = \mathbf{g}(n\boldsymbol{\theta})$. Find a set $T$ that $n\boldsymbol\theta$ are dense in. (Masser, Theorem \ref{thm:abelian}, and Kronecker, Theorem \ref{thm:kronecker})
+\item Argue that $\liminf_n  \seq{\mathbf{q}_{dom}(n), \mathbf{p'}_{dom}} = \min_{\boldsymbol{\phi} \in T} \seq{\mathbf{g}(\boldsymbol{\phi}), \mathbf{p'}_{dom}}  = \mu(\mathbf{p'})$
+\item Query $\mu$. Let $\psi(\mathbf{p'})$ denote the formula that $\mu(\mathbf{p'}) \ge 0$ (First Order Theory of Reals, Renegar, Theroem \ref{thm:renegar})
 \end{enumerate}
+The first task then reduces to evaluating the truth of the sentence 
+$$
+\forall \mathbf{p'}.~ (\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p}) \le 1 \Rightarrow \psi(\mathbf{p'})
+$$
+The neighbourhood may intersect the critical region where $\mu = 0$. If there are no non-dominant terms, this is irrelevant; but otherwise decidability hinges on whether we can handle the intersection. Geometric arguments, and the underlying decidability of the non-robust problems at low orders \cite{joeljames3} give us our decidability results.
 
 \subsection{Mathematical tools}
 \label{arsenal}
-Multiplicative dependencies among algebraic numbers can be efficiently elicited. 
+The first step of our plan was to replace the discrete $\mathbf{q}_{dom}$, by $\mathbf{g}$, parametrised by $\boldsymbol\phi$ that come from a continuous set $T$. The preliminary step is to efficiently elicit additive relations among $\boldsymbol\theta$, which translate into multiplicative relationships among the corresponding characteristic roots $e^{i\boldsymbol\theta}$.
  \begin{theorem}[Masser \cite{Masser}]
   \label{thm:abelian}
   Let $e^{i \theta_1},...,e^{i \theta_k}$ be complex algebraic numbers of unit modulus. Consider the free abelian group $L$ defined by $L = \{(\lambda_1, \ldots ,\lambda_k) \in \mathbb{Z}^k: 
@@ -54,7 +139,7 @@ Multiplicative dependencies among algebraic numbers can be efficiently elicited.
   \end{theorem}
  Given $e^{2i\theta}$, if an $n$ such that $e^{2i n \theta} = 1$ exists ($\theta$ is a rational multiple of $2\pi$), this $n$ is bounded, and can be efficiently found by enumeration. Similarly, one can check whether $\alpha^n = \beta$ (is $n\theta - \varphi$ ever an integer multiple of $2\pi$?). 
  
- The above owes its potency to the fact that we can use it to abstract the discrete, dense $n\theta$ by the continuous $\phi$. This enabled by Kronecker's theorem on simultaneous Diophantine approximation, as strengthened by \cite{joeljames3, ouaknine2014positivity}
+Let $T$ be the set of all $\boldsymbol\phi$ such that for all $\mathbf{l} \in L$ above, $\seq{\mathbf{l}, \boldsymbol\phi} \in 2\pi\integers$. Kronecker's theorem on simultaneous Diophantine approximation, as strengthened by \cite{joeljames3, ouaknine2014positivity}, directly establishes that $n\boldsymbol\theta$ are dense in $T$.
  
  \begin{theorem}[Kronecker \cite{Kronecker}]
   \label{thm:kronecker}
@@ -68,9 +153,9 @@ Multiplicative dependencies among algebraic numbers can be efficiently elicited.
     \end{enumerate}
   \end{theorem}
   
-This immediately implies that
+Since $\mathbf{q}_{dom}(n) = \mathbf{g}(n\boldsymbol{\theta})$, this immediately implies that for all $\mathbf{p'}$
 \begin{equation}
-\liminf_{n \in \naturals} F(\mathbf{p}, \cos n\theta, \sin n\theta, (-1)^n) = \min_{\phi \in [0, 2\pi); b\in\{-1, 1\}} F(\mathbf{p}, \cos \phi, \sin \phi, b) = \mu
+\liminf_n  \seq{\mathbf{q}_{dom}(n), \mathbf{p'}_{dom}} = \min_{\boldsymbol{\phi} \in T} \seq{\mathbf{g}(\boldsymbol{\phi}), \mathbf{p'}_{dom}}  = \mu(\mathbf{p'})
 \end{equation}
 
 We now turn to computing $\mu$. Fortunately, $F$ is multilinear, and, given $\mathbf{p}$, all the constants involved are algebraic. Thus, we can use the First Order Theory of the Reals. Let $\sigma(a_1, a_2, b)$ denote $a_1^2 + a_2^2 = 1 \land b^2 =1$. Then, $\mu$ is the unique satisfying assignment of the following formula $\chi(\mu)$
@@ -79,141 +164,8 @@ $$
 $$
 Renegar's Theorem (Theorem \ref{thm:renegar}) asserts that this algebraic $\mu$ can be computed via quantifier elimination. Finally, we note that when $\theta$ is not a rational multiple of $2\pi$, the minimum of $1 - \cos(n\theta - \varphi)$ is attained at most once: we can use Theorem \ref{thm:abelian} to check if this is the case. In fact, we can provide a threshold $N_1$ beyond which $n\theta \ne \varphi$. 
 
-We now invoke Baker's theorem to lower bound $[n\theta - \varphi]_{2\pi}$. The statement we present is a sharp formulation due to Baker and W{\"u}stholz \cite{baker}. In the following, $\log z$ refers to the principal branch, i.e. $\log |z| + i \arg z$, where $\arg z \in (-\pi, \pi]$.
 
-\begin{theorem}[Baker]
-\label{thm:baker}
-Let $\alpha_1, \dots, \alpha_m \in \algebraics$ be different from $0$ and $1$, and let $b_1, \dots, b_m \in \integers$. Write
-$$
-\Lambda = b_1 \log \alpha_1 + \dots + b_m \log \alpha_m
-$$
-Let $A_1, \dots, A_m, B \ge e$ be such that for each $j \in [m]$, $A_j$ is an upper bound for the height of $\alpha_j$, and $B$ is an upper bound for $|b_j|$. Let $d$ be the degree of the extension field $\rationals(\alpha_1, \dots, \alpha_m)$ over $\rationals$. If $\Lambda \ne 0$, then
-$$
-\log |\Lambda| > -(16md)^{2(m+2)}\log A_1 \dots \log A_m \log B
-$$  
-\end{theorem}
 
-In our context $m=2$ ($m=1$ is even simpler), $\alpha_1 = e^{i\theta}$, and $\alpha_2 = e^{-i\varphi}$, $b_1 = n$, $b_2 = 1$. $A_1, A_2, d$ are all fixed constants, $B = n$. Hence, beyond $M$ for which $[n\theta - \varphi]_{2\pi} \ne 0$,
-\begin{equation}
-|\Lambda| = [n\theta - \varphi]_{2\pi} > \exp(-(32d)^8 \log A_1 \log A_2 \log n)
-\end{equation}
-Simplifying, we conclude there exists a polynomial $H$ such that for all $n \ge M$,
-\begin{equation}
-[n\theta - \varphi]_{2\pi} > \frac{1}{H(n)}
-\end{equation}
-As argued in \cite{joeljames3} using the Taylor series expansion, we can further claim that there exists an $N$, and another polynomial $g$, such for all $n \ge N$
-\begin{equation}
-\label{eq:baker}
-1 - \cos(n\theta - \varphi) > \frac{1}{g(n)}
-\end{equation}
-
-We are now ready resolve each case, in roughly increasing order of non-triviality. 
-
-\subsection{Two distinct dominant roots}
-This scenario corresponds to equation \ref{eq:twodom}. Here, the inequality is
-\begin{equation}
-z + w(-1)^n + \rho^n(x \cos n\theta + y \sin n\theta) \ge r\sqrt{2 + \rho^{2n}}
-\end{equation}
-This is non-trivial only when the limiting values of both the (minimal) LHS and RHS are equal, \\i.e. $z - |w|= r\sqrt{2}$. Depending on the sign of $w$, we must have have for all (but finitely many) odd (or even) $n$,
-\begin{equation}
-\rho^n(x \cos n\theta + y \sin n\theta) \ge r\left(\frac{\rho^{2n}}{\sqrt{2 + \rho^{2n}} + \sqrt{2}}\right)
-\end{equation}
-However, the RHS is always positive, while the LHS will be negative for infinitely many odd (and even!) $n$. Hence, we can return NO.
-
-\subsection{Unity as a repeated dominant root}
-In this case (equation \ref{eq:unityrep}), given the centre and $r$, we need to check whether for all (but finitely many) $n$:
-\begin{equation}
-z_1 n + z_0 + \rho^n (x \cos n\theta + y \sin n \theta) \ge r\sqrt{n^2 + 1 + \rho^{2n}}
-\end{equation}
-This can trivially be resolved with growth arguments if $z_1 \ne r$, so we will assume $z_1 = r$. Subtracting $rn$ from both sides,
-
-\begin{equation}
-z_0 + \rho^n (x \cos n\theta + y \sin n \theta) \ge r\left( \frac{1 + \rho^{2n}}{n+ \sqrt{n^2 + 1 + \rho^{2n}}}\right)
-\end{equation}
-
-The RHS decays to $0$ linearly. Thus, the only case that is non-trivial is when $\rho = 1$, $\theta$ is not a rational multiple of $2\pi$, and $z_0^2 = x^2 + y^2$. In this case, our inequality can be written as
-\begin{equation}
-z_0(1 - \cos(n\theta - \varphi)) \ge r\left( \frac{2}{n+ \sqrt{n^2 + 2}}\right)
-\end{equation}
-
-As noted in inequality \ref{eq:quadraticdecay}, the LHS is upper-bounded by $c/n^2$ for infinitely many $n$, while the RHS can be lower bounded by $r/n$. Thus, the above inequality will be violated for infinitely many $n$. We can therefore return NO for $r$-Robust Uniform Ultimate Positivity as well as $r$-Robust Positivity.
-
-\subsection{Four distinct dominant roots}
-This corresponds to equation \ref{eq:fourdom}. The relevant inequality is
-\begin{equation}
-z + x \cos n\theta + y\sin n\theta + w \ge r\sqrt{3}
-\end{equation}
-
-We can detect if $\theta$ is a rational multiple of $2\pi$ (Theorem \ref{thm:abelian}), in which case checking the inequality is trivial. Otherwise, we invoke Theorem \ref{thm:kronecker} to argue that it suffices to check the truth of this sentence in First Order Theory of the Reals:
-\begin{equation}
-\forall q_1, q_2, q_3. \left(q_1^2 + q_2^2 = 1 \land q_3^2 = 1\right) \Rightarrow z + xq_1 + yq_2 + wq_3 - r\sqrt{3} \ge 0
-\end{equation}
-Of course, the above form doesn't fit the grammar, but $z, x, y, w, r, \sqrt{3}$ are all algebraic constants, and accessible in this theory. The truth of this sentence can be evaluated: in fact, it is equivalent to
-\begin{equation}
-\label{eq:cone}
-z - |w| - \sqrt{x^2 + y^2} - r\sqrt{3} \ge 0
-\end{equation}
-
-\subsection{One dominant root}
-This corresponds to equation \ref{eq:onedom}. Our critical inequality here is
-\begin{equation}
-z + w\alpha^n + \rho^n(x \cos n\theta + y \sin n \theta) \ge r\sqrt{1 + \alpha^{2n} + \rho^{2n}}
-\end{equation}
-As before, we note that this is interesting only when $z = r$, and subtract $r$ from both sides
-\begin{equation}
-w\alpha^n + \rho^n(x \cos n\theta + y \sin n \theta) \ge r\left(\frac{\alpha^{2n} + \rho^{2n}}{1 + \sqrt{1 + \alpha^{2n} + \rho^{2n}}}\right)
-\end{equation}
-
-$\alpha$ must be positive, otherwise the LHS will be negative for infinitely many $n$. Furthermore, $\alpha \ge \rho$ for the same reasons. If $\alpha > \rho$, the problem can again be resolved via growth arguments. We shall therefore assume that $\alpha = \rho$. 
-\begin{align}
-w + x \cos n\theta + y \sin n \theta &\ge r\left(\frac{2\rho^{n}}{1 + \sqrt{1 + 2\rho^{2n}}}\right)
-\end{align}
-
-As before, our problem is non-trivial only if $\theta$ is not a rational multiple of $2\pi$, and $w^2 = x^2 + y^2$. So, we can rearrange as 
-\begin{equation}
-w(1 - \cos(n\theta - \varphi)) \ge r\left(\frac{2\rho^{n}}{1 + \sqrt{1 + 2\rho^{2n}}}\right)
-\end{equation}
-We appeal to equation \ref{eq:baker} from Baker: there is an $N \in \naturals$ and polynomial $g$ such that for all $n \ge N$, we have the stronger
-\begin{equation}
-w(1 - \cos(n\theta - \varphi)) > \frac{1}{g(n)} > r \rho^n >  r\left(\frac{2\rho^{n}}{1 + \sqrt{1 + 2\rho^{2n}}}\right)
-\end{equation}
-Decidability follows by explicitly checking the original inequality up to $N$.
-
-\subsection{Three distinct dominant roots}
-Our final case corresponds to equation \ref{eq:threedom}, and combines techniques from the previous two subsections. The critical inequality is
-\begin{equation}
-z + x\cos n\theta + y\sin n\theta + w\alpha^n \ge r\sqrt{2 + \alpha^{2n}}
-\end{equation}
-We first quickly dispose of the case $\theta$ is a rational multiple of $2\pi$. As in the previous cases, the critical scenario is when the minimum of the finitely many values $z + x\cos n\theta + y\sin n\theta $ can take is $r\sqrt{2}$. Let this value be taken when $n = qm + r$. Beyond a sufficient computable threshold, we must therefore have for all $m$
-\begin{equation}
-w\alpha^{qm+r} \ge r\left(\frac{\alpha^{2(qm+r)}}{\sqrt{2}+ \sqrt{2+\alpha^{2(qm+r)}}}\right)
-\end{equation}
-
-Here $\alpha$ is real. If $\alpha > 0$, then this inequality will eventually always be satisfied. If $\alpha < 0$: this inequality is eventually always satisfied if and only if either $w>0$ and $qm+r$ is always even, or $w<0$ and $qm+r$ is always odd. This can easily be checked.
-
-In the remainder of this section, we shall assume that $\theta$ is not a rational multiple of $2\pi$. We use Theorem \ref{thm:kronecker} (Kronecker) to argue $n\theta$ (modulo $2\pi$) is dense in $[0, 2\pi)$. The critical case arises when the inequality can be rearranged as
-$$
-r\sqrt{2} + q(1 - \cos(n\theta - \varphi)) + w\alpha^n \ge r\sqrt{2 + \alpha^{2n}} \Leftrightarrow q(1 - \cos(n\theta - \varphi)) \ge -w\alpha^n + r\left(\frac{\alpha^{2n}}{\sqrt{2}+\sqrt{2 + \alpha^{2n}}}\right)
-$$
-As in the previous case, we use equation \ref{eq:baker} due to Baker to argue a lower bound on the LHS that is much tighter than the RHS, that holds from a computable $N$ onwards. We finish off by explicitly checking the original inequality explicitly up to $N$.
-
-\section{Non-uniform Robustness: Decidability at order five}
-\label{section:decidability2}
-In this section, we redeploy the sophisticated arsenal we invoked in \S\ref{arsenal} to prove Theorem \ref{thm:decide2}. As before, the techniques naturally apply to lower orders, and we omit their explicit treatment. Recall equation \ref{eq:grouping} and the surrounding discussion:
-\begin{equation}
-u_n/n^d\rho^n = \begin{bmatrix}
-{\color{red!70!black} \mathbf{q}_{dom}^T(n) } & \mathbf{q}_{res}^T(n)
-\end{bmatrix}
-\begin{bmatrix}
-{\color{red!70!black} \mathbf{p}_{dom}} \\
-\mathbf{p}_{res}
-\end{bmatrix}
-\end{equation}
-The crucial first task is to check whether for all points in the neighbourhood, \\$\liminf_{n\in\naturals}\mathbf{q}_{dom}^T(n)\mathbf{p}_{dom} = \mu \ge 0$. Observe that through Theorems \ref{thm:abelian}, \ref{thm:kronecker}, \ref{thm:renegar} (Masser, Kronecker, and Renegar) we have already discussed the means to check the inequality for a particular $\mathbf{p}$, through the First Order Theory of Reals. Let $\psi(\mathbf{p})$ (resp.\ $\psi_0(\mathbf{p})$) be the quantifier free formula that expresses $\mu > 0$ (resp.\ $\mu = 0$). We simply query the truth of
-\begin{equation}
-\label{eq:firsttask}
-\forall \mathbf{p'}.~||\mathbf{p'} - \mathbf{p}|| \le r \Rightarrow (\psi(\mathbf{p'}) \lor \psi_0(\mathbf{p'}))
-\end{equation}
 If there are no residual terms, we are already done at this point. In the event residual terms have non-zero contribution, decidability hinges on whether we can handle points where $\mu = 0$. If there are two pairs of complex conjugates among the dominant roots, then all five terms are dominant (recall Proposition \ref{prop:folklore}!)
 
 \begin{figure}[h]
