@@ -5,7 +5,7 @@ $$
 \seq{\mathbf{p}, \mathbf{x_n}} \ge \max_{\mathbf{f} \in \ball}\mathbf{x_n}^T\left(\mathbf{B}^{-1}\right)^T\mathbf{f} = ||\mathbf{B}^{-1}\mathbf{x_n}|| = \sqrt{\seq{\mathbf{b_1}, \mathbf{x_n}}^2 +\dots+\seq{\mathbf{b_\kappa}, \mathbf{x_n}}^2}
 $$
 
-Our main case distinction is on the number of pairs of complex conjugates among the roots. In each case, the plan is to first decide whether a threshold index $N$ beyond which the LHS is always positive exists, and compute it. This can always be done for order four LRS \cite{joeljames3}. We then square throughout, and transfer all terms to the LHS, thus obtaining a new instance of (Ultimate) Positivity. This plan is trivial to execute when all characteristic roots are real.
+Our main case distinction is on the number of pairs of complex conjugates among the roots. In each case, the plan is to first decide whether there exists a threshold index $N$ beyond which the LHS is always positive, and if so, compute it. This can always be done for order four LRS \cite{joeljames3}. We then square throughout, and transfer all terms to the LHS, thus obtaining a new instance of (Ultimate) Positivity. This plan is trivial to execute when all characteristic roots are real.
 
 Thanks to the following old result \cite[Thm. 2]{positive-dominant}, the answer to Ultimate Positivity is trivially NO if there are two pairs of complex conjugates.
 
@@ -31,7 +31,7 @@ If $\rho < 1$, the above can trivially be resolved with growth arguments, or is 
 {\color{red!70!black} n(z_1 + x_2\cos n\theta + y_2\sin n\theta)} + (z_0 + x_1\cos n\theta + y_1\sin n\theta + x_0\cos 2n\theta + y_0\sin 2n\theta) \ge 0
 \end{equation}
 
-Since we assume $\theta$ is not a rational approximation of $2\pi$, we can argue by Theorem \ref{thm:kronecker} (Kronecker) that $n\theta$ modulo ${2\pi}$ is dense in $[0, 2\pi]$. Define
+Since we assume $\theta$ is not a rational multiple of $2\pi$, we can argue by Theorem \ref{thm:kronecker} (Kronecker) that $n\theta$ modulo ${2\pi}$ is dense in $[0, 2\pi]$. Define
 \begin{align}
 f(t) &= z_1 + x_2\cos t + y_2\sin t \\
 g(t) &= z_0 + x_1\cos t + y_1\sin t + x_0\cos 2t + y_0\sin 2t
@@ -54,7 +54,7 @@ On retracing our steps back to the discussion surrounding equation \ref{eq:inner
 f_\varphi(t) &= z_1 + x_2'\cos t  \\
 g_\varphi(t) &= z_0 + x_1'\cos t + y_1'\sin t + x_0'\cos 2t + y_0'\sin 2t
 \end{align}
-Here, $z_1 + x_2' = 0$, since the minimal $f_\varphi(0) = 0$. If $g_\varphi(0) > 0$, we are done: we can easily get a positive lower bound $f_\varphi$ for values where $g_\varphi < 0$, and get an $N$ beyond which the validity of inequality \ref{eq:groundtruthrewrite} is guaranteed. On the other hand, if $g_\varphi(0) < 0$, we argue that inequality \ref{eq:groundtruthrewrite} is violated for infinitely many $n$. Recall inequality \ref{eq:quadraticdecay}. It tells us that there are infinitely many $n$ for which $f_\varphi(n\theta + \varphi) < c/n^2$. Thus, the terms in red are infinitely often lower bounded by $c/n$, while the terms in black, for the same $n$, would be close to a negative constant. Thus, we can return NO for robust Ultimate Positivity.
+Here, $z_1 + x_2' = 0$, since the minimal $f_\varphi(0) = 0$. If $g_\varphi(0) > 0$, we are done: we can easily get a positive lower bound on $f_\varphi$ for values where $g_\varphi < 0$, and get an $N$ beyond which the validity of inequality \ref{eq:groundtruthrewrite} is guaranteed. On the other hand, if $g_\varphi(0) < 0$, we argue that inequality \ref{eq:groundtruthrewrite} is violated for infinitely many $n$. Recall inequality \ref{eq:quadraticdecay}. It tells us that there are infinitely many $n$ for which $f_\varphi(n\theta + \varphi) < c/n^2$. Thus, the terms in red are infinitely often lower bounded by $c/n$, while the terms in black, for the same $n$, would be close to a negative constant. Thus, we can return NO for robust Ultimate Positivity.
 
 The final case that remains is $g_\varphi(0) = 0$. We argue that remarkably, it does not arise at all!
 \begin{lemma}
@@ -202,6 +202,7 @@ If there are no residual terms, we are already done after certifying the non-neg
 Hence, we consider that there is at most one complex conjugate pair among the dominant roots. This requires slightly more insight of the geometrical nature of the solution set of $\psi_0$ (Figure \ref{fig:geometricpicture}). See \cite{originalstacs,originalarxiv} for an exposition of the geometric intuition. 
 
 \begin{lemma}
+\label{lem:residuesame}
 Suppose the neighbourhood satisfies $\mu \ge 0$. Let $\mathbf{p'}$ be in the intersection of the neighbourhood surface and the $\mu = 0$ region. $\mathbf{p'}$ and the centre of the neighbourhood $\mathbf{p}$ are identical in their non-dominant coordinates.
 \end{lemma}
 \begin{proof}
@@ -217,6 +218,6 @@ z  - \sqrt{x^2 + y^2} = 0
 In this case, it is a union of \textit{infinitely} many hyperplanes of the form $z + x \cos \phi + y\sin \phi = 0$. As established by the validity of equation \ref{eq:firsttask}, the surface of the neighbourhood $(\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p})$ is \textit{tangent} to the surface of the cone in case of an intersection. At any point of intersection, it is tangent to the hyperplane (from the infinite union) passing through that point. We can therefore also solve for the intersection in terms of $\cos \phi$: consider the first order formula in $c$ (notation as in \ref{eq:intersection}, which expresses that $\mathbf{p'}$ is in the intersection).
 $$\exists s, \mathbf{p'}.~~c^2 + s^2 = 1 \land \sigma({\mathbf{p'}}) \land \begin{bmatrix}1 & c & s & 0 & 0 \end{bmatrix}^T\mathbf{p'} = 0 $$
 
-Quantifier elimination gives us a polynomial equation in $\cos \phi$: this holds for finitely many (ball touching cone), or all $\phi$ (ball nestled in cone). We already know how to handle a finite intersection.
+Quantifier elimination gives us a polynomial equation in $\cos \phi$: this holds for finitely many (ball touching cone), or all $\phi$ (ball nestled in cone). We already know how to handle a finite intersection: we explicitly check the tangent points on each of the finitely many hyperplanes.
 
-If this holds for all $\phi$, then we use Theorem \ref{thm:kronecker} (Kronecker's density) to argue that for every $n$, there exists a point on the surface of the ball such that the dominant contribution $z + x\cos n\theta + y\sin n\theta = z + x\cos\phi + y\sin\phi$ is zero. As observed, the residual part is the same as the centre for such points. Thus, in this case, it is entirely up to the residual terms of the centre to guarantee Robust Ultimate Positivity. This is a decidable instance of regular Ultimate Positivity at lower order, and we are done.
+If this holds for all $\phi$, then we use Theorem \ref{thm:kronecker} (Kronecker's density) to argue that for every $n$, there exists a point on the surface of the ball such that the dominant contribution $z + x\cos n\theta + y\sin n\theta = z + x\cos\phi + y\sin\phi$ is zero. As observed in Lemma \ref{lem:residuesame}, the residual part is the same as the centre for such points. Thus, in this case, it is entirely up to the residual terms of the centre to guarantee Robust Ultimate Positivity. This is a decidable instance of regular Ultimate Positivity at lower order, and we are done.
