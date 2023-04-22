@@ -119,13 +119,22 @@ The crucial first task is to check whether for all points $\mathbf{p'}$ in the n
 \begin{enumerate}
 \item Replace $\mathbf{q}_{dom}$ by $\mathbf{g}(\boldsymbol{\phi})$, such that $\mathbf{q}_{dom}(n) = \mathbf{g}(n\boldsymbol{\theta})$. Find a set $T$ that $n\boldsymbol\theta$ are dense in. (Masser, Theorem \ref{thm:abelian}, and Kronecker, Theorem \ref{thm:kronecker})
 \item Argue that $\liminf_n  \seq{\mathbf{q}_{dom}(n), \mathbf{p'}_{dom}} = \min_{\boldsymbol{\phi} \in T} \seq{\mathbf{g}(\boldsymbol{\phi}), \mathbf{p'}_{dom}}  = \mu(\mathbf{p'})$
-\item Query $\mu$. Let $\psi(\mathbf{p'})$ denote the formula that $\mu(\mathbf{p'}) \ge 0$ (First Order Theory of Reals, Renegar, Theroem \ref{thm:renegar})
+\item Query $\mu$. Let $\psi(\mathbf{p'})$ (resp.\ $\psi_0(\mathbf{p'})$) denote the quantifier-free formula which conveys that $\mu(\mathbf{p'}) \ge 0$ (resp.\ $=0$) (First Order Theory of Reals, Renegar, Theroem \ref{thm:renegar})
 \end{enumerate}
 The first task then reduces to evaluating the truth of the sentence 
-$$
-\forall \mathbf{p'}.~ (\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p}) \le 1 \Rightarrow \psi(\mathbf{p'})
-$$
-The neighbourhood may intersect the critical region where $\mu = 0$. If there are no non-dominant terms, this is irrelevant; but otherwise decidability hinges on whether we can handle the intersection. Geometric arguments, and the underlying decidability of the non-robust problems at low orders \cite{joeljames3} give us our decidability results.
+\begin{equation}
+\label{eq:firsttask}
+\chi := \forall \mathbf{p'}.~ (\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p}) \le 1 \Rightarrow \psi(\mathbf{p'})
+\end{equation}
+Once we describe the formula $\psi$, we have a sentence that we can invoke Renegar's efficient quantifier elimination procedure (Theorem \ref{thm:renegar}) on, and tractably evaluate the truth of.
+
+If the inequality is strict, then Ultimate Positivity is guaranteed for that point; however the neighbourhood may intersect the critical region where $\mu = 0$. If there are no non-dominant terms, this is irrelevant; but otherwise decidability hinges on whether we can handle the intersection, which is described by 
+\begin{equation}
+\label{eq:intersection}
+\sigma(\mathbf{p}):= \chi \land \psi_0(\mathbf{p'}) \land (\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p}) = 1
+\end{equation}
+
+Geometric arguments, and the underlying decidability of the non-robust problems at low orders \cite{joeljames3} give us our decidability results.
 
 \subsection{Mathematical tools}
 \label{arsenal}
@@ -158,15 +167,30 @@ Since $\mathbf{q}_{dom}(n) = \mathbf{g}(n\boldsymbol{\theta})$, this immediately
 \liminf_n  \seq{\mathbf{q}_{dom}(n), \mathbf{p'}_{dom}} = \min_{\boldsymbol{\phi} \in T} \seq{\mathbf{g}(\boldsymbol{\phi}), \mathbf{p'}_{dom}}  = \mu(\mathbf{p'})
 \end{equation}
 
-We now turn to computing $\mu$. Fortunately, $F$ is multilinear, and, given $\mathbf{p}$, all the constants involved are algebraic. Thus, we can use the First Order Theory of the Reals. Let $\sigma(a_1, a_2, b)$ denote $a_1^2 + a_2^2 = 1 \land b^2 =1$. Then, $\mu$ is the unique satisfying assignment of the following formula $\chi(\mu)$
-$$
-(\forall a_1, a_2, b.~ \sigma(a_1, a_2, b) \implies F(\mathbf{p}, a_1, a_2, b) \ge \mu) \land (\exists a_1, a_2, b.~ \sigma(a_1, a_2, b) \land F(\mathbf{p}, a_1, a_2, b) = \mu)
-$$
-Renegar's Theorem (Theorem \ref{thm:renegar}) asserts that this algebraic $\mu$ can be computed via quantifier elimination. Finally, we note that when $\theta$ is not a rational multiple of $2\pi$, the minimum of $1 - \cos(n\theta - \varphi)$ is attained at most once: we can use Theorem \ref{thm:abelian} to check if this is the case. In fact, we can provide a threshold $N_1$ beyond which $n\theta \ne \varphi$. 
+We now turn to verifying $\mu(\mathbf{p'}) \ge 0$. The First Order Logic formula, at its core, must have the form
+\begin{equation}
+\label{eq:coreFO}
+\forall \boldsymbol\phi.~~\boldsymbol{\phi} \in T \Rightarrow \seq{\mathbf{g}(\boldsymbol\phi), \mathbf{p'}} \ge 0
+\end{equation}
+If we want to verify $\mu = 0$, we have the additional conjunct
+\begin{equation}
+\label{eq:coreFOzero}
+\exists \boldsymbol{\phi} \in T.~\seq{\mathbf{g}(\boldsymbol\phi), \mathbf{p'}} = 0
+\end{equation}
+An immediate observation, as also noted in \cite{originalstacs,originalarxiv}, is that the $\mu \ge 0$ region is carved out by halfspaces!
 
+However, the logic only gives us access to polynomials with integer coefficients. We note that $\mathbf{g}$ has entries that are $\cos \phi_j$, $\sin \phi_j$. So, actually, we apply the universal quantifier to variables that represent the trigonometric functions of $\phi$. Fortunately, this fits right in to the definition of $T$: if $\phi_j$ participates in an additive relationship, then $e^{i\phi_j} = \cos \phi_j + i\sin \phi_j$ participates in a fixed, integer multiplicative relationship. All the multiplicative relationships defining $T$ can be hardcoded into a FO logic formula that has $\cos \phi_j$, $\sin \phi_j$ as variables. The only technical detail we have to work around is the mimicry of complex multiplication/division with real numbers: however, this is not a problem: the real and complex parts of $(\cos\theta + i\sin \theta)^a$ are both real polynomials in $\cos \theta, \sin\theta$. For division, note $(\cos \theta + i\sin \theta)^{-a} = (\cos \theta - i\sin\theta)^a$. Thus, we conclude that formula \ref{eq:coreFO} can indeed be expressed as a FO formula over the reals. As a small example, when $T = [0, 2\pi]$, formula \ref{eq:coreFO} is written as:
+\begin{equation}
+\forall b_1, b_2. ~~b_1^2 + b_2^2 = 1 \Rightarrow z + xb_1 + yb_2 \ge 0
+\end{equation}
+On eliminating quantifiers, this reduces to
+\begin{equation}
+\label{eq:cone}
+z^2 = x^2 + y^2
+\end{equation}
 
-
-If there are no residual terms, we are already done at this point. In the event residual terms have non-zero contribution, decidability hinges on whether we can handle points where $\mu = 0$. If there are two pairs of complex conjugates among the dominant roots, then all five terms are dominant (recall Proposition \ref{prop:folklore}!)
+\subsection{Geometry and decidability}
+If there are no residual terms, we are already done after certifying the non-negativity of the dominant terms through logic. In the event residual terms have non-zero contribution, decidability hinges on whether we can handle points where $\mu = 0$. If there are two pairs of complex conjugates among the dominant roots, then all five terms must be dominant (recall Proposition \ref{prop:folklore}: the necessarily is a real positive dominant root!)
 
 \begin{figure}[h]
 
@@ -175,12 +199,24 @@ If there are no residual terms, we are already done at this point. In the event 
 \label{fig:geometricpicture}
 \end{figure}
 
-Hence, we consider that there is at most one complex conjugate pair among the dominant roots. This requires slightly more insight of the geometrical nature of the solution set of $\psi_0$ (Figure \ref{fig:geometricpicture}). See \cite{originalstacs,originalarxiv} for an exposition of the geometric intuition. If there are just one or two dominant terms, they are necessarily real. The region $\mu(\mathbf{p}) = 0$ will simply be the union of at most two hyperplanes. ($z = 0$, or $z - |w| = 0$). Here, the intersection of the ball with $\mu = 0$ consists of at most two points. Since Ultimate Positivity is decidable up to order $5$ \cite{joeljames3}, it can explicitly be checked.
+Hence, we consider that there is at most one complex conjugate pair among the dominant roots. This requires slightly more insight of the geometrical nature of the solution set of $\psi_0$ (Figure \ref{fig:geometricpicture}). See \cite{originalstacs,originalarxiv} for an exposition of the geometric intuition. 
 
-Finally, let there be one pair of complex conjugates $e^{\pm i\theta}$ among the dominant roots. It is clear that if $\theta$ is a rational multiple of $2\pi$, $\mu = 0$ will be a union of finitely many hyperplanes (of the form $z - |w| - x\cos \theta_0 - y\sin \theta_0 = 0$). Here again, the finite intersection can be explicitly checked. In the case when $e^{i\theta}$ is not a root of unity, we recall equation \ref{eq:cone}: the set of $\mathbf{p}$ for which $\mu = 0$ is given by
+\begin{lemma}
+Suppose the neighbourhood satisfies $\mu \ge 0$. Let $\mathbf{p'}$ be in the intersection of the neighbourhood surface and the $\mu = 0$ region. $\mathbf{p'}$ and the centre of the neighbourhood $\mathbf{p}$ are identical in their non-dominant coordinates.
+\end{lemma}
+\begin{proof}
+ Recall, from formulae \ref{eq:coreFO}, \ref{eq:coreFOzero}, that the $\mu \ge 0$ region is carved out by halfspaces. Thus, $\mathbf{p'}$ must lie on a hyperplane. If $\mathbf{p'}$ and $\mathbf{p}$ differ in non-dominant coordinates, it means that the coordinate corresponding to the real dominant root can freely be decreased, at the cost of moving the non-dominant coordinates of $\mathbf{p'}$ closer to those of $\mathbf{p}$, while still remaining on the surface of the \textit{convex} neighbourhood. The former pushes $\mathbf{p'}$ below the hyperplane it lay on, while the latter has no effect on the bearing of $\mathbf{p'}$ with respect to the region $\mu \ge 0$. We have thus found a point in the neighbourhood with $\mu < 0$: a contradiction.
+ \end{proof}
+
+If there are just one or two dominant terms, they are necessarily real. The region $\mu(\mathbf{p}) = 0$ will simply be the union of at most two hyperplanes. ($z = 0$, or $z - |w| = 0$). Here, the intersection of the ball with $\mu = 0$ consists of at most two points (ball seated atop hyperplane). Since Ultimate Positivity is decidable up to order $5$ \cite{joeljames3}, it can explicitly be checked.
+
+Finally, let there be one pair of complex conjugates $e^{\pm i\theta}$ among the dominant roots. We assume there are three dominant terms: accounting for an additional $(-1)^n$ term is not so complicated. It is clear that if $\theta$ is a rational multiple of $2\pi$, $\mu = 0$ will be a union of finitely many hyperplanes (of the form $z + x\cos \theta_0 + y\sin \theta_0 = 0$). Here again, the finite intersection can be explicitly checked. In the case when $e^{i\theta}$ is not a root of unity, we recall equation \ref{eq:cone}: the set of $\mathbf{p}$ for which $\mu = 0$ is given by
 \begin{equation}
-z - |w| - \sqrt{x^2 + y^2} = 0
+z  - \sqrt{x^2 + y^2} = 0
 \end{equation}
-In this case, it is a union of \textit{infinitely} many hyperplanes of the form $z - |w| - x \cos \phi - y\sin \phi = 0$. As established by the validity of equation \ref{eq:firsttask}, the centre of the neighbourhood is distance at least $r$ away from each of these hyperplanes. If the surface of the $r$-ball touches any of these hyperplanes, the point must be obtained by traversing along the normal from the centre. Thus, the point must be $(z_0 - \frac{r}{\sqrt{3}}, w_0 \pm \frac{r}{\sqrt{3}}, x_0 + \frac{r}{\sqrt{3}}\cos\phi, y_0 +  \frac{r}{\sqrt{3}}\sin\phi, v_0)$. Note that the residual coordinate is unchanged! Substituting this into the hyperplane equation gives us a quadratic equation in $\cos \phi$: this holds for zero, one, two, or all $\phi$. We already know how to handle a finite intersection.
+In this case, it is a union of \textit{infinitely} many hyperplanes of the form $z + x \cos \phi + y\sin \phi = 0$. As established by the validity of equation \ref{eq:firsttask}, the surface of the neighbourhood $(\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p})$ is \textit{tangent} to the surface of the cone in case of an intersection. At any point of intersection, it is tangent to the hyperplane (from the infinite union) passing through that point. We can therefore also solve for the intersection in terms of $\cos \phi$: consider the first order formula in $c$ (notation as in \ref{eq:intersection}, which expresses that $\mathbf{p'}$ is in the intersection).
+$$\exists s, \mathbf{p'}.~~c^2 + s^2 = 1 \land \sigma({\mathbf{p'}}) \land \begin{bmatrix}1 & c & s & 0 & 0 \end{bmatrix}^T\mathbf{p'} = 0 $$
 
-If this holds for all $\phi$, then we use Theorem \ref{thm:kronecker} (Kronecker's density) to argue that for every $n$, there exists a point on the surface of the ball such that the dominant contribution is zero. As observed, the residual part is the same as the centre for such points. Thus, in this case, it is entirely up to the residual terms of the centre to guarantee Robust Ultimate Positivity. This is a decidable instance of regular Ultimate Positivity at lower order, and we are done.
+Quantifier elimination gives us a polynomial equation in $\cos \phi$: this holds for finitely many (ball touching cone), or all $\phi$ (ball nestled in cone). We already know how to handle a finite intersection.
+
+If this holds for all $\phi$, then we use Theorem \ref{thm:kronecker} (Kronecker's density) to argue that for every $n$, there exists a point on the surface of the ball such that the dominant contribution $z + x\cos n\theta + y\sin n\theta = z + x\cos\phi + y\sin\phi$ is zero. As observed, the residual part is the same as the centre for such points. Thus, in this case, it is entirely up to the residual terms of the centre to guarantee Robust Ultimate Positivity. This is a decidable instance of regular Ultimate Positivity at lower order, and we are done.
