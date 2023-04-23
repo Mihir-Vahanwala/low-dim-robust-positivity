@@ -1,6 +1,6 @@
 \section{Uniform Robustness: Hardness at order five}
 \label{section:hardness}
-We shall prove Theorem \ref{thm:hardness} in this section. That is, given $\theta \in \mathcal{T}$ as defined in equation \ref{eq:keyset}, we shall give rational $\mathbf{a}, \mathbf{c}$ such that varying $r$ while invoking $r$-Robust Positivity decision procedures will enable us to approximate $L(t)$ and $L_\infty(t)$ to arbitrary precision.
+We shall prove Theorem \ref{thm:hardness} in this section. That is, given $\theta \in \mathcal{T}$ as defined in equation \ref{eq:keyset}, we shall give rational $\mathbf{a}, \mathbf{c}$ such that varying $\mathbf{S}$ while invoking $\mathbf{S}$-Robust Positivity decision procedures will enable us to approximate $L(t)$ and $L_\infty(t)$ to arbitrary precision.
 
 \subsection{The hard sequence}
 We assume $\theta$ is specified by $p \in \rationals$, $0 < |p| < 1$, such that $\theta = \frac{\arccos p}{2\pi}$. Our LRR $\mathbf{a}$ is such that the roots of the characteristic polynomial are $1, 1, 1, e^{2\pi i\theta}, e^{-2\pi i \theta}$, i.e. the characteristic polynomial is 
@@ -14,9 +14,9 @@ u_n = \begin{bmatrix}
 n^2 & n & 1 & \cos 2\pi n\theta & \sin 2\pi n\theta
 \end{bmatrix}
 \mathbf{p}
-$, and we choose the input $\mathbf{S}$ such that its translation $\mathbf{M}$ to the solution space is the identity matrix.
+$, and we choose the input $\mathbf{S} = r^2(\mathbf{V}^{-1})^T\mathbf{V}^{-1}$ such that its translation $\mathbf{M}$ to the solution space is $r^2$ times the identity matrix.
 
-We note that since both $p, q$ from the root $p + qi$ are rational, the linear map $\tau$ from the space of initialisations to the space of real exponential polynomial coefficients is also rational. In the solution space, we consider a ball of radius $r$ around $(r, 0, 1+\frac{r}{2}, -1, 0)$, i.e. by equation \ref{eq:crux}, we ask whether for all (but finitely many) $n$
+We note that since both $p, q$ from the root $p + qi$ are rational, the linear map $\mathbf{V}^{-1}$ from the space of initialisations to the space of real exponential polynomial coefficients is also rational. In the solution space, we consider a ball of radius $r$ around $(r, 0, 1+\frac{r}{2}, -1, 0)$, i.e. by equation \ref{eq:crux}, we ask whether for all (but finitely many) $n$
 \begin{align*}
 rn^2 + \frac{r}{2} + 1 - \cos 2\pi n\theta \ge r\sqrt{n^4 + n^2 + 2} 
 &\Leftrightarrow \frac{r}{2} + 1 - \cos 2\pi n\theta \ge r\left(\frac{n^2 + 2}{n^2 + \sqrt{n^4 + n^2 + 2}}\right) \\
@@ -66,7 +66,9 @@ $$
 Thus, we can conclude that $L_\infty(\theta) \le \frac{\sqrt{7r}}{4\pi}$.
 
 \subsection{Computing the Diophantine approximation type}
-Here, we choose a precision $\varepsilon$, and compute the $N$ in Lemma \ref{lemma:numerical}. We supply this $N$ along with an $r$ to the hard LRS. Reasoning as in the previous subsection, 
+Here, we choose a precision $\varepsilon$, and compute the $N$ in Lemma \ref{lemma:numerical}. We use this $N$ to get an appropriate instance of $\mathbf{S}$-Robust Positivity for the hard LRS. 
+
+Our goal is to be able to reason as follows, similar to the previous subsection, 
 $$
 \text{YES} \Rightarrow \inf_{n \ge N} n[n\theta] \ge (1 - \varepsilon)\frac{\sqrt{7r}}{4\pi}
 $$
@@ -75,5 +77,18 @@ $$
 \text{NO} \Rightarrow \inf_{n \ge N} n[n\theta] \le \left(\frac{1}{1-\varepsilon}\right)\frac{\sqrt{7r}}{4\pi}
 $$
 For the finite prefix $1$ to $N-1$, we can compute $n[n\theta]$ to arbitrary precision and compare with the purported lower/upper bounds for $L(\theta) = \inf_{n \in \naturals} n[n\theta]$.
+
+Our query, therefore is
+$$
+\forall n \ge N.~ \mathbf{x_n}^T\mathbf{p} \ge r\sqrt{\seq{\mathbf{x_n}, \mathbf{x_n}}} 
+$$
+which, on taking $\mathbf{S} = r^2(\mathbf{V}^{-1})^T\mathbf{V}^{-1}$, is equivalent to
+$$
+\forall n \ge 0.~ \mathbf{A}^n(\mathbf{A}^N\mathbf{c}) \ge \max_{\mathbf{d} \in \ball_\mathbf{S}} \mathbf{A}^n(\mathbf{A}^N\mathbf{d})
+$$
+Let $\mathbf{c'} = \mathbf{A}^N\mathbf{c}$, $\mathbf{S'} = (\mathbf{A}^{-N})^T\mathbf{S}\mathbf{A}^{-N}$. Thus, our instance of robust Positivity is:
+$$
+\forall n \ge 0.~ \mathbf{A}^n\mathbf{c'} \ge \max_{\mathbf{d'} \in \ball_\mathbf{S'}} \mathbf{A}^n\mathbf{d'}
+$$
 
 Finally, we note that by replacing the coefficients $(r, 0, 1 + \frac{r}{2}, -1, 0)$ with  $(r, 0, 1 + \frac{r}{2}, \cos 2\pi\varphi, \sin 2\pi\varphi)$, the same reduction allows us to compute \textbf{inhomogeneous} Langrange constants and Diophantine approximation types.
