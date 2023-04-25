@@ -11,7 +11,7 @@ Thanks to the following old result \cite[Thm. 2]{positive-dominant}, the answer 
 
 \begin{proposition}
 \label{prop:folklore}
-If the characteristic polynomial has no real dominant root, then in any full-dimensional neighbourhood of initialisations, there exists an initialisation, such that the sequence has infinitely many positive terms, and infinitely many negative terms.
+If the characteristic polynomial has no real dominant root of maximum multiplicity, then in any full-dimensional neighbourhood of initialisations, there exists an initialisation, such that the sequence has infinitely many positive terms, and infinitely many negative terms.
 \end{proposition}
 
 Thus, we shall concern ourselves with the case there is one pair of complex conjugate roots. Without loss of generality, we also assume that the real dominant root is $1$. We rely on specific applications of the following general results to analyse the trigonometric terms that arise.
@@ -40,10 +40,16 @@ Thus, we shall concern ourselves with the case there is one pair of complex conj
     $1 \le j \le k$ we have $| n \theta_j - \phi_j| \le \epsilon$.
     \end{enumerate}
   \end{theorem}
-  
+ 
+Considering the state-of-the-art, the following lemma is rather immediate. 
+\begin{lemma}[Decidability for Simple LRS]
+Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable for simple LRS of order four.
+\end{lemma}
+\begin{proof}
+Let the distinct characteristic roots be $1, \alpha, \gamma, \bar{\gamma}$. On squaring throughout after the initial Positivity check, and transferring all terms to the LHS, we get a Positivity (Problem \ref{prob:pos}) instance for a new simple LRS, this time of order at most $10$. This time, the characteristic roots are $1, \alpha^2, \gamma^2, \bar{\gamma}^2, \alpha, \gamma, \bar{\gamma}, \alpha\gamma, \alpha\bar{\gamma}, \gamma\bar{\gamma}$. 
 
-
-If our LRS is \textit{simple}, i.e. it has distinct characteristic roots $1, \alpha, \gamma, \bar{\gamma}$, then decidability is rather immediate, considering the state-of-the-art. On squaring throughout after the initial Positivity check, and transferring all terms to the LHS, we get a Positivity (Problem \ref{prob:pos}) instance for a new simple LRS, this time of order at most $10$ (we get at most four roots from squaring the original roots, while there are at most six more roots from pairwise products). We assume $\alpha \ne -1$: if it were, the resulting LRS could be decomposed into two LRS of lower order, and Positivity for simple LRS is known to be decidable for order up to nine \cite{ouaknine2014positivity}. For the same reason, we can also assume $\gamma/\bar{\gamma}$ is not a root of unity: this can be efficiently detected, see Theorem \ref{thm:abelian}. Thus, the resulting LRS has at most five dominant roots, $1, \gamma, \bar{\gamma}, \gamma^2, \bar{\gamma}^2$. In this case, Positivity can be deciding for simple LRS using the techniques in \cite{ouaknine2014positivity}, regardless of the order.
+We assume $\alpha \ne -1$: if it were, the resulting LRS could be decomposed into two LRS of lower order, and both Ultimate Positivity \cite{ouaknine2014ultimate} and Positivity  \cite{ouaknine2014positivity} for simple LRS is known to be decidable for order up to nine. For the same reason, we can also assume $\gamma/\bar{\gamma}$ is not a root of unity: this can be efficiently detected, see Theorem \ref{thm:abelian}. Thus, depending on whether $|\gamma| < 1$ or $= 1$, the resulting LRS either has only $1$ as a dominant root, and nine non-dominant roots, or has five dominant roots, $1, \gamma, \bar{\gamma}, \gamma^2, \bar{\gamma}^2$ ($\gamma\bar{\gamma} = 1$) and four non-dominant roots. The former case is trivial, while the latter is handled by \cite{ouaknine2014positivity}.
+\end{proof}
 
 The only remaining possibility, therefore, is that the characteristic roots are $1, 1, \gamma, \bar{\gamma}$. Let $0 < |\gamma| = \rho \le 1$, and we again assume that $\gamma/\bar{\gamma}$ is not a root of unity, for reasons described above. On squaring after the initial check, our LRS is of the form
 \begin{align*}
