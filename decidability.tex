@@ -9,12 +9,39 @@ Our main case distinction is on the number of pairs of complex conjugates among 
 
 Thanks to the following old result \cite[Thm. 2]{positive-dominant}, the answer to Ultimate Positivity is trivially NO if there are two pairs of complex conjugates.
 
-\begin{proposition}[Folklore]
+\begin{proposition}
 \label{prop:folklore}
-If the characteristic polynomial has no real dominant root, then for any initialisation to the sequence, there are infinitely many positive terms, and infinitely many negative terms.
+If the characteristic polynomial has no real dominant root, then in any full-dimensional neighbourhood of initialisations, there exists an initialisation, such that the sequence has infinitely many positive terms, and infinitely many negative terms.
 \end{proposition}
 
-Thus, we shall concern ourselves with the case there is one pair of complex conjugate roots. Without loss of generality, we also assume that the real dominant root is $1$. 
+Thus, we shall concern ourselves with the case there is one pair of complex conjugate roots. Without loss of generality, we also assume that the real dominant root is $1$. We rely on specific applications of the following general results to analyse the trigonometric terms that arise.
+
+\begin{theorem}[Masser \cite{Masser}]
+  \label{thm:abelian}
+  Let $e^{i \theta_1},...,e^{i \theta_k}$ be complex algebraic numbers of unit modulus. Consider the free abelian group $L$ defined by $L = \{(\lambda_1, \ldots ,\lambda_k) \in \mathbb{Z}^k: 
+  e^{i (\lambda_1 \theta_1 + \cdots +  \lambda_k \theta_k)} = 1 \}$. 
+  The group $L$ has a finite generator set $\{ \mathbf{l_1}, \ldots, \mathbf{l_p}\} \subset \mathbb{Z}^k$ with $p \le k$. The generator set can be computed in time polynomial and
+  each entry in the generator set is polynomially bounded in the sizes of the representations of $e^{i \theta_1},...,e^{i \theta_k}$.
+  \end{theorem}
+ Given $e^{2i\theta}$, if an $n$ such that $e^{2i n \theta} = 1$ exists ($\theta$ is a rational multiple of $2\pi$), this $n$ is bounded, and can be efficiently found by enumeration. Similarly, one can check whether $\alpha^n = \beta$ (is $n\theta - \varphi$ ever an integer multiple of $2\pi$?). Suppose $\theta$ is not a rational multiple of $2\pi$. Then the following theorem establishes that $\{n\theta \text{ modulo } 2\pi\}_{n\in\naturals}$ is dense in $[0, 2\pi]$. Let $h$ be a trigonometric function of $t$ with period $2\pi$. Another immediate consequence is that
+\begin{equation}
+\label{eq:liminfmin}
+\liminf_n h(n\theta)= \min_{t \in [0, 2\pi]} h(t)
+\end{equation}
+ 
+\begin{theorem}[Kronecker \cite{Kronecker}]
+  \label{thm:kronecker}
+  Let $\theta_1, ... , \theta_k, \phi_1, ... , \phi_k \in [0, 2\pi)$. Then the following are equivalent:
+  \begin{enumerate}
+\item For every tuple $(\lambda_1,...\lambda_k)$ of integers with 
+    $\lambda_1 \theta_1 + \cdots +  \lambda_k \theta_k \in 2\pi\integers$, 
+  we have \\$\lambda_1 \phi_1 + \cdots + \lambda_k \phi_k \in 2\pi\integers$.
+  \item For any $\epsilon > 0$, there exists an arbitrarily large $n$ such that for all 
+    $1 \le j \le k$ we have $| n \theta_j - \phi_j| \le \epsilon$.
+    \end{enumerate}
+  \end{theorem}
+  
+
 
 If our LRS is \textit{simple}, i.e. it has distinct characteristic roots $1, \alpha, \gamma, \bar{\gamma}$, then decidability is rather immediate, considering the state-of-the-art. On squaring throughout after the initial Positivity check, and transferring all terms to the LHS, we get a Positivity (Problem \ref{prob:pos}) instance for a new simple LRS, this time of order at most $10$ (we get at most four roots from squaring the original roots, while there are at most six more roots from pairwise products). We assume $\alpha \ne -1$: if it were, the resulting LRS could be decomposed into two LRS of lower order, and Positivity for simple LRS is known to be decidable for order up to nine \cite{ouaknine2014positivity}. For the same reason, we can also assume $\gamma/\bar{\gamma}$ is not a root of unity: this can be efficiently detected, see Theorem \ref{thm:abelian}. Thus, the resulting LRS has at most five dominant roots, $1, \gamma, \bar{\gamma}, \gamma^2, \bar{\gamma}^2$. In this case, Positivity can be deciding for simple LRS using the techniques in \cite{ouaknine2014positivity}, regardless of the order.
 
@@ -30,15 +57,7 @@ If $\rho < 1$, the above can trivially be resolved with growth arguments, or is 
 \label{eq:groundtruth}
 {\color{red!70!black} n(z_1 + x_2\cos n\theta + y_2\sin n\theta)} + (z_0 + x_1\cos n\theta + y_1\sin n\theta + x_0\cos 2n\theta + y_0\sin 2n\theta) \ge 0
 \end{equation}
-
-Since we assume $\theta$ is not a rational multiple of $2\pi$, we can argue by Theorem \ref{thm:kronecker} (Kronecker) that $n\theta$ modulo ${2\pi}$ is dense in $[0, 2\pi]$. Define
-\begin{align}
-f(t) &= z_1 + x_2\cos t + y_2\sin t \\
-g(t) &= z_0 + x_1\cos t + y_1\sin t + x_0\cos 2t + y_0\sin 2t
-\end{align}
-
-If $\min f(t) < 0$, then Robust Ultimate Positivity trivially does not hold; if $\min f(t) > 0$, then it can trivially be certified. Thus, we shall consider that $\min f(t) = 0$, equivalently, $z_1^2 = x_2^2 + y_2^2$. Let the minimum be attained at $\varphi$, i.e., $f(\varphi) = 0$. We have that $\varphi = \arccos(-x_2/z_1)$. Decidability is most clearly seen through a slight shift in perspective: we rotate the basis.
-First, note that inequality \ref{eq:groundtruth} can easily be rewritten as (we use $t_n$ as shorthand for $n\theta - \varphi$)
+Decidability is most clearly seen through a slight shift in perspective: for any $x, y, \phi$, there exist $x', y'$ such that $x\cos \alpha + y\sin\alpha = x'\cos(\alpha - \phi) + y'\sin (\alpha - \phi)$ is an identity in $\alpha$. Thus, note that for a convenient choice of $\varphi$, inequality \ref{eq:groundtruth} can easily be rewritten as (we use $t_n$ as shorthand for $n\theta - \varphi$, and choose $\varphi$ such that $x_2' \le 0$)
 \begin{equation}
 \label{eq:groundtruthrewrite}
 {\color{red!70!black}n(z_1 + x_2' \cos t_n)} + (z_0 + x_1'\cos t_n + y_1'\sin t_n + x_0'\cos 2t_n + y_0'\sin 2t_n) \ge 0
@@ -49,14 +68,19 @@ $$
 \left(\mathbf{e_1}^T\mathbf{A}^n\mathbf{c}\right)^2 - \left(\max_{\mathbf{d} \in \ball_{\mathbf{S}}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d}\right)^2 \ge 0
 $$
 
-On retracing our steps back to the discussion surrounding equation \ref{eq:innerprod}, we could well have chosen our basis of solutions to be $\mathbf{x_n'}\begin{bmatrix}n & 1 & \cos(n\theta - \varphi) & \sin(n\theta - \varphi) \end{bmatrix}$. This would have given us different $\mathbf{V'}, \mathbf{M'}$, and hence $\mathbf{B'}$ in equation \ref{eq:crux}, but importantly, it would generate inequality \ref{eq:groundtruthrewrite} for the same original input. We define 
-\begin{align}
-f_\varphi(t) &= z_1 + x_2'\cos t  \\
-g_\varphi(t) &= z_0 + x_1'\cos t + y_1'\sin t + x_0'\cos 2t + y_0'\sin 2t
-\end{align}
-Here, $z_1 + x_2' = 0$, since the minimal $f_\varphi(0) = 0$. If $g_\varphi(0) > 0$, we are done: we can easily get a positive lower bound on $f_\varphi$ for values where $g_\varphi < 0$, and get an $N$ beyond which the validity of inequality \ref{eq:groundtruthrewrite} is guaranteed. On the other hand, if $g_\varphi(0) < 0$, we argue that inequality \ref{eq:groundtruthrewrite} is violated for infinitely many $n$. Recall inequality \ref{eq:quadraticdecay}. It tells us that there are infinitely many $n$ for which $f_\varphi(n\theta + \varphi) < c/n^2$. Thus, the terms in red are infinitely often lower bounded by $c/n$, while the terms in black, for the same $n$, would be close to a negative constant. Thus, we can return NO for robust Ultimate Positivity.
+On retracing our steps back to the discussion surrounding equation \ref{eq:innerprod}, we could well have chosen our basis of solutions to be $\mathbf{x_n'}\begin{bmatrix}n & 1 & \cos(n\theta - \varphi) & \sin(n\theta - \varphi) \end{bmatrix}$. This would have given us different $\mathbf{V'}, \mathbf{M'}$, and hence $\mathbf{B'}$ in equation \ref{eq:crux}, but importantly, it would generate inequality \ref{eq:groundtruthrewrite} for the same original input.
 
-The final case that remains is $g_\varphi(0) = 0$. We argue that remarkably, it does not arise at all!
+Since we assume $\theta$ is not a rational multiple of $2\pi$, we can argue by Theorem \ref{thm:kronecker} (Kronecker) that $\{(n\theta - \varphi)$ modulo ${2\pi}\}_{n\in\naturals}$ is dense in $[0, 2\pi]$. 
+We define 
+\begin{align}
+f(t) &= z_1 + x_2'\cos t  \\
+g(t) &= z_0 + x_1'\cos t + y_1'\sin t + x_0'\cos 2t + y_0'\sin 2t
+\end{align}
+Since we chose $x_2' \le 0$, it is clear that $f$ attains its minima at $0$. If $z + x_2' < 0$, then the inequality will be violated for infinitely many $n$ for which $[n\theta - \varphi]_{2\pi}$ is close enough to $0$; on the other hand, if $z + x_2' > 0$, then it is guaranteed to hold beyond a computable threshold index $N$.
+
+Thus, we assume, $z_1 + x_2' = 0$, i.e.\ the minimal $f(0) = 0$. If $g(0) > 0$, we are done: we can easily get a positive lower bound on $f$ for values where $g < 0$, and get an $N$ beyond which the validity of inequality \ref{eq:groundtruthrewrite} is guaranteed. On the other hand, if $g < 0$, we argue that inequality \ref{eq:groundtruthrewrite} is violated for infinitely many $n$. Recall inequality \ref{eq:quadraticdecay}. It tells us that there are infinitely many $n$ for which $f(n\theta - \varphi) < c/n^2$. Thus, the terms in red are infinitely often lower bounded by $c/n$, while the terms in black, for the same $n$, would be close to a negative constant. Thus, we can return NO for robust Ultimate Positivity.
+
+The final case that remains is $g(0) = 0$. We argue that remarkably, it does not arise at all!
 \begin{lemma}
 The scenario where $z_2 = 0$, $z_1 + x_2' = 0$, and $z_0 + x_1'+ x_0' = 0$ is impossible.
 \end{lemma}
@@ -102,122 +126,4 @@ p_1(p_2 + p_3) &= \seq{\mathbf{u_1}, \mathbf{u_2} + \mathbf{u_3}} \\
 This implies that $|\seq{\mathbf{u_1}, \mathbf{u_2} + \mathbf{u_3}}| = ||\mathbf{u_1}||\cdot||\mathbf{u_2} + \mathbf{u_3}||$, i.e. $\mathbf{u_1}$ is a scaled multiple of $\mathbf{u_2} + \mathbf{u_3}$. This contradicts the fact that the columns of the invertible $(\mathbf{B'})^{-1}$ are linearly independent, and we're done.
 \end{proof}
 
-\section{Non-uniform Robustness: Decidability at order five}
-\label{section:decidability2}
-In this section, we deploy sophisticated mathematical arsenal to prove Theorem \ref{thm:decide2}. As before, the techniques naturally apply to lower orders, and we omit their explicit treatment. Recall equation \ref{eq:grouping} and the surrounding discussion:
-\begin{equation}
-u_n/n^d\rho^n = \begin{bmatrix}
-{\color{red!70!black} \mathbf{q}_{dom}^T(n) } & \mathbf{q}_{res}^T(n)
-\end{bmatrix}
-\begin{bmatrix}
-{\color{red!70!black} \mathbf{p}_{dom}} \\
-\mathbf{p}_{res}
-\end{bmatrix}
-\end{equation}
-The crucial first task is to check whether for all points $\mathbf{p'}$ in the neighbourhood, \\$\liminf_{n\in\naturals}\seq{\mathbf{q}_{dom}(n), \mathbf{p'}_{dom}} = \mu(\mathbf{p'}) \ge 0$. For an arbitrary point $\mathbf{p'}$, the high-level approach to do this is to:
 
-\begin{enumerate}
-\item Replace $\mathbf{q}_{dom}$ by $\mathbf{g}(\boldsymbol{\phi})$, such that $\mathbf{q}_{dom}(n) = \mathbf{g}(n\boldsymbol{\theta})$. Find a set $T$ that $n\boldsymbol\theta$ are dense in. (Masser, Theorem \ref{thm:abelian}, and Kronecker, Theorem \ref{thm:kronecker})
-\item Argue that $\liminf_n  \seq{\mathbf{q}_{dom}(n), \mathbf{p'}_{dom}} = \min_{\boldsymbol{\phi} \in T} \seq{\mathbf{g}(\boldsymbol{\phi}), \mathbf{p'}_{dom}}  = \mu(\mathbf{p'})$
-\item Query $\mu$. Let $\psi(\mathbf{p'})$ (resp.\ $\psi_0(\mathbf{p'})$) denote the quantifier-free formula which conveys that $\mu(\mathbf{p'}) \ge 0$ (resp.\ $=0$) (First Order Theory of Reals, Renegar, Theroem \ref{thm:renegar})
-\end{enumerate}
-The first task then reduces to evaluating the truth of the sentence 
-\begin{equation}
-\label{eq:firsttask}
-\chi := \forall \mathbf{p'}.~ (\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p}) \le 1 \Rightarrow \psi(\mathbf{p'})
-\end{equation}
-Once we describe the formula $\psi$, we have a sentence that we can invoke Renegar's efficient quantifier elimination procedure (Theorem \ref{thm:renegar}) on, and tractably evaluate the truth of.
-
-If the inequality is strict, then Ultimate Positivity is guaranteed for that point; however the neighbourhood may intersect the critical region where $\mu = 0$. If there are no non-dominant terms, this is irrelevant; but otherwise decidability hinges on whether we can handle the intersection, which is described by 
-\begin{equation}
-\label{eq:intersection}
-\sigma(\mathbf{p}):= \chi \land \psi_0(\mathbf{p'}) \land (\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p}) = 1
-\end{equation}
-
-Geometric arguments, and the underlying decidability of the non-robust problems at low orders \cite{joeljames3} give us our decidability results.
-
-\subsection{Mathematical tools}
-\label{arsenal}
-The first step of our plan was to replace the discrete $\mathbf{q}_{dom}$, by $\mathbf{g}$, parametrised by $\boldsymbol\phi$ that come from a continuous set $T$. The preliminary step is to efficiently elicit additive relations among $\boldsymbol\theta$, which translate into multiplicative relationships among the corresponding characteristic roots $e^{i\boldsymbol\theta}$.
- \begin{theorem}[Masser \cite{Masser}]
-  \label{thm:abelian}
-  Let $e^{i \theta_1},...,e^{i \theta_k}$ be complex algebraic numbers of unit modulus. Consider the free abelian group $L$ defined by $L = \{(\lambda_1, \ldots ,\lambda_k) \in \mathbb{Z}^k: 
-  e^{i (\lambda_1 \theta_1 + \cdots +  \lambda_k \theta_k)} = 1 \}$. 
-  The group $L$ has a finite generator set $\{ \mathbf{l_1}, \ldots, \mathbf{l_p}\} \subset \mathbb{Z}^k$ with $p \le k$. The generator set can be computed in time polynomial and
-  each entry in the generator set is polynomially bounded in the sizes of the representations of $e^{i \theta_1},...,e^{i \theta_k}$.
-  \end{theorem}
- Given $e^{2i\theta}$, if an $n$ such that $e^{2i n \theta} = 1$ exists ($\theta$ is a rational multiple of $2\pi$), this $n$ is bounded, and can be efficiently found by enumeration. Similarly, one can check whether $\alpha^n = \beta$ (is $n\theta - \varphi$ ever an integer multiple of $2\pi$?). 
- 
-Let $T$ be the set of all $\boldsymbol\phi$ such that for all $\mathbf{l} \in L$ above, $\seq{\mathbf{l}, \boldsymbol\phi} \in 2\pi\integers$. Kronecker's theorem on simultaneous Diophantine approximation, as strengthened by \cite{joeljames3, ouaknine2014positivity}, directly establishes that $n\boldsymbol\theta$ are dense in $T$.
- 
- \begin{theorem}[Kronecker \cite{Kronecker}]
-  \label{thm:kronecker}
-  Let $\theta_1, ... , \theta_k, \phi_1, ... , \phi_k \in [0, 2\pi)$. Then the following are equivalent:
-  \begin{enumerate}
-\item For every tuple $(\lambda_1,...\lambda_k)$ of integers with 
-    $\lambda_1 \theta_1 + \cdots +  \lambda_k \theta_k \in 2\pi\integers$, 
-  we have \\$\lambda_1 \phi_1 + \cdots + \lambda_k \phi_k \in 2\pi\integers$.
-  \item For any $\epsilon > 0$, there exists an arbitrarily large $n$ such that for all 
-    $1 \le j \le k$ we have $| n \theta_j - \phi_j| \le \epsilon$.
-    \end{enumerate}
-  \end{theorem}
-  
-Since $\mathbf{q}_{dom}(n) = \mathbf{g}(n\boldsymbol{\theta})$, this immediately implies that for all $\mathbf{p'}$
-\begin{equation}
-\liminf_n  \seq{\mathbf{q}_{dom}(n), \mathbf{p'}_{dom}} = \min_{\boldsymbol{\phi} \in T} \seq{\mathbf{g}(\boldsymbol{\phi}), \mathbf{p'}_{dom}}  = \mu(\mathbf{p'})
-\end{equation}
-
-We now turn to verifying $\mu(\mathbf{p'}) \ge 0$. The First Order Logic formula, at its core, must have the form
-\begin{equation}
-\label{eq:coreFO}
-\forall \boldsymbol\phi.~~\boldsymbol{\phi} \in T \Rightarrow \seq{\mathbf{g}(\boldsymbol\phi), \mathbf{p'}} \ge 0
-\end{equation}
-If we want to verify $\mu = 0$, we have the additional conjunct
-\begin{equation}
-\label{eq:coreFOzero}
-\exists \boldsymbol{\phi} \in T.~\seq{\mathbf{g}(\boldsymbol\phi), \mathbf{p'}} = 0
-\end{equation}
-An immediate observation, as also noted in \cite{originalstacs,originalarxiv}, is that the $\mu \ge 0$ region is carved out by halfspaces!
-
-However, the logic only gives us access to polynomials with integer coefficients. We note that $\mathbf{g}$ has entries that are $\cos \phi_j$, $\sin \phi_j$. So, actually, we apply the universal quantifier to variables that represent the trigonometric functions of $\phi$. Fortunately, this fits right in to the definition of $T$: if $\phi_j$ participates in an additive relationship, then $e^{i\phi_j} = \cos \phi_j + i\sin \phi_j$ participates in a fixed, integer multiplicative relationship. All the multiplicative relationships defining $T$ can be hardcoded into a FO logic formula that has $\cos \phi_j$, $\sin \phi_j$ as variables. The only technical detail we have to work around is the mimicry of complex multiplication/division with real numbers: however, this is not a problem: the real and complex parts of $(\cos\theta + i\sin \theta)^a$ are both real polynomials in $\cos \theta, \sin\theta$. For division, note $(\cos \theta + i\sin \theta)^{-a} = (\cos \theta - i\sin\theta)^a$. Thus, we conclude that formula \ref{eq:coreFO} can indeed be expressed as a FO formula over the reals. As a small example, when $T = [0, 2\pi]$, formula \ref{eq:coreFO} is written as:
-\begin{equation}
-\forall b_1, b_2. ~~b_1^2 + b_2^2 = 1 \Rightarrow z + xb_1 + yb_2 \ge 0
-\end{equation}
-On eliminating quantifiers, this reduces to
-\begin{equation}
-\label{eq:cone}
-z^2 = x^2 + y^2
-\end{equation}
-
-\subsection{Geometry and decidability}
-If there are no residual terms, we are already done after certifying the non-negativity of the dominant terms through logic. In the event residual terms have non-zero contribution, decidability hinges on whether we can handle points where $\mu = 0$. If there are two pairs of complex conjugates among the dominant roots, then all five terms must be dominant (recall Proposition \ref{prop:folklore}: the necessarily is a real positive dominant root!)
-
-\begin{figure}[h]
-
-\includegraphics[width=\textwidth]{picture1.png}
-\caption{Visual intuition}
-\label{fig:geometricpicture}
-\end{figure}
-
-Hence, we consider that there is at most one complex conjugate pair among the dominant roots. This requires slightly more insight of the geometrical nature of the solution set of $\psi_0$ (Figure \ref{fig:geometricpicture}). See \cite{originalstacs,originalarxiv} for an exposition of the geometric intuition. 
-
-\begin{lemma}
-\label{lem:residuesame}
-Suppose the neighbourhood satisfies $\mu \ge 0$. Let $\mathbf{p'}$ be in the intersection of the neighbourhood surface and the $\mu = 0$ region. $\mathbf{p'}$ and the centre of the neighbourhood $\mathbf{p}$ are identical in their non-dominant coordinates.
-\end{lemma}
-\begin{proof}
- Recall, from formulae \ref{eq:coreFO}, \ref{eq:coreFOzero}, that the $\mu \ge 0$ region is carved out by halfspaces. Thus, $\mathbf{p'}$ must lie on a hyperplane. If $\mathbf{p'}$ and $\mathbf{p}$ differ in non-dominant coordinates, it means that the coordinate corresponding to the real dominant root can freely be decreased, at the cost of moving the non-dominant coordinates of $\mathbf{p'}$ closer to those of $\mathbf{p}$, while still remaining on the surface of the \textit{convex} neighbourhood. The former pushes $\mathbf{p'}$ below the hyperplane it lay on, while the latter has no effect on the bearing of $\mathbf{p'}$ with respect to the region $\mu \ge 0$. We have thus found a point in the neighbourhood with $\mu < 0$: a contradiction.
- \end{proof}
-
-If there are just one or two dominant terms, they are necessarily real. The region $\mu(\mathbf{p}) = 0$ will simply be the union of at most two hyperplanes. ($z = 0$, or $z - |w| = 0$). Here, the intersection of the ball with $\mu = 0$ consists of at most two points (ball seated atop hyperplane). Since Ultimate Positivity is decidable up to order $5$ \cite{joeljames3}, it can explicitly be checked.
-
-Finally, let there be one pair of complex conjugates $e^{\pm i\theta}$ among the dominant roots. We assume there are three dominant terms: accounting for an additional $(-1)^n$ term is not so complicated. It is clear that if $\theta$ is a rational multiple of $2\pi$, $\mu = 0$ will be a union of finitely many hyperplanes (of the form $z + x\cos \theta_0 + y\sin \theta_0 = 0$). Here again, the finite intersection can be explicitly checked. In the case when $e^{i\theta}$ is not a root of unity, we recall equation \ref{eq:cone}: the set of $\mathbf{p}$ for which $\mu = 0$ is given by
-\begin{equation}
-z  - \sqrt{x^2 + y^2} = 0
-\end{equation}
-In this case, it is a union of \textit{infinitely} many hyperplanes of the form $z + x \cos \phi + y\sin \phi = 0$. As established by the validity of equation \ref{eq:firsttask}, the surface of the neighbourhood $(\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p})$ is \textit{tangent} to the surface of the cone in case of an intersection. At any point of intersection, it is tangent to the hyperplane (from the infinite union) passing through that point. We can therefore also solve for the intersection in terms of $\cos \phi$: consider the first order formula in $c$ (notation as in \ref{eq:intersection}, which expresses that $\mathbf{p'}$ is in the intersection).
-$$\exists s, \mathbf{p'}.~~c^2 + s^2 = 1 \land \sigma({\mathbf{p'}}) \land \begin{bmatrix}1 & c & s & 0 & 0 \end{bmatrix}^T\mathbf{p'} = 0 $$
-
-Quantifier elimination gives us a polynomial equation in $\cos \phi$: this holds for finitely many (ball touching cone), or all $\phi$ (ball nestled in cone). We already know how to handle a finite intersection: we explicitly check the tangent points on each of the finitely many hyperplanes.
-
-If this holds for all $\phi$, then we use Theorem \ref{thm:kronecker} (Kronecker's density) to argue that for every $n$, there exists a point on the surface of the ball such that the dominant contribution $z + x\cos n\theta + y\sin n\theta = z + x\cos\phi + y\sin\phi$ is zero. As observed in Lemma \ref{lem:residuesame}, the residual part is the same as the centre for such points. Thus, in this case, it is entirely up to the residual terms of the centre to guarantee Robust Ultimate Positivity. This is a decidable instance of regular Ultimate Positivity at lower order, and we are done.
