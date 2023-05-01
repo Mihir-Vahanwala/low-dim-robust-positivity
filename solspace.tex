@@ -56,7 +56,7 @@ We can alternate quantifiers, and query a weaker notion of Robust Ultimate Posit
 Given an LRS $(\mathbf{a}, \mathbf{c})$, and positive definite $\mathbf{S}$, decide whether for all $\mathbf{c'}$ with $(\mathbf{c'} - \mathbf{c})^T\mathbf{S}(\mathbf{c'} - \mathbf{c}) \le 1$ , there exists an $N$ such that the LRS $(\mathbf{a}, \mathbf{c'})$ is positive from the $N^{th}$ term onwards.
 \end{problem}
 
-The attentive reader might have already noticed that we depart from convention and specify neighbourhoods as \textit{closed} balls. Although \cite{originalarxiv} does not solve the problems we consider in this paper, it makes crucial observations about the geometry: for Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}, there is no difference between open and closed balls. On the other hand, Problem \ref{prob:rrobnonuniultpos} becomes considerably easier with open balls, and its decidability assuming open balls is tackled in \cite{originalarxiv} itself.
+The attentive reader might have already noticed that we depart from convention and specify neighbourhoods as \textit{closed} balls. Although \cite{originalarxiv} does not solve the problems we consider in this paper, it makes crucial observations about the geometry: for Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}, there is no difference between open and closed balls. On the other hand, Problem \ref{prob:rrobnonuniultpos} becomes considerably easier with open balls, and its decidability assuming open balls is tackled in \cite{originalarxiv} itself. 
 
 For any order $\kappa$ LRS $\seq{\mathbf{a}, \mathbf{c}}$, the $n^{th}$ term $u_n$ has the following closed form, consisting of $\kappa$ monomials:
 \begin{equation}
@@ -109,7 +109,9 @@ u_n/n^d\rho^n = \begin{bmatrix}
 We split the inner product into a dominant ({\color{red!70!black}red}) and a residual (black) part. In the limit, the latter becomes negligible relative to the former. We have normalised the inner product, so the dominant part is $\Theta(1)$. Let $\mu = \liminf_{n\in \naturals}\seq{ \mathbf{q}_{dom}(n), \mathbf{p}_{dom}}$. If $\mu < 0$, then Ultimate Positivity is impossible. If $\mu > 0$, then we can provide an $N$ such that $u_n > 0$ beyond the $N^{th}$ term. Thus, the core idea is to ensure that the given neighbourhood lies entirely in the region where $\mu \ge 0$. Although Ultimate Positivity is guaranteed for the points where the inequality is strict, the neighbourhood may intersect the critical region where $\mu = 0$. If there are no non-dominant terms, this is irrelevant; but otherwise decidability hinges on whether we can handle the intersection.
 \begin{theorem}[Second Decidability Result]
 \label{thm:decide2}
-Problem \ref{prob:rrobnonuniultpos} is decidable up to order 3.
+Problem \ref{prob:rrobnonuniultpos} is decidable up to order 4.
 \end{theorem}
+
+
 
 

@@ -19,6 +19,12 @@ It is known (Dirichlet, Minkowski \cite{minkowski}) that these constants lie bet
 \exists c.~\forall t, s.~ \exists^\infty n. ~ 1 - \cos(nt - s) \le \frac{1}{2}\left[nt - s \right]_{2\pi}^2 \le \frac{c}{n^2}
 \end{equation}
 
+We record a useful number-theoretic fact: its proof relies on the Ostrowski numeration system \cite{bourla2016ostrowski,berthe2022dynamics}, and is deferred to Appendix \ref{appendix:ostrowski}.
+\begin{lemma}
+\label{lemma:existsreal}
+For every irrational number $x$, strictly decreasing real positive function $\psi$, and interval $\mathcal{I} = [a, b] \subset [0, 1], ~ a \ne b$, there exists $y \in \mathcal{I}$ such that $[nx - y] < \psi(n)$ for infinitely many $n$.
+\end{lemma}
+
 Following \cite{joeljames3}, we note that the Diophantine approximation type and Lagrange constant of most transcendental numbers are unknown, and define
 \begin{equation}
 \mathcal A=\{p+q i \in \mathbb{C} \mid p,q \in \mathbb{A}, p^2+q^2=1, \forall n.~(p + qi)^n \ne 1\}
@@ -40,24 +46,9 @@ Let $\mathcal{T}$ be as above. A decision problem is said to be $\mathcal{T}$-Di
 Problem \ref{prob:rrobpos} (resp.\ Problem \ref{prob:rrobuniultpos}) is $\mathcal{T}$-Diophantine hard (resp.\ $\mathcal{T}$-Lagrange hard) at order 5. 
 \end{theorem}
 
-One could also consider inhomogeneous Diophantine approximation with \textit{general} error functions.
-\begin{definition}[General Error Lagrange Constant]
-\label{def:generallagrange}
-Let $t$ be irrational, $s\in \reals$, and $\psi$ be an increasing positive real function such that $\sum_{n=1}^\infty \frac{1}{\psi(n)}$ does not diverge. The general error Lagrange constant $L_\infty(t, s; \psi)$ is defined to be $\liminf_{n\in \naturals}\psi(n)[nt - s]$.
-\end{definition}
+\cite{originalarxiv} notes that in view of the Lagrange hardness (Definition \ref{def:hardness}) of Ultimate Positivity at order 6 \cite{joeljames3}, Problem \ref{prob:rrobnonuniultpos} is also Lagrange hard at order 6: one can simply construct a neighbourhood that lies entirely in the region $\mu > 0$ (i.e. neighbourhoods for which Ultimate Positivity can be \textit{certified}), except for a hard instance of Ultimate Positivity on its surface. In this way, Ultimate Positivity is guaranteed for all but the single critical point on the boundary.
 
-In the case $\sum_{n=1}^\infty \frac{1}{\psi(n)}$ does not diverge, most modern literature focuses on the Lebesgue measure and Hausdorff dimension, rather than the non-emptiness itself, of the set 
-$$
-E_\psi(t) := \{s\in \reals: L_\infty(t, s; \psi) \le 1\}
-$$ 
-Contemporary sources include \cite{generaldio1,generaldio2,generaldio3,generaldio4}. They establish that $E_\psi(t)$ has zero Lebesgue measure (and zero Hausdorff dimension when $\psi$ is of the form $\rho^n$, which is relevant to us); however, we couldn't identify any work that, given a $\psi$, can decide if $E_{\psi}(t)$ is non-empty, or even compute a scaling constant $\ell$ which guarantees (non-)emptiness. Recently, \cite{generaldio5} gave an explicit expression for the Hausdorff dimension of $E_\psi(t)$.
-
-\begin{definition}[$\mathcal{T}$-General Lagrange hardness]
-\label{def:hardness2}
-Let $\mathcal{T}$ be as above. A decision problem is said to be $\mathcal{T}$-General Lagrange hard, if its decidability entails that given any $t \in \mathcal{T}$, $\varepsilon > 0$, and $\psi$, one can compute a constant $\ell$ such that $E_{\ell'\psi}(t)$ is empty for $\ell' > \ell + \varepsilon$, and non-empty for $\ell' < \ell - \varepsilon$.
-\end{definition}
-
-\begin{theorem}[Second Main Hardness Result]
+\begin{theorem}
 \label{thm:hardness2}
-Problem \ref{prob:rrobnonuniultpos} is $\mathcal{T}$-General Lagrange hard at order 4. 
+Problem \ref{prob:rrobnonuniultpos} is $\mathcal{T}$-Lagrange hard at order 6. 
 \end{theorem}

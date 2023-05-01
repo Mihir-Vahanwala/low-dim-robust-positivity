@@ -1,0 +1,54 @@
+\section{Appendix: Ostrowski Numeration System}
+\label{appendix:ostrowski}
+
+In this appendix, we prove Lemma \ref{lemma:existsreal}. We state number-theoretic properties of the continued fraction representation and Ostrowski Numeration System without proof. We refer the reader to \cite{bourla2016ostrowski} for a more detailed exposition, and we closely follow the discussion surrounding \cite[Propositions 1.1, 2.1]{berthe2022dynamics} in our own proof. 
+
+\begin{lemma}
+\label{lemma:existsreal2}
+For every irrational number $x$, strictly decreasing real positive function $\psi$, and interval $\mathcal{I} = [\alpha, \beta] \subset [0, 1], ~ \alpha \ne \beta$, there exists $y \in \mathcal{I}$ such that $[nx - y] < \psi(n)$ for infinitely many $n$.
+\end{lemma}
+
+Without loss of generality, we can assume that $x \in (0, 1)$. Consider the continued fraction representation of $x$: $[0; a_1, a_2, a_3, \dots]$
+$$
+x = \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots}}}}
+$$
+where $a_1, a_2, a_3, \dots \in \naturals$. Let the rational approximation of $x$ obtained by truncating the expansion at the $k^{th}$ level be $\frac{p_k}{q_k}$, i.e. $\frac{p_1}{q_1} = \frac{1}{a_1}$, and so on. Let $\theta_k = q_k x -p_k$. We have that $|\theta_k| = (-1)^k\theta_k$. It is well known that $|\theta_k| < 1/q_k$. We define $q_{-1} = p_0 := 0$, and $p_{-1} = q_0 := 1$, so that for $k \ge 1$, the following recurrences hold:
+$$
+p_k = a_kp_{k-1} + p_{k-2}, ~ q_k = a_kq_{k-1} + q_{k-2}
+$$
+We thus have that $q_k \ge \left(\frac{1 + \sqrt{5}}{2}\right)^k = \phi^k$.
+
+\begin{proposition}
+\label{prop:absconv}
+Let irrational $x$ and its continued fraction representation $[0; a_1, a_2, a_3, \dots]$ be as above. The infinite series 
+$$
+\sum_{i=1}^\infty a_i |\theta_{i-1}|
+$$
+converges.
+\end{proposition}
+
+\begin{proposition}[Ostrowski Numeration System]
+\label{prop:numsys}
+Every real number $y \in [0, 1)$ can be written uniquely in the form
+$$
+y = \sum_{i=1}^\infty b_i |\theta_{i-1}| = \sum_{i=1}^\infty (-1)^{i-1}b_i \theta_{i-1} 
+$$
+where $b_i \in \naturals$ $b_i \le a_i$ for all $i \ge 1$. If for some $i$, $a_i = b_i$, then $b_{i+1} = 0$. $a_i \ne b_i$ for infinitely many odd, and infinitely many even indices $i$.
+\end{proposition}
+
+We prove Lemma \ref{lemma:existsreal2} by using the free choice of $b_i$ in this system to construct appropriate $y$. We first handle the issue of placing $y$ in the correct interval $[\alpha, \beta]$. Let $\beta - \alpha = \delta$. We use Proposition \ref{prop:absconv} to argue that there exists a suffix of the infinite series, such that changing the suffix does not change the real number it represents by more than $\delta/2$. Then, we can simply fix the corresponding prefix of $(\alpha + \beta)/2$ to be the prefix of $y$.
+
+Once this prefix is locked in, our strategy is to set $b_i$ to $0$ in even positions, and $1$ in some odd positions, to ensure that for sufficiently large $k$, $n_k = \sum_{i=1}^k b_i (-1)^{i-1}q_{i-1}$ is positive, and increasing in $k$.
+
+Now, notice that since $b_i, p_i$ are all integers, for any $y$,
+\begin{align*}
+[n_kx - y] &= \left[\sum_{i=1}^k b_i (-1)^{i-1}q_{i-1}x - \sum_{i=1}^k b_i (-1)^{i-1}p_{i-1} - y\right] \\
+&= \left[\sum_{i=1}^k b_i (-1)^{i-1}\theta_{i-1} - y\right] \\
+&= \left[- \sum_{i=k+1}^\infty b_i (-1)^{i-1}\theta_{i-1} \right] = \sum_{i=k+1}^\infty b_i |\theta_{i-1} |\\
+&< \sum_{i=k+1}^\infty b_i \frac{1}{q_{i-1}} \le \sum_{i=k+1}^\infty b_i \frac{1}{\phi^{i-1}} \le \frac{b}{\phi^k}
+\end{align*}
+
+Note that the last constant $b$ can be set independently of the choice of which $b_i$ are $1$. We now make that choice. To conclude the proof, we shall show that given a decreasing function $\psi$, we can ensure that for infinitely many distinct $n_k$, 
+$$[n(k)x - y] < \frac{b}{\phi^k} \le \psi(n_k) = \psi\left(\sum_{i=1}^k b_i (-1)^{i-1}q_{i-1}\right)$$.
+
+The first inequality is guaranteed. Suppose the second inequality does not hold. Then, from $i = k$ onwards, we keep assigning $b_i := 0$. This holds $n_k$ constant as $k$ increases, but decreases $\frac{b}{\phi^k}$. Eventually, the second inequality will indeed hold. After this point, for the next odd $i$, we can set $b_i$ to $1$, and get a new $n_k$. We continue this ad infinitum, and we are done.
