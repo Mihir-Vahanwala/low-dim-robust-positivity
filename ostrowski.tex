@@ -1,13 +1,13 @@
 \section{Appendix: Ostrowski Numeration System}
 \label{appendix:ostrowski}
 
-In this appendix, we prove Lemma \ref{lemma:existsreal}. We state number-theoretic properties of the continued fraction representation and Ostrowski Numeration System without proof. We refer the reader to \cite{bourla2016ostrowski} for a more detailed exposition, and we closely follow the discussion surrounding \cite[Propositions 1.1, 2.1]{berthe2022dynamics} in our own proof. 
+In this appendix, we prove Lemma \ref{lemma:existsreal}. We state number-theoretic properties of the continued fraction representation and Ostrowski Numeration System without proof. We refer the reader to \cite{bourla2016ostrowski} for a more detailed exposition, and we closely follow the discussion surrounding \cite[Propositions 1.1, 2.1]{berthe2022dynamics} in our own proof. We first prove a slightly simpler statement.
 
 \begin{lemma}
 \label{lemma:existsreal2}
 For every irrational number $x$, strictly decreasing real positive function $\psi$, and interval $\mathcal{I} = [\alpha, \beta] \subset [0, 1], ~ \alpha \ne \beta$, there exists $y \in \mathcal{I}$ such that $[nx - y] < \psi(n)$ for infinitely many $n$.
 \end{lemma}
-
+\begin{proof}
 Without loss of generality, we can assume that $x \in (0, 1)$. Consider the continued fraction representation of $x$: $[0; a_1, a_2, a_3, \dots]$
 $$
 x = \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots}}}}
@@ -45,10 +45,14 @@ Now, notice that since $b_i, p_i$ are all integers, for any $y$,
 [n_kx - y] &= \left[\sum_{i=1}^k b_i (-1)^{i-1}q_{i-1}x - \sum_{i=1}^k b_i (-1)^{i-1}p_{i-1} - y\right] \\
 &= \left[\sum_{i=1}^k b_i (-1)^{i-1}\theta_{i-1} - y\right] \\
 &= \left[- \sum_{i=k+1}^\infty b_i (-1)^{i-1}\theta_{i-1} \right] = \sum_{i=k+1}^\infty b_i |\theta_{i-1} |\\
-&< \sum_{i=k+1}^\infty b_i \frac{1}{q_{i-1}} \le \sum_{i=k+1}^\infty b_i \frac{1}{\phi^{i-1}} \le \frac{b}{\phi^k}
+&< \sum_{i=k+1}^\infty b_i \frac{1}{q_{i-1}} \le \sum_{i=k+1}^\infty b_i \frac{1}{\phi^{i-1}} \le \frac{c}{\phi^k}
 \end{align*}
 
-Note that the last constant $b$ can be set independently of the choice of which $b_i$ are $1$. We now make that choice. To conclude the proof, we shall show that given a decreasing function $\psi$, we can ensure that for infinitely many distinct $n_k$, 
-$$[n(k)x - y] < \frac{b}{\phi^k} \le \psi(n_k) = \psi\left(\sum_{i=1}^k b_i (-1)^{i-1}q_{i-1}\right)$$.
+Note that the last constant $c$ can be set independently of the choice of which $b_i$ are $1$, and which are $0$: it comes from the convergence of the geometric sum. We now make the choice of where to set $b_i=1$. To conclude the proof, we shall show that given a decreasing function $\psi$, we can ensure that for infinitely many distinct $n_k$, 
+$$[n_k x - y] < \frac{c}{\phi^k} \le \psi(n_k) = \psi\left(\sum_{i=1}^k b_i (-1)^{i-1}q_{i-1}\right)$$.
 
-The first inequality is guaranteed. Suppose the second inequality does not hold. Then, from $i = k$ onwards, we keep assigning $b_i := 0$. This holds $n_k$ constant as $k$ increases, but decreases $\frac{b}{\phi^k}$. Eventually, the second inequality will indeed hold. After this point, for the next odd $i$, we can set $b_i$ to $1$, and get a new $n_k$. We continue this ad infinitum, and we are done.
+The first inequality is guaranteed. Suppose the second inequality does not hold. Then, from $i = k$ onwards, we keep assigning $b_i := 0$. This holds $n_k$ constant as $k$ increases, but decreases $\frac{c}{\phi^k}$. Eventually, the second inequality will indeed hold. After this point, for the next odd $i$, we can set $b_i$ to $1$, and get a new $n_k$. We continue this ad infinitum, and we are done.
+\end{proof}
+
+Now, to get infinitely many \textit{even} $n$, apply Lemma \ref{lemma:existsreal2} with $2x$, $[a, b]$, $\psi_0(n) = \psi(2n)$. For some choice of $y$, there will be infinitely many $n$ such that $[2nx - y] < \psi_0(n) = \psi(2n)$. To get infinitely many \textit{odd} $n$, we can take a subset of the interval, and shift it by $x$. Take $\psi_1(n) = \psi(2n+1)$. For some choice of $y - x$, there will be infinitely many $n$ such that $[n(2x) - (y-x)] = [(2n+1)x - y] < \psi_1(n) = \psi(2n+1)$.
+
