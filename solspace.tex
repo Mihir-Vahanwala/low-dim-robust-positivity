@@ -75,7 +75,7 @@ where each $\rho_j \in \reals$. Note that $\gamma_j$, if not real, is written as
 Let $\mathbf{p} \in \realalgebraics^{\kappa} \subset \reals^\kappa$ be the vector of coefficients in equation \ref{eq:realexppoly}. We can thus write
 \begin{equation}
 \label{eq:innerprod}
-u_n = \seq{\mathbf{p}, \mathbf{x_n}}= 
+u_n = \seq{\mathbf{p}, \mathbf{q_n}}= 
 \begin{bmatrix}
 \rho_1^n & n \rho_1^n & \dots & n^{m_{k_1}-1}\rho_{k_1}^n & \rho_{k_1+1}^n\cos n\theta_{k_1+1} & \rho_{k_1+1}^n\sin n\theta_{k_1+1} & \dots
 \end{bmatrix}\mathbf{p}
@@ -84,10 +84,10 @@ u_n = \seq{\mathbf{p}, \mathbf{x_n}}=
 From the discussion surrounding equation \ref{eq:exppoly}, it is clear that we can easily compute an invertible linear map $\mathbf{V}$ such that $\mathbf{Vp} = \mathbf{c}$. Thus, we can equivalently consider our robust problems in the coefficient space, replacing $\mathbf{S}$ with $\mathbf{M} = \mathbf{V}^T\mathbf{SV}$, which is also positive definite. We can also decompose $\mathbf{M}$ as $\mathbf{B}\mathbf{B}^T$: indeed, $\mathbf{M}$, being symmetric positive definite, is unitarily diagonalisable with positive eigenvalues, so there is an algebraic unitary matrix $\mathbf{U}$ and algebraic diagonal matrix $\mathbf{D}$ such that $\mathbf{M} = \mathbf{U}\mathbf{D}^2\mathbf{U}^T$.
 
 Consider Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}. They boil down to asking whether for all $\mathbf{p'}$ with\\ 
-$(\mathbf{p'}-\mathbf{p})^T\mathbf{BB}^T(\mathbf{p'} - \mathbf{p}) = 1$, for all (but finitely many $n$) $\mathbf{x_n}^T\mathbf{p'} \ge 0$. $\mathbf{p'}$, in turn, can be expressed as $\mathbf{p} + \mathbf{d}$. Let $\mathbf{f} = \mathbf{B}^T\mathbf{d}$. Thus, it is equivalent to ask whether
+$(\mathbf{p'}-\mathbf{p})^T\mathbf{BB}^T(\mathbf{p'} - \mathbf{p}) = 1$, for all (but finitely many $n$) $\mathbf{q_n}^T\mathbf{p'} \ge 0$. $\mathbf{p'}$, in turn, can be expressed as $\mathbf{p} + \mathbf{d}$. Let $\mathbf{f} = \mathbf{B}^T\mathbf{d}$. Thus, it is equivalent to ask whether
 \begin{equation}
 \label{eq:crux}
-\seq{\mathbf{p}, \mathbf{x_n}} \ge \max_{\mathbf{f} \in \ball}\mathbf{x_n}^T\left(\mathbf{B}^{-1}\right)^T\mathbf{f} = ||\mathbf{B}^{-1}\mathbf{x_n}|| = \sqrt{\seq{\mathbf{b_1}, \mathbf{x_n}}^2 +\dots+\seq{\mathbf{b_\kappa}, \mathbf{x_n}}^2}
+\seq{\mathbf{p}, \mathbf{q_n}} \ge \max_{\mathbf{f} \in \ball}\mathbf{q_n}^T\left(\mathbf{B}^{-1}\right)^T\mathbf{f} = ||\mathbf{B}^{-1}\mathbf{q_n}|| = \sqrt{\seq{\mathbf{b_1}, \mathbf{q_n}}^2 +\dots+\seq{\mathbf{b_\kappa}, \mathbf{q_n}}^2}
 \end{equation}
 
 \begin{theorem}[First Main Decidability Result]

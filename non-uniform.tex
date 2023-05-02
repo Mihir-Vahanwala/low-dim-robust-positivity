@@ -28,41 +28,31 @@ Otherwise, the dominant terms contain a pair of complex conjugates. The case whe
 \end{equation}
 We can use Theorem \ref{thm:renegar} (Renegar) to evaluate the truth of this sentence in the First Order Theory of the Reals. If $-1$ is a root, we adjust the expression for $\mu$ accordingly. Here, evaluating the truth of the formula suffices to decide Ultimate Positivity, because there are no non-dominant terms.
 
-Thus, we concentrate on the case where there is one non-dominant term, i.e. $\seq{\mathbf{x_n}, \mathbf{p'}} = z + x\cos n\theta + y\sin n\theta + w\alpha^n$. As discussed, we need to analyse the points where the (surface of the) neighbourhood intersects the region $\mu(\mathbf{p'}) = 0$. Notice that the cone $z - \sqrt{x^2 + y^2} = 0$ is carved out by \textit{infinitely} many hyperplanes of the form $z + x\cos\phi + y\sin\phi = 0$. Consider the following first order formula with free variable $c$
+Thus, we concentrate on the case where there is one non-dominant term, i.e. $\seq{\mathbf{q_n}, \mathbf{p'}} = z + x\cos n\theta + y\sin n\theta + w\alpha^n$. As discussed, we need to analyse the points where the (surface of the) neighbourhood intersects the region $\mu(\mathbf{p'}) = 0$, and where the non-dominant terms can make a negative contribution. Notice that the cone $z - \sqrt{x^2 + y^2} = 0$ is carved out by \textit{infinitely} many hyperplanes of the form $z + x\cos\phi + y\sin\phi = 0$. Consider the following first order formula with free variable $c$
 \begin{equation}
 \label{eq:intersection}
-\chi_1(c):= \exists s \exists \mathbf{p'} = \begin{bmatrix}
-z & x & y & w
-\end{bmatrix}.~ (\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p}) = 1 \land z + cx + sy = 0 \land c^2 + s^2 = 1
+\chi_1(c):= \exists s \exists \mathbf{p'}.~ (\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p}) = 1 \land z + cx + sy = 0 \land c^2 + s^2 = 1 \land w \sim 0
 \end{equation}
 
-The free variable $c$ stands for $\cos \phi$, and denotes the hyperplane where the neighbourhood, which lies within the cone, possibly touches the surface of the cone. We can use Theorem \ref{thm:renegar} to get an equivalent quantifier free formula: this comprises purely of polynomial (in-)equalities in the free variable $c$. The set of $c$, and hence $\cos \phi$, satisfying these, consists of finitely many intervals. 
+In the above $\sim$ is $\ne$ if the non-dominant root $\alpha < 0$, and is $<$ otherwise. ($\alpha$ is necessarily nonzero!) The free variable $c$ stands for $\cos \phi$, and denotes the hyperplane where the neighbourhood, which lies within the cone, possibly touches the surface of the cone. Moreover, by the inequalities on $w$, we also enforce that the non-dominant terms make a negative contribution at the point of contact. We can use Theorem \ref{thm:renegar} to get an equivalent quantifier free formula: this comprises purely of polynomial (in-)equalities in the free variable $c$. The set of $c$, and hence $\cos \phi$, satisfying these, consists of finitely many intervals. Of course, Ultimate Positivity is guaranteed when this set is empty: the non-dominant terms are never adversarial when the dominant contribution is dangerously small.
 
-We first dispose of the case where intervals consist of single points. Consider an interval $\{c_0\}$ consisting of a single point. This is illustrated by the case of the ball touching the cone in Figure \ref{fig:geometricpicture}. Since we know that for the corresponding witness $s_0, z_0, x_0, y_0$, $z_0 \ge \sqrt{x_0^2 + y_0^2}$, it must be the case that $x_0 = -z_0c_0$, $y_0 = -z_0s_0$. All these numbers are algebraic; regardless of $w_0$, this point of tangency is an order 4 decidable instance of Ultimate Positivity: in fact, it is a YES instance, due to the techniques of \cite{ouaknine2014ultimate}.
+We first dispose of the case where all intervals consist of single points. Consider an interval $\{c_0\}$ consisting of a single point. This is illustrated by the case of the ball touching the cone in Figure \ref{fig:geometricpicture}. Since we know that for the corresponding witness $s_0, z_0, x_0, y_0$, $z_0 \ge \sqrt{x_0^2 + y_0^2}$, it must be the case that $x_0 = -z_0c_0$, $y_0 = -z_0s_0$. Since $c_0, s_0$ are algebraic; regardless of $z_0, w_0$, this point of tangency is an order 4 decidable instance of Ultimate Positivity: in fact, it is a YES instance, due to the techniques of \cite{ouaknine2014ultimate}.
 
-If, however, the set of $c$ satisfying $\chi_1$ consist of intervals that have more than one point, then the techniques of \cite{ouaknine2014ultimate} to decide Ultimate Positivity for a single point with algebraic coordinates are no longer accessible. This situation is illustrated by the case of the ball nestled in cone in Figure \ref{fig:geometricpicture}. Let $[\phi_1, \phi_2]$ be an interval of $\phi$ such that all values of $c$ between $\cos\phi_1$ and $\cos\phi_2$ satisfy $\chi_1$. Then, we must have for each $\phi$ (and corresponding $z(c), x = -cz, y = -z\sin \phi, w(c)$) in this interval, the following inequality is violated only finitely often:
+If, however, the set of $c$ satisfying $\chi_1$ consists of intervals that have more than one point, then the techniques of \cite{ouaknine2014ultimate} to decide Ultimate Positivity for a single point with algebraic coordinates are no longer accessible. This situation is illustrated by the case of the ball nestled in cone in Figure \ref{fig:geometricpicture}. Let $[\phi_1, \phi_2]$ be an interval of $\phi$ such that: a) all values of $c$ between $\cos\phi_1$ and $\cos\phi_2$ satisfy $\chi_1$, and b) The corresponding witnesses $w$ have magnitude at least some fixed $w_0$. Then, we must have for each $\phi$ (and corresponding $z(c), x = -cz, y = -z\sin \phi, w)$) in this interval, the following inequality is violated only finitely often:
 \begin{equation}
 z - z\cos(n\theta - \phi) + w\alpha^n \ge 0
 \end{equation}
 
-We consider an even weaker inequality, which, in this context, we argue is bound to be violated:
+We consider an even weaker inequality, which, in this context, we argue is bound to be violated infinitely often:
 \begin{equation}
-z[n\theta - \phi]_{2\pi}^2  \ge -2w\alpha^n
+z[n\theta - \phi]_{2\pi}^2  \ge 2w_0\alpha^n
 \end{equation}
 
-The argument hinges on Lemma \ref{lemma:existsreal}, which we recall:
+The argument hinges on Lemma \ref{lemma:existsreal}, which we restate:
 \begin{lemma}
 \label{lemma:existsreal3}
 For every irrational number $x$, strictly decreasing real positive function $\psi$, and interval $\mathcal{I} = [a, b] \subset [0, 1], ~ a \ne b$, there exists $y \in \mathcal{I}$ such that $[nx - y] < \psi(n)$ for infinitely many odd, and infinitely many even $n$.
 \end{lemma}
 
-Now, if $\alpha < 0$, we use Lemma \ref{lemma:existsreal3} on $\theta$, an irrational multiple of $2\pi$, and the decreasing $2|w|\cdot |\alpha|^n$ to argue that there exists a $\phi$ in the desired interval, such that the weaker inequality will be violated for infinitely many $n$ of the the appropriate parity. Thus, we can return NO if we are in this case.
-
-For the very same reason, if $\alpha > 0$, then we return YES if and only if at all critical points of tangency, $w \ge 0$. The negation is detected with the following first order logic formula
-\begin{equation}
-\label{eq:intersectionw}
-\chi_2(c):= \exists s \exists \mathbf{p'}.~ (\mathbf{p'} - \mathbf{p})^T\mathbf{M}(\mathbf{p'} - \mathbf{p}) = 1 \land z + cx + sy = 0 \land c^2 + s^2 = 1 \land w < 0
-\end{equation}
-
-This formula describes all the intervals of $\cos \phi$, where the point of tangency is such that $w$ is negative. If these intervals are single points, they are innocuous for Ultimate Positivity, and we can return YES, as discussed above. However, if the intervals are longer than singleton, we return NO: we can use the number-theoretic Lemma \ref{lemma:existsreal3} to argue the existence of an adversarial $\phi$ for which Ultimate Positivity does not hold at the point of contact to that hyperplane.
+Now, if $\alpha < 0$, we use Lemma \ref{lemma:existsreal3} on $\theta$, an irrational multiple of $2\pi$, and the decreasing $2w_0 |\alpha|^n$ to argue that there exists a $\phi$ in the desired interval, such that the weaker inequality will be violated for infinitely many $n$ of the the appropriate parity. Thus, we can return NO if we are in the case where the set of $c$ satisfying $\chi_1$ (equation \ref{eq:intersection}) consists of intervals that contain more than a single point.
 
