@@ -38,14 +38,14 @@ In the above $\sim$ is $\ne$ if the non-dominant root $\alpha < 0$, and is $<$ o
 
 We first dispose of the case where all intervals consist of single points. Consider an interval $\{c_0\}$ consisting of a single point. This is illustrated by the case of the ball touching the cone in Figure \ref{fig:geometricpicture}. Since we know that for the corresponding witness $s_0, z_0, x_0, y_0$, $z_0 \ge \sqrt{x_0^2 + y_0^2}$, it must be the case that $x_0 = -z_0c_0$, $y_0 = -z_0s_0$. Since $c_0, s_0$ are algebraic; regardless of $z_0, w_0$, this point of tangency is an order 4 decidable instance of Ultimate Positivity: in fact, it is a YES instance, due to the techniques of \cite{ouaknine2014ultimate}.
 
-If, however, the set of $c$ satisfying $\chi_1$ consists of intervals that have more than one point, then the techniques of \cite{ouaknine2014ultimate} to decide Ultimate Positivity for a single point with algebraic coordinates are no longer accessible. This situation is illustrated by the case of the ball nestled in cone in Figure \ref{fig:geometricpicture}. Let $[\phi_1, \phi_2]$ be an interval of $\phi$ such that: a) all values of $c$ between $\cos\phi_1$ and $\cos\phi_2$ satisfy $\chi_1$, and b) The corresponding witnesses $w$ have magnitude at least some fixed $w_0$. Then, we must have for each $\phi$ (and corresponding $z(c), x = -cz, y = -z\sin \phi, w)$) in this interval, the following inequality is violated only finitely often:
+If, however, the set of $c$ satisfying $\chi_1$ consists of intervals that have more than one point, then the techniques of \cite{ouaknine2014ultimate} to decide Ultimate Positivity for a single point with algebraic coordinates are no longer accessible. This situation is illustrated by the case of the ball nestled in cone in Figure \ref{fig:geometricpicture}. Let $[\phi_1, \phi_2]$ be an interval of $\phi$ such that: a) all values of $c$ between $\cos\phi_1$ and $\cos\phi_2$ satisfy $\chi_1$, b) The corresponding witnesses $z$ are at most $z_0$, and c) The corresponding witnesses $w$ have magnitude at least some fixed $w_0$. Then, we must have for each $\phi$ (and corresponding $z(c), x = -cz, y = -z\sin \phi, w)$) in this interval, the following inequality is violated only finitely often:
 \begin{equation}
 z - z\cos(n\theta - \phi) + w\alpha^n \ge 0
 \end{equation}
 
 We consider an even weaker inequality, which, in this context, we argue is bound to be violated infinitely often:
 \begin{equation}
-z[n\theta - \phi]_{2\pi}^2  \ge 2w_0\alpha^n
+z_0[n\theta - \phi]_{2\pi}^2  \ge 2w_0\alpha^n
 \end{equation}
 
 The argument hinges on Lemma \ref{lemma:existsreal}, which we restate:
@@ -54,5 +54,5 @@ The argument hinges on Lemma \ref{lemma:existsreal}, which we restate:
 For every irrational number $x$, strictly decreasing real positive function $\psi$, and interval $\mathcal{I} = [a, b] \subset [0, 1], ~ a \ne b$, there exists $y \in \mathcal{I}$ such that $[nx - y] < \psi(n)$ for infinitely many odd, and infinitely many even $n$.
 \end{lemma}
 
-Now, if $\alpha < 0$, we use Lemma \ref{lemma:existsreal3} on $\theta$, an irrational multiple of $2\pi$, and the decreasing $2w_0 |\alpha|^n$ to argue that there exists a $\phi$ in the desired interval, such that the weaker inequality will be violated for infinitely many $n$ of the the appropriate parity. Thus, we can return NO if we are in the case where the set of $c$ satisfying $\chi_1$ (equation \ref{eq:intersection}) consists of intervals that contain more than a single point.
+Now, if $\alpha < 0$, we use Lemma \ref{lemma:existsreal3} on the irrational $\theta/2\pi$, an irrational, and the decreasing $\sqrt{\frac{w_0 |\alpha|^n}{2\pi^2z_0}}$ to argue that there exists a $\phi$ in the desired interval, such that the weaker inequality will be violated for infinitely many $n$ of the the appropriate parity. Thus, we can return NO if we are in the case where the set of $c$ satisfying $\chi_1$ (equation \ref{eq:intersection}) consists of intervals that contain more than a single point.
 
