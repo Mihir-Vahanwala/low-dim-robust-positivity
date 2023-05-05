@@ -1,4 +1,14 @@
 \section{Extensions and Perspective}
+We note that our techniques for $\mathbf{S}$-Robust Non-uniform Ultimate Positivity hinge on the First Order Theory of the Reals. Observe that this was rather agnostic to the exact shape of the neighbourhood: we can easily extend the same techniques to arbitrary \textit{semi-algebraic} neighbourhoods. The uniform variants, on the other hand, can easily be seen to reduce to Positivity and Ultimate Positivity when the neighbourhoods are polyhedra. Let $\mathcal{P}$ be a polyhedron that contains the origin, and let $\mathbf{d_1}, \dots, \mathbf{d_k}$ be its corners. Our critical inequality \ref{eq:crux} in this case is:
+\begin{equation}
+\seq{\mathbf{p}, \mathbf{q_n}} \ge \max_{\mathbf{d} \in \mathcal{P}} \seq{\mathbf{d}, \mathbf{q_n}}
+\end{equation}
+The inner product on the right is always maximised at a \textit{corner}. Thus, it is equivalent to ask whether for all $j \in \{1, \dots, k\}$,
+\begin{equation}
+\seq{\mathbf{p} - \mathbf{d_j}, \mathbf{q_n}} \ge 0
+\end{equation}
+These are precisely $k$ many instances of (Ultimate) Positivity, which are decidable up to order five, and number-theoretically hard at order six \cite{joeljames3}.
+
 As outlined at the outset, we contributed towards a sharp and comprehensive picture of what is \textit{decidable} about Robust Positivity Problems for real algebraic Linear Recurrence Sequences. We find it remarkable that number-theoretic analyses involving Diophantine approximation, which usually show up in the context of hardness, also play a significant role in our \textit{decidability} proofs! However, a rather conspicuous gap in our picture is the status of $\mathbf{S}$-Robust Non-uniform Ultimate Positivity at order $5$: this seems to require even more delicate analysis. 
 
 An obvious, but possibly tedious future direction would be to tie up the book-keeping loose ends, and meticulously account for the complexity of our techniques. We chose to work with algebraic numbers; in settings involving rational numbers where scaling to integers and accessing an $\mathsf{PosSLP}$ oracle is viable, the complexity usually lies in $\mathsf{PSPACE}$. However, this might blow up significantly in the absence of efficient positivity testing for a different class of arithmetic circuit.
