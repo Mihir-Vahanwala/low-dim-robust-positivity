@@ -2,7 +2,7 @@
 \label{section:intro}
 A real Linear Recurrence Sequence (LRS) of order $\kappa$ is an infinite sequence of real numbers $\seq{u_0, u_1, u_2, \dots}$ having the following property: there exist $\kappa$ real constants $a_{0}, \dots, a_{\kappa-1}$, with $a_0 \ne 0$ such that for all $n \ge 0$:
 \begin{equation}
-u_{n+\kappa} = a_{\kappa-1}u_{n+\kappa-1} + \dots a_0 u_n
+u_{n+\kappa} = a_{\kappa-1}u_{n+\kappa-1} + \dots a_0 u_n.
 \end{equation}
 The constants $a_0, \dots, a_{\kappa-1}$, and the initial terms $u_0, \dots, u_{\kappa-1}$ uniquely specify an LRS. The best-known example is the Fibonacci sequence $\seq{0, 1, 1, 2, 3, 5, 8, \dots}$, satisfying the recurrence relation $u_{n+2} = u_{n+1} + u_n$: it is named after Leonardo of Pisa, who used it to model the population growth of rabbits. LRS have been extensively studied, and found several mathematical and scientific applications since. The monograph of Everest \textit{et al.} \cite{Everest2003RecurrenceS} is a comprehensive treatise on the mathematical aspects of Recurrence Sequences.
 
@@ -39,11 +39,11 @@ As first discussed in \cite[Section 5]{joeljames3}, solving decision problems on
 \end{table}
 
 \subsubsection*{Notation and Prerequisites}
-For the purposes of discussing robustness, we shall use $\ball$ to denote the unit Euclidean ball in $\reals^\kappa$, centred at the origin. Similarly, we use $\ball_{\mathbf{S}}$ to denote the set of $\mathbf{d}$ such that $\mathbf{d}^T\mathbf{Sd} \le 1$. For real column vectors $\mathbf{x}, \mathbf{y}$, we use $\seq{\mathbf{x}, \mathbf{y}}$ to denote the inner product $\mathbf{x}^T\mathbf{y} = \mathbf{y}^T\mathbf{x}$. $||\mathbf{x}||$ denotes the standard $\ell^2$-norm $\sqrt{\seq{\mathbf{x}, \mathbf{x}}}$
+For the purposes of discussing robustness, we shall use $\ball$ to denote the unit Euclidean ball in $\reals^\kappa$, centred at the origin. Similarly, we use $\ball_{\mathbf{S}}$ to denote the set of $\mathbf{d}$ such that $\mathbf{d}^T\mathbf{Sd} \le 1$. For real column vectors $\mathbf{x}, \mathbf{y}$, we use $\seq{\mathbf{x}, \mathbf{y}}$ to denote the inner product $\mathbf{x}^T\mathbf{y} = \mathbf{y}^T\mathbf{x}$. The notation $||\mathbf{x}||$ denotes the standard $\ell^2$-norm $\sqrt{\seq{\mathbf{x}, \mathbf{x}}}$.
 
 Throughout this paper,  $\naturals$, $\integers$, $\rationals$, $\reals$, and $\complexes$ respectively denote the natural numbers, integers, rationals, reals, and complex numbers. $\alpha \in \complexes$ is said to be algebraic if it is a root of a polynomial with integer coefficients. Algebraic numbers form an algebraically closed field, denoted by $\algebraics$. We denote the field of real algebraic numbers by $\realalgebraics$.
 
-In this paper, we assume our input consists of real algebraic numbers. Appendix \ref{appendix:prelims} contains a brief initiation to this number field. The key takeaways are that the usual arithmetic can be carried out with perfect precision, and that the First Order Theory of the Reals $\seq{\reals; +, \cdot, \ge, 0, 1}$ is a decidable logical system powerful enough to fit our purposes.
+\textbf{In this paper, we assume our input consists of real algebraic numbers.} Appendix \ref{appendix:prelims} contains a brief initiation to this number field. The key takeaways are that the usual arithmetic can be carried out with perfect precision, and that the First Order Theory of the Reals $\seq{\reals; +, \cdot, \ge, 0, 1}$ is a decidable logical system powerful enough to fit our purposes.
 
 \begin{theorem}[Renegar \cite{renegar}]
 \label{thm:renegar}

@@ -1,7 +1,22 @@
 \section{Diophantine Approximation}
 \label{section:diophantine}
 
-Diophantine Approximation is a vast and active number-theoretic field of research concerned, among other things, with the approximation of reals by rational numbers. In this section, we follow Lagarias and Shallit’s terminology \cite{dio-constants} and briefly introduce classes of constants whose computation is an open problem. In what follows, $[x]$ denotes the shortest distance from $x$ to an integer; while $[x]_b$ denotes the shortest distance from $x$ to an integer multiple of $b$. $[x]_b = b[x/b]$
+Diophantine Approximation is a vast and active number-theoretic field of research, one of whose concerns is the approximation of reals by rational numbers. A key tool in this regard is the partial fraction expansion $[0; a_1, a_2, \dots]$ of an irrational $t \in (0, 1)$:
+$$
+t = \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots}}}}
+$$
+where $a_1, a_2, a_3, \dots \in \naturals$. Truncating this expansion at progressively greater depths yields a series of increasingly accurate approximations. The quality of the rational approximation depends not only on its accuracy but also on the size of the denominator. As discussed in the Introduction, evaluating the quality of the approximation, or that of the convergence, seems inaccessible to contemporary number theory.
+
+The above intuition about the quality of the approximation is captured in the following definition of $L(t)$, the (homogenous) Diophantine approximation type:
+\begin{equation}
+L(t) = \inf\left\{c \in \reals : \left|t - \frac{p}{q}\right| < \frac{c}{q^2} \text{ for some } p, q\in \integers\right\}.
+\end{equation}
+Similarly, the quality of the convergence is formalised by defining $L_{\infty}(t)$, the (homogenous) Lagrange constant: 
+\begin{equation}
+L_\infty(t) = \inf\left\{c \in \reals : \left|t - \frac{p}{q}\right| < \frac{c}{q^2} \text{ for infinitely many } p, q\in \integers\right\}.
+\end{equation}
+ 
+For technical purposes, we use an equivalent definition that relates to the continued fraction perspective, and allows for a slight generalisation. We follow Lagarias and Shallit’s terminology \cite{dio-constants} and use $[x]$ to denote the shortest distance from $x$ to an integer; while $[x]_b$ denotes the shortest distance from $x$ to an integer multiple of $b \in \reals$. It is easy to observe the property $[x]_b = b[x/b]$.
 
 \begin{definition}[Diophantine Approximation Type]
 \label{def:L}
@@ -13,26 +28,32 @@ The homogenous Diophantine approximation type $L(t)$ is defined to be $\inf_{n \
 The homogenous Lagrange constant $L_\infty(t)$ is defined to be $\liminf_{n \in \naturals} n[nt]$. The inhomogeneous Lagrange constant $L_\infty(t, s)$ is defined to be\\ $\liminf_{n \in \naturals} n[nt - s]$, $s \notin \integers + t\integers$.
 \end{definition} 
 
-It is known (Dirichlet, Minkowski \cite{minkowski}) that these constants lie between $0$ and $1$. As an immediate corollary, one observes that
+From the definitions, it is clear that $0 \le L(t) \le L_\infty(t)$. Due to the work of Khintchine \cite{khintchine}, it is known that these constants lie between $0$ and $\frac{1}{\sqrt{5}}$. As an immediate corollary, we make an observation that will prove useful in our context.
 \begin{equation}
 \label{eq:quadraticdecay}
-\exists c.~\forall t, s.~ \exists^\infty n. ~ 1 - \cos(nt - s) \le \frac{1}{2}\left[nt - s \right]_{2\pi}^2 \le \frac{c}{n^2}
+\exists c.~\forall t, s.~ \exists^\infty n. ~ 1 - \cos(nt - s) \le \frac{1}{2}\left[nt - s \right]_{2\pi}^2 \le \frac{c}{n^2}.
 \end{equation}
 
-We record a useful number-theoretic fact: its proof relies on the Ostrowski numeration system \cite{bourla2016ostrowski,berthe2022dynamics}, and is deferred to Appendix \ref{appendix:ostrowski}.
+We record a number-theoretic fact which describes the density of the integer multiples of an irrational $x$ modulo $1$ in the unit interval: its proof relies on continued fraction expansions and the Ostrowski numeration system \cite{bourla2016ostrowski,berthe2022dynamics}, and is deferred to Appendix \ref{appendix:ostrowski}.
 \begin{lemma}
 \label{lemma:existsreal}
-For every irrational number $x$, strictly decreasing real positive function $\psi$, and interval $\mathcal{I} = [a, b] \subset [0, 1], ~ a \ne b$, there exists $y \in \mathcal{I}$ such that $[nx - y] < \psi(n)$ for infinitely many odd, and infinitely many even $n$.
+For every irrational number $x$, strictly decreasing real positive function $\psi$, and interval $\mathcal{I} = [a, b] \subset [0, 1], ~ a \ne b$, there exists $y_0 \in \mathcal{I}$ such that $[nx - y_0] < \psi(n)$ for infinitely many even $n$, and $y_1 \in \mathcal{I}$ such that $[nx - y_1] < \psi(n)$ for infinitely many odd $n$.
 \end{lemma}
 
-Following \cite{joeljames3}, we note that the Diophantine approximation type and Lagrange constant of most transcendental numbers are unknown, and define
+The familiar density theorem is an immediate corollary of the above powerful result. Indeed, we can consider an interval of length $\varepsilon/2$, and take $\psi(n) = \varepsilon/2$.
+\begin{lemma}
+\label{lemma:density}
+Let $x$ be irrational, and $y \in [0, 1)$. For every $\varepsilon > 0$, there exist infinitely many even $n$, and infinitely many odd $n$ such that $[nx - y] < \varepsilon$.
+\end{lemma}
+
+The computation of the constants $L(t)$ and $L_\infty(t)$ discussed above is reduced to the non-robust variants of Positivity problems for LRS of order 6 in \cite[Section 5]{joeljames3}. We refer the reader to this source for a cursory survey of the history of developments in the field of Diophantine approximation. We note that despite the observations and results mentioned in the preceding discussion, the Diophantine approximation type and Lagrange constant of most transcendental numbers are unknown. For instance, computing $L_\infty(\pi)$ is a longstanding and mathematically interesting open problem. In this paper, we prove analogous hardness results for robust Positivity problems, and thus define a similar class of transcendental numbers relevant to our reduction.
 \begin{equation}
 \mathcal A=\{p+q i \in \mathbb{C} \mid p,q \in \mathbb{A}, p^2+q^2=1, \forall n.~(p + qi)^n \ne 1\}
 \end{equation}
-i.e., the set of points on the unit circle of $\mathbb{C}$ with rational real and imaginary parts, excluding $1,-1, i$ and $-i$. The set $\mathcal A$ consists of algebraic numbers, none of which are roots of unity. In particular, writing $p+q i= e^{i 2 \pi \theta}$, we have that $\theta \notin \mathbb{Q}$. We denote:
+i.e., the set $\mathcal A$ consists of algebraic numbers on the unit circle in $\complexes$, none of which are roots of unity. In particular, writing $p+q i= e^{i 2 \pi \theta}$, we have that $\theta \notin \mathbb{Q}$. We denote:
 \begin{equation}
 \label{eq:keyset}
-\mathcal{T} = \left\{ \theta \in (- 1/2, 1/2] \mid e^{2 \pi i \theta} \in \mathcal{A}\right\}
+\mathcal{T} = \left\{ \theta \in (- 1/2, 1/2] \mid e^{2 \pi i \theta} \in \mathcal{A}\right\}.
 \end{equation}
 The set $\mathcal{T}$ is dense in $(- \frac 1 2, \frac 1 2]$. In general, we don't have a method to compute $L(\theta)$ or $L_\infty(\theta)$ for $\theta \in \mathcal{T}$, or approximate them with arbitrary precision.
 
@@ -46,7 +67,7 @@ Let $\mathcal{T}$ be as above. A decision problem is said to be $\mathcal{T}$-Di
 Problem \ref{prob:rrobpos} (resp.\ Problem \ref{prob:rrobuniultpos}) is $\mathcal{T}$-Diophantine hard (resp.\ $\mathcal{T}$-Lagrange hard) at order 5. 
 \end{theorem}
 
-\cite{originalarxiv} notes that in view of the Lagrange hardness (Definition \ref{def:hardness}) of Ultimate Positivity at order 6 \cite{joeljames3}, Problem \ref{prob:rrobnonuniultpos} is also Lagrange hard at order 6: one can simply construct a neighbourhood that lies entirely in the region $\mu > 0$ (i.e. neighbourhoods for which Ultimate Positivity can be \textit{certified}), except for a hard instance of Ultimate Positivity on its surface. In this way, Ultimate Positivity is guaranteed for all but the single critical point on the boundary.
+As noted in \cite{originalarxiv}, in view of the Lagrange hardness (Definition \ref{def:hardness}) of Ultimate Positivity at order 6 \cite{joeljames3}, Problem \ref{prob:rrobnonuniultpos}, which asks whether the given neighbourhood consists entirely of initialisations that produce an Ultimately Positive sequence, is also Lagrange hard at order 6. The idea is to extend the existing reduction from the computation of Lagrange constants to Ultimate Positivity. One simply constructs a neighbourhood of initialisations that has the hard instance of Ultimate Positivity on its surface, but otherwise lies entirely in the region where Ultimate Positivity is guaranteed.
 
 \begin{theorem}
 \label{thm:hardness2}
