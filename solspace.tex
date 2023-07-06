@@ -119,21 +119,6 @@ Crucially, $\mathbf{g_1}, \dots, \mathbf{g_\kappa}$ are the linearly independent
 Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable up to order 4.
 \end{theorem}
 
-
-
-
-
-Let $\mathbf{p} \in \realalgebraics^{\kappa} \subset \reals^\kappa$ be the vector of coefficients in equation \ref{eq:realexppoly}. We can thus write
-\begin{equation}
-\label{eq:innerprod}
-u_n = \seq{\mathbf{p}, \mathbf{q_n}}= 
-\begin{bmatrix}
-\rho_1^n & n \rho_1^n & \dots & n^{m_{k_1}-1}\rho_{k_1}^n & \rho_{k_1+1}^n\cos n\theta_{k_1+1} & \rho_{k_1+1}^n\sin n\theta_{k_1+1} & \dots
-\end{bmatrix}\mathbf{p}
-\end{equation}
-
-From the discussion surrounding equation \ref{eq:realexppoly}, it is clear that we can easily compute an invertible linear map $\mathbf{V}$ such that $\mathbf{Vp} = \mathbf{c}$. Thus, we can equivalently consider our robust problems in the coefficient space, replacing $\mathbf{S}$ with $\mathbf{M} = \mathbf{V}^T\mathbf{SV}$, which is also positive definite. We can also decompose $\mathbf{M}$ as $\mathbf{B}\mathbf{B}^T$: indeed, $\mathbf{M}$ is symmetric positive definite. 
-
 \textbf{Our strategy for Problem \ref{prob:rrobnonuniultpos} is as follows.}
 \begin{enumerate}
 \item Consider the invertible matrix $\mathbf{V}^{-1}$ that maps initialisations to the coefficients in the real exponential polynomial closed form \ref{eq:realexppoly}.

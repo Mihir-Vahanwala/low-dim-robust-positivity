@@ -1,0 +1,30 @@
+\section{Useful Mathematical Tools}
+\label{section:utils}
+
+
+Let $\mathbf{p} \in \realalgebraics^{\kappa} \subset \reals^\kappa$ be the vector of coefficients in equation \ref{eq:realexppoly}. We can thus write
+\begin{equation}
+\label{eq:innerprod}
+u_n = \seq{\mathbf{p}, \mathbf{q_n}}= 
+\begin{bmatrix}
+\rho_1^n & n \rho_1^n & \dots & n^{m_{k_1}-1}\rho_{k_1}^n & \rho_{k_1+1}^n\cos n\theta_{k_1+1} & \rho_{k_1+1}^n\sin n\theta_{k_1+1} & \dots
+\end{bmatrix}\mathbf{p}
+\end{equation}
+
+From the discussion surrounding equation \ref{eq:realexppoly}, it is clear that we can easily compute an invertible linear map $\mathbf{V}$ such that $\mathbf{Vp} = \mathbf{c}$. Thus, we can equivalently consider our robust problems in the coefficient space, replacing $\mathbf{S}$ with $\mathbf{M} = \mathbf{V}^T\mathbf{SV}$, which is also positive definite. We can also decompose $\mathbf{M}$ as $\mathbf{B}\mathbf{B}^T$: indeed, $\mathbf{M}$ is symmetric positive definite. 
+
+The following result is now standard, and follows directly by applying \cite[Lemma 4]{Braverman06} to the dominant terms in expression \ref{eq:realexppoly} and arguing that the contribution from the remaining terms vanishes asymptotically. It implies that the answer to Ultimate Positivity is trivially NO if there are two pairs of complex conjugates among the four roots.
+
+\begin{proposition}
+\label{prop:folklore}
+If the characteristic polynomial has no real dominant root of maximum multiplicity, then in any full-dimensional neighbourhood of initialisations, there exists an initialisation, such that the sequence has infinitely many positive terms, and infinitely many negative terms.
+\end{proposition}
+
+The following Lemma helps us detect, by brute enumeration, whether an algebraic number on the unit circle is a root of unity.
+\begin{lemma}
+\label{lemma:rootofunity}
+Let $\alpha$ be an algebraic number of degree $d$. Then if $\alpha$ is a $k^{th}$ root of unity, $k \le 2d^2$.
+\end{lemma}
+\begin{proof}
+The degree of the $k^{th}$ root of unity is precisely $\Phi(k)$, where $\Phi$ denotes the Euler totient function. $\Phi(k) \ge \sqrt{k/2}$. The desired inequality follows.
+\end{proof}

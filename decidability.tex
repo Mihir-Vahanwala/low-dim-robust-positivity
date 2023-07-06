@@ -7,22 +7,17 @@ $$
 
 Our main case distinction is on the number of pairs of complex conjugates among the roots. In each case, the plan is to first decide whether there exists a threshold index $N$ beyond which the LHS is always positive, and if so, compute it. This can always be done for order four LRS \cite{joeljames3}. We then square throughout, and transfer all terms to the LHS, thus obtaining a new instance of (Ultimate) Positivity. This plan is trivial to execute when all characteristic roots are real.
 
-Thanks to the following old result \cite[Thm. 2]{positive-dominant}, the answer to Ultimate Positivity is trivially NO if there are two pairs of complex conjugates.
 
-\begin{proposition}
-\label{prop:folklore}
-If the characteristic polynomial has no real dominant root of maximum multiplicity, then in any full-dimensional neighbourhood of initialisations, there exists an initialisation, such that the sequence has infinitely many positive terms, and infinitely many negative terms.
-\end{proposition}
 
 Thus, we shall concern ourselves with the case there is one pair of complex conjugate roots. Without loss of generality, we also assume that the real dominant root is $1$. We rely on specific applications of the following general results to analyse the trigonometric terms that arise.
 
-\begin{theorem}[Masser \cite{Masser}]
+%\begin{theorem}[Masser \cite{Masser}]
   \label{thm:abelian}
-  Let $e^{i \theta_1},...,e^{i \theta_k}$ be complex algebraic numbers of unit modulus. Consider the free abelian group $L$ defined by $L = \{(\lambda_1, \ldots ,\lambda_k) \in \mathbb{Z}^k: 
-  e^{i (\lambda_1 \theta_1 + \cdots +  \lambda_k \theta_k)} = 1 \}$. 
-  The group $L$ has a finite generator set $\{ \mathbf{l_1}, \ldots, \mathbf{l_p}\} \subset \mathbb{Z}^k$ with $p \le k$. The generator set can be computed in time polynomial and
-  each entry in the generator set is polynomially bounded in the sizes of the representations of $e^{i \theta_1},...,e^{i \theta_k}$.
-  \end{theorem}
+ % Let $e^{i \theta_1},...,e^{i \theta_k}$ be complex algebraic numbers of unit modulus. Consider the free abelian group $L$ defined by $L = \{(\lambda_1, \ldots ,\lambda_k) \in \mathbb{Z}^k: 
+ % e^{i (\lambda_1 \theta_1 + \cdots +  \lambda_k \theta_k)} = 1 \}$. 
+  %The group $L$ has a finite generator set $\{ \mathbf{l_1}, \ldots, \mathbf{l_p}\} \subset \mathbb{Z}^k$ with $p \le k$. The generator set can be computed in time polynomial and
+ % each entry in the generator set is polynomially bounded in the sizes of the representations of $e^{i \theta_1},...,e^{i \theta_k}$.
+ % \end{theorem}
  Given $e^{2i\theta}$, if an $n$ such that $e^{2i n \theta} = 1$ exists ($\theta$ is a rational multiple of $2\pi$), this $n$ is bounded, and can be efficiently found by enumeration. Similarly, one can check whether $\alpha^n = \beta$ (is $n\theta - \varphi$ ever an integer multiple of $2\pi$?). Suppose $\theta$ is not a rational multiple of $2\pi$. Then the following theorem establishes that $\{n\theta \text{ modulo } 2\pi\}_{n\in\naturals}$ is dense in $[0, 2\pi]$. Let $h$ be a trigonometric function of $t$ with period $2\pi$. Another immediate consequence is that
 \begin{equation}
 \label{eq:liminfmin}
