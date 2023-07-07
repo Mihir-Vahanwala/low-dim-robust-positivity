@@ -1,31 +1,41 @@
-\section{Useful Technical Groundwork}
+\section{Useful Technical Groundwork and Intuition}
 \label{section:utils}
-In this section, we elaborate on the discussion surrounding the real exponential polynomial expression \ref{eq:realexppoly}, and lay the technical foundation for our decidability proofs. Recall that
-\begin{align}
-\label{eq:realexppolycopy}
-u_n &= \mathbf{e_1}^T\mathbf{A}^n\mathbf{c}\\
-&= \left(\sum_{j=1}^{k_1}\sum_{\ell = 0}^{m_j-1} z_{j\ell}\rho_j^n n^\ell\right) + \left(\sum_{j=k_1 + 1}^{k_2} \sum_{\ell = 0}^{m_j-1} (x_{j\ell} \cos n\theta_j + y_{j\ell}\sin n\theta_j)\rho_j^n n^\ell\right).
-\end{align}
-The exponential polynomial expression above is due to the fact that real algebraic sequences which are solutions to Linear Recurrence Relations have a basis $\{q_1(n), \dots, q_\kappa(n)\}$. We only consider bases each element $q_j(n)$ is a function with a single term, e.g. $\rho_j^n n^\ell$; $\rho_j^n n^\ell \cos(n\theta_j - \varphi)$; $\rho_j^n n^\ell \sin(n\theta_j - \varphi)$.
-
-A standard, intuitive prerequisite for Ultimate Positivity is that the leading terms must include one that is real and strictly positive, otherwise their dominant contribution oscillates between positive and negative. It is formalised by applying \cite[Lemma 4]{Braverman06} to the dominant terms in expression \ref{eq:realexppoly} and arguing that the contribution from the remaining terms vanishes asymptotically. 
-\begin{proposition}
-\label{prop:folklore}
-If the characteristic polynomial has no real dominant root of maximum multiplicity, then in any full-dimensional neighbourhood of initialisations, there exists an initialisation, such that the sequence has infinitely many positive terms, and infinitely many negative terms.
-\end{proposition}
-
-Since our decidability results concern LRS of order at most 4, a direct consequence in our context is that the answer to Ultimate Positivity is trivially NO if there are two pairs of complex conjugates among the four roots. \textbf{Henceforth, we assume that the characteristic polynomial has at most one pair of complex conjugate roots.}
+In this section, we elaborate on the discussion surrounding the real exponential polynomial expression \ref{eq:realexppoly}, specify simplifying assumptions, and lay the technical foundation for our decidability proofs. 
 
 
-Let $\mathbf{p} \in \realalgebraics^{\kappa} \subset \reals^\kappa$ be the vector of coefficients in equation \ref{eq:realexppoly}. We can thus write
-\begin{equation}
-\label{eq:innerprod}
-u_n = \seq{\mathbf{p}, \mathbf{q_n}}= 
+\subsection{The uniform variants}
+The exponential polynomial expression reflects the fact that real algebraic sequences which are solutions to Linear Recurrence Relations have a basis $\{q_1(n), \dots, q_\kappa(n)\}$. \textbf{Crucially, this basis is not unique.} However, we only consider bases where each element $q_j(n)$ is a function with a single term, e.g. $\rho_j^n n^\ell$; $\rho_j^n n^\ell \cos(n\theta_j - \varphi)$; $\rho_j^n n^\ell \sin(n\theta_j - \varphi)$. For such a basis $Q$, let $\mathbf{V}$ be the (generalised) Vandermonde matrix
+\begin{equation*}
 \begin{bmatrix}
-\rho_1^n & n \rho_1^n & \dots & n^{m_{k_1}-1}\rho_{k_1}^n & \rho_{k_1+1}^n\cos n\theta_{k_1+1} & \rho_{k_1+1}^n\sin n\theta_{k_1+1} & \dots
-\end{bmatrix}\mathbf{p}
+q_1(0) & \dots & q_\kappa(0) \\
+\vdots & \ddots & \vdots \\
+q_1(\kappa-1) & \dots & q_{\kappa}(\kappa-1)
+\end{bmatrix}.
+\end{equation*}
+By construction, $\mathbf{e_1}^T\mathbf{A}^n\mathbf{V} = \begin{bmatrix}q_1(n) & \dots & q_\kappa(n)\end{bmatrix} = \mathbf{q_n}^T$. We argue that $\mathbf{V}^{-1}$ linearly maps initialisations to coefficients in the closed form solution: to see this, denote $\mathbf{c} = \mathbf{Vp}$, and observe $\mathbf{e_1}^T\mathbf{A}^n\mathbf{c} = \mathbf{q}^T\mathbf{p} = \seq{\mathbf{p}, \mathbf{q}}$. This means that inequality \ref{eq:critical}, whose verification is critical for Robust (Uniform Ultimate) Positivity, can be transformed to the succinct form
+\begin{equation}
+\seq{\mathbf{p}, \mathbf{q_n}}^2 - \seq{\mathbf{b_1}, \mathbf{q_n}}^2 - \dots - \seq{\mathbf{b_\kappa}, \mathbf{q_n}}^2 \ge 0.
 \end{equation}
+For instance, the inequality we will need to handle in a non-trivial case is
+\begin{align*}
+&(p_1n + p_2 + p_3\cos(n\theta -\varphi) + p_4\sin(n\theta-\varphi))^2 \\- \sum_{j=1}^4 &(b_{j1}n + b_{j2} + b_{j3}\cos(n\theta -\varphi) + b_{j4}\sin(n\theta-\varphi))^2 \ge 0.
+\end{align*}
+ In fact, Robust (Uniform Ultimate) Positivity can be \textbf{equivalently formulated} as
+\begin{equation}
+\label{eq:equivalentdefinition}
+\seq{\mathbf{p}, \mathbf{q_n}} \ge \sqrt{\seq{\mathbf{b_1}, \mathbf{q_n}}^2 + \dots +\seq{\mathbf{b_\kappa}, \mathbf{q_n}}^2} 
+\end{equation}
+for all (but finitely many) $n$, where the only additional requirement is that $\mathbf{b_1}, \dots, \mathbf{b_\kappa}$ be linearly independent. It is this formulation we use in \S\ref{section:hardness} to prove that the problems are hard at order 5. We note a property that is crucial for the reduction: it is straightforward to verify that inequality \ref{eq:equivalentdefinition} holds for all $n \ge N$ if and only if for all $n \in \naturals$,
+\begin{equation}
+\seq{\mathbf{p'}, \mathbf{q_n}} \ge \sqrt{\seq{\mathbf{b_1'}, \mathbf{q_n}}^2 + \dots +\seq{\mathbf{b_\kappa'}, \mathbf{q_n}}^2} 
+\end{equation}
+where $\mathbf{p'} = \mathbf{V}^{-1}\mathbf{A}^N\mathbf{Vp}$, and the other primed vectors are obtained similarly.
 
-From the discussion surrounding equation \ref{eq:realexppoly}, it is clear that we can easily compute an invertible linear map $\mathbf{V}$ such that $\mathbf{Vp} = \mathbf{c}$. Thus, we can equivalently consider our robust problems in the coefficient space, replacing $\mathbf{S}$ with $\mathbf{M} = \mathbf{V}^T\mathbf{SV}$, which is also positive definite. We can also decompose $\mathbf{M}$ as $\mathbf{B}\mathbf{B}^T$: indeed, $\mathbf{M}$ is symmetric positive definite. 
+\subsection{The non-uniform variant}
+We follow the strategy outlined in \S\ref{section:solspace}. Through the exponential polynomial solution, we have already expressed $u_n = \seq{\mathbf{p}, \mathbf{q_n}}$, where $\mathbf{p} = \mathbf{V}^{-1}\mathbf{c}$. We define $\mu(\mathbf{c}) = \seq{\mathbf{p}, \mathbf{q_n}}_{dom}$ to be the normalised contribution of the dominant terms in the exponential polynomial solution: i.e. we pick the terms with the highest growth rate $\rho^n n^\ell$, and divide their total contribution by $\rho^n n^\ell$. For example, if
+$
+u_n = p_1 2^n + p_2 2^n\cos n\theta + p_3 2^n \sin n\theta + p_4
+$
+then $$\mu(\mathbf{c}) = p_1  + p_2 \cos n\theta + p_3 \sin n\theta.$$
 
 

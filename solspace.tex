@@ -6,22 +6,24 @@ We start approaching robustness by formally decoupling the elements of an LRS: n
 \begin{definition}[Linear Recurrence Relation (LRR)]
 \label{def:LRR}
 A real algebraic LRR $\mathbf{a}$ of order $\kappa$:
-\begin{itemize}
-\item is a $\kappa+1$-ary relation, specified by $\kappa$ numbers, $a_0, \dots, a_{\kappa-1} \in \realalgebraics$, with $a_0 \ne 0$. $\mathbf{a}(Y_0, Y_1, \dots, Y_\kappa)$ is interpreted as 
+is a $\kappa+1$-ary relation, specified by $\kappa$ numbers, $a_0, \dots, a_{\kappa-1} \in \realalgebraics$, with $a_0 \ne 0$. $\mathbf{a}(Y_0, Y_1, \dots, Y_\kappa)$ is interpreted as 
 $
 Y_\kappa = \sum_{j=0}^{\kappa-1} a_j Y_j
-$.
-\item has a characteristic polynomial is
+$. \\
+Its characteristic polynomial is
 $
 X^{\kappa} - \sum_{j=0}^{\kappa-1}a_j X^j
 $.
-\end{itemize}
+A Linear Recurrence is called simple if its characteristic polynomial has no repeated roots.
 \end{definition}
 
 \begin{definition}[Linear Recurrence Sequence (LRS)]
 \label{def:LRS}
 A real algebraic LRS $\mathbf{u}$ of order $\kappa$ is an infinite sequence $\seq{u_n}_{n=0}^\infty$, given by a real algebraic order $\kappa$ LRR $\mathbf{a}$ and the initialisation $\mathbf{c} = (u_0, u_1, \dots, u_{\kappa-1}) \in \realalgebraics^\kappa$. For all $n \in \naturals$, $\mathbf{a}(u_n, u_{n+1}, \dots, u_{n+\kappa})$ holds.
 \end{definition}
+
+An LRS $\seq{u_n}_{n=0}^\infty$ is given as $(\mathbf{a}, \mathbf{c})$, i.e. the real algebraic recurrence and the initialisation. The Positivity problem is to decide whether for all $n \in \naturals$, $u_n \ge 0$.
+The Ultimate Positivity problem is to decide whether there exists an $N$ such that for all $n \ge N$, $u_n \ge 0$. A Positive LRS is necessarily Ultimately Positive. As mentioned in the Introduction, \cite{joeljames3} shows both Positivity and Ultimate Positivity to be decidable up to order 5, while demonstrating number-theoretic hardness at order 6 in the precise sense of Definition \ref{def:hardness}. On restricting our attention to \textit{simple} LRS (the characteristic polynomial has no repeated root), Positivity is decidable up to order 9 \cite{ouaknine2014positivity}, while Ultimate Positivity is decidable at all orders \cite{ouaknine2014ultimate}. 
 
 One can also encode the recurrence $\mathbf{a}$ as a $\kappa \times \kappa$ companion matrix $\mathbf{A}$, and interpret the initialisation $\mathbf{c}$ as a vector. Then, $u_n$ is given by the first coordinate of $\mathbf{A}^n\mathbf{c}$, i.e.
 \begin{equation}
@@ -53,14 +55,16 @@ u_n = \left(\sum_{j=1}^{k_1}\sum_{\ell = 0}^{m_j-1} z_{j\ell}\rho_j^n n^\ell\rig
 \end{equation}
 where $\rho_j$ (alternately, $\rho_j e^{i\theta_j}$) are roots of the characteristic polynomial defined by $\mathbf{a}$, each with multiplicity $m_j$. The coefficients $z_{j\ell}, x_{j\ell}, y_{j\ell}$ each depend linearly on $\mathbf{c}$. Roots such that $|\rho_j|$ is the largest are called \textbf{dominant}. The growth rate of a term in the above expression is governed by $\rho_j^n n^\ell$. Terms with the fastest growth are called \textbf{dominant terms}, and they drive the asymptotic behaviour of the LRS.
 
-Throughout this paper, we consider that our input consists of real algebraic numbers.
-An LRS $\seq{u_n}_{n=0}^\infty$ is given as $(\mathbf{a}, \mathbf{c})$, i.e. the real algebraic recurrence and the initialisation. The Positivity problem is to decide whether for all $n \in \naturals$, $u_n \ge 0$.
-The Ultimate Positivity problem is to decide whether there exists an $N$ such that for all $n \ge N$, $u_n \ge 0$.
+A standard, intuitive prerequisite for Ultimate Positivity is that the leading terms in the exponential polynomial expression must include one that is real and strictly positive, otherwise their dominant contribution oscillates between positive and negative. It is formalised by applying \cite[Lemma 4]{Braverman06} to the dominant terms in expression \ref{eq:realexppoly} and arguing that the contribution from the remaining terms vanishes asymptotically. 
+\begin{proposition}
+\label{prop:folklore}
+If the characteristic polynomial has no real dominant root of maximum multiplicity, then in any full-dimensional neighbourhood of initialisations, there exists an initialisation, such that the sequence has infinitely many positive terms, and infinitely many negative terms.
+\end{proposition}
+
+\textbf{Henceforth, we assume that the characteristic polynomial has a real dominant root of maximum multiplicity, otherwise the answer to Ultimate Positivity is trivially NO.} 
 
 
-A Positive LRS is necessarily Ultimately Positive. As alluded to in the Introduction, \cite{joeljames3} shows both Positivity and Ultimate Positivity to be decidable up to order 5, while demonstrating number-theoretic hardness at order 6 in the precise sense of Definition \ref{def:hardness}. On restricting our attention to \textit{simple} LRS (the characteristic polynomial has no repeated root), Positivity is decidable up to order 9 \cite{ouaknine2014positivity}, while Ultimate Positivity is decidable at all orders \cite{ouaknine2014ultimate}. In this paper, we shall focus on defining and tackling robust versions of these problems.
-
-In all the problems we consider, our input consists of a linear recurrence relation $\mathbf{a}$, an initialisation $\mathbf{c}$, and a positive definite matrix $\mathbf{S}$ that is used to define a neighbourhood around $\mathbf{c}$. All input is made up of real algebraic entries.
+In this paper, we shall focus on defining and tackling Robust Positivity problems. Our input consists of a linear recurrence relation $\mathbf{a}$, an initialisation $\mathbf{c}$, and a positive definite matrix $\mathbf{S}$ that is used to define a neighbourhood around $\mathbf{c}$. All input is real algebraic.
 
 \begin{problem}[$\mathbf{S}$-Robust Positivity]
 \label{prob:rrobpos}
@@ -78,12 +82,12 @@ We can switch the order in which $N$ and $\mathbf{c'}$ are quantified, and query
 Decide whether for all $\mathbf{c'}$ with $(\mathbf{c'} - \mathbf{c})^T\mathbf{S}(\mathbf{c'} - \mathbf{c}) \le 1$ , there exists an $N$ such that the LRS $(\mathbf{a}, \mathbf{c'})$ is positive from the $N^{th}$ term onwards.
 \end{problem}
 
-The attentive reader might have already noticed that we depart from convention and specify neighbourhoods as \textit{closed} balls. Although \cite{originalarxiv} does not solve the problems we consider in this paper, it makes crucial observations about the geometry: for Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}, there is no difference between open and closed balls. On the other hand, Problem \ref{prob:rrobnonuniultpos} becomes considerably easier with open balls, and its decidability assuming open balls is tackled in \cite{originalarxiv} itself. 
+The attentive reader might have already noticed that we depart from convention and specify neighbourhoods as \textit{closed} balls. Although \cite{originalarxiv} does not solve the problems we consider in this paper, it makes crucial observations about the geometry: for Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}, there is no difference between open and closed balls. On the other hand, Problem \ref{prob:rrobnonuniultpos} becomes considerably easier with open balls, and its decidability in this case is tackled in \cite{originalarxiv} itself. 
 
-In general, an arbitrary point $\mathbf{c'}$ is expressed as $\mathbf{c} + \mathbf{d}$, where $\mathbf{d} \in \mathcal{P}$, a full-dimensional neighbourhood symmetric about the origin. Observe equation \ref{eq:companion}. The $n^{th}$ term of the LRS is non-negative throughout the neighbourhood if and only if for all $d \in \mathcal{P}$
-\begin{equation}
+In general, an arbitrary point $\mathbf{c'}$ is expressed as $\mathbf{c} + \mathbf{d}$, where $\mathbf{d} \in \mathcal{P}$, a full-dimensional neighbourhood symmetric about the origin. Observe equation \ref{eq:companion}. The $n^{th}$ term of the LRS is non-negative throughout the neighbourhood if and only if for all $d \in \mathcal{P}$,
+$
 \mathbf{e_1}^T \mathbf{A}^n (\mathbf{c + d}) \ge 0.
-\end{equation}
+$
 We can use the symmetry of $\mathcal{P}$ about the origin to rewrite the above as
 \begin{equation}
 \label{eq:illustrate}
@@ -111,6 +115,7 @@ $\mathcal{B}$ is a convex set; thus a linear function will necessarily be maximi
 
 In order to express a necessary and sufficient condition for $|\mathbf{e_1}^T \mathbf{A}^n \mathbf{c}|\ge \max_{\mathbf{d} \in \mathcal{P}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d}$ to hold in terms of the positivity of an LRS at step $n$, we simply square both sides of the inequality, and transfer all terms to the left: 
 \begin{equation}
+\label{eq:critical}
 (\mathbf{e_1}^T \mathbf{A}^n \mathbf{c})^2 - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_1})^2 - \dots - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_\kappa})^2 \ge 0.
 \end{equation}
 Crucially, $\mathbf{g_1}, \dots, \mathbf{g_\kappa}$ are the linearly independent columns of the invertible $\mathbf{G}^{-1}$. In \S\ref{section:decidability}, we give the technical details of how Step 3 of the above plan can be implemented, thus proving our first main decidability result.
@@ -123,7 +128,7 @@ Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable up to ord
 \textbf{Our strategy for Problem \ref{prob:rrobnonuniultpos} is as follows.}
 \begin{enumerate}
 \item Consider the invertible matrix $\mathbf{V}^{-1}$ that maps initialisations to the coefficients in the real exponential polynomial closed form \ref{eq:realexppoly}.
-\item Define $\mu(\mathbf{c})$ to be the (normalised) greatest lower bound for the contribution from the dominant terms corresponding to $\mathbf{c}$.
+\item Define $\mu(\mathbf{c})$ to be the (normalised) greatest lower bound for the contribution from the dominant terms corresponding to $\mathbf{c}$. As discussed at length in \cite{originalstacs,originalarxiv}, $\mu(\mathbf{c'}) \ge 0$ is necessary for the Ultimate Positivity of $\mathbf{c'}$, $\mu(\mathbf{c'}) > 0$ is sufficient.
 \item Use the First Order Theory of the Reals to check that $\mu(\mathbf{c'}) \ge 0$ for all $\mathbf{c'}$ in the given neighbourhood, and detect the critical boundary cases when $\mu(\mathbf{c'}) = 0$.
 \item Exploit the low dimensionality to handle the critical boundary cases when $\mu(\mathbf{c'}) = 0$.
 \end{enumerate}
