@@ -46,7 +46,8 @@ u_{1} \\
 u_{\kappa-1}
 \end{bmatrix}.
 \end{equation}
-Let $\mathbf{e_1}^T$ denote the row vector $\begin{bmatrix}1 & 0 & \dots & 0\end{bmatrix}$. We can thus write $u_n = \mathbf{e_1}^T\mathbf{A}^n\mathbf{c}$. It is now a standard fact that LRS have the following \textbf{real exponential polynomial} closed form\begin{equation}
+Let $\mathbf{e_1}^T$ denote the row vector $\begin{bmatrix}1 & 0 & \dots & 0\end{bmatrix}$. We can thus write $u_n = \mathbf{e_1}^T\mathbf{A}^n\mathbf{c}$. It is now a standard fact that LRS have the following \textbf{real exponential polynomial} closed form
+\begin{equation}
 \label{eq:realexppoly}
 u_n = \left(\sum_{j=1}^{k_1}\sum_{\ell = 0}^{m_j-1} z_{j\ell}\rho_j^n n^\ell\right) + \left(\sum_{j=k_1 + 1}^{k_2} \sum_{\ell = 0}^{m_j-1} (x_{j\ell} \cos n\theta_j + y_{j\ell}\sin n\theta_j)\rho_j^n n^\ell\right)
 \end{equation}
@@ -112,7 +113,7 @@ In order to express a necessary and sufficient condition for $|\mathbf{e_1}^T \m
 \begin{equation}
 (\mathbf{e_1}^T \mathbf{A}^n \mathbf{c})^2 - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_1})^2 - \dots - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_\kappa})^2 \ge 0.
 \end{equation}
-Crucially, $\mathbf{g_1}, \dots, \mathbf{g_\kappa}$ are the linearly independent columns of the invertible $\mathbf{G}^{-1}$. Further technical details of how this inequality is verified by implementing Step 3 from above lead to our first main decidability result.
+Crucially, $\mathbf{g_1}, \dots, \mathbf{g_\kappa}$ are the linearly independent columns of the invertible $\mathbf{G}^{-1}$. In \S\ref{section:decidability}, we give the technical details of how Step 3 of the above plan can be implemented, thus proving our first main decidability result.
 
 \begin{theorem}[First Main Decidability Result]
 \label{thm:decide}
@@ -127,6 +128,7 @@ Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable up to ord
 \item Exploit the low dimensionality to handle the critical boundary cases when $\mu(\mathbf{c'}) = 0$.
 \end{enumerate}
 
+We adopt this strategy and prove our second decidability result in \S\ref{section:decidability2}.
 \begin{theorem}[Second Decidability Result]
 \label{thm:decide2}
 Problem \ref{prob:rrobnonuniultpos} is decidable up to order 4.

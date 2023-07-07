@@ -1,7 +1,6 @@
 \section{Diophantine Approximation}
 \label{section:diophantine}
-
-Diophantine Approximation is a vast and active number-theoretic field of research, one of whose concerns is the approximation of reals by rational numbers. A key tool in this regard is the partial fraction expansion $[0; a_1, a_2, \dots]$ of an irrational $t \in (0, 1)$:
+We justify the inability of our techniques to generalise to LRS of higher order by establishing a connection to a number-theoretic hurdle: that of Diophantine Approximation. Diophantine Approximation is a vast and active number-theoretic field of research, one of whose concerns is the approximation of reals by rational numbers. A key tool in this regard is the partial fraction expansion $[0; a_1, a_2, \dots]$ of an irrational $t \in (0, 1)$:
 $$
 t = \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots}}}}
 $$
@@ -28,11 +27,24 @@ The homogenous Diophantine approximation type $L(t)$ is defined to be $\inf_{n \
 The homogenous Lagrange constant $L_\infty(t)$ is defined to be $\liminf_{n \in \naturals} n[nt]$. The inhomogeneous Lagrange constant $L_\infty(t, s)$ is defined to be\\ $\liminf_{n \in \naturals} n[nt - s]$, $s \notin \integers + t\integers$.
 \end{definition} 
 
-From the definitions, it is clear that $0 \le L(t) \le L_\infty(t)$. Due to the work of Khintchine \cite{khintchine}, it is known that these constants lie between $0$ and $\frac{1}{\sqrt{5}}$. As an immediate corollary, we make an observation that will prove useful in our context.
+From the definitions, it is clear that $0 \le L(t) \le L_\infty(t)$. Due to the work of Khintchine \cite{khintchine}, it is known that these constants lie between $0$ and $\frac{1}{\sqrt{5}}$. In our setting, the irrational $t$ comes from the argument $\theta$ of the characteristic root $\rho e^{i\theta}$ of the LRS: $t = \theta/2\pi$. The following observation hints at how the correspondence could further extend to Positivity problems.
+\begin{lemma}
+For all $\theta$ that are not rational multiples of $2\pi$, and all $\varphi$, there exist infinitely many $n\in \naturals$ such that
 \begin{equation}
 \label{eq:quadraticdecay}
-\exists c.~\forall t, s.~ \exists^\infty n. ~ 1 - \cos(nt - s) \le \frac{1}{2}\left[nt - s \right]_{2\pi}^2 \le \frac{c}{n^2}.
+1 - \cos(n\theta- \varphi) \le \frac{1}{2}\left[n\theta - \varphi \right]_{2\pi}^2 = 2\pi^2[nt -s]^2 \le \frac{2\pi^2}{5n^2}.
 \end{equation}
+\end{lemma}
+
+The properties of the LRS are driven by whether the characteristic root $\rho e^{i\theta}$ is a root of unity, i.e. $\theta$ is a rational multiple of $2\pi$. If yes, decision procedures are often much simpler; if not, we appeal to the number theory discussed in this section. One can detect whether an algebraic characteristic root is a root of unity by brute enumeration.
+
+\begin{lemma}
+\label{lemma:rootofunity}
+Let $\alpha$ be an algebraic number of degree $d$. Then if $\alpha$ is a $k^{th}$ root of unity, $k \le 2d^2$.
+\end{lemma}
+\begin{proof}
+The degree of the $k^{th}$ root of unity is precisely $\Phi(k)$, where $\Phi$ denotes the Euler totient function. $\Phi(k) \ge \sqrt{k/2}$. The desired inequality follows.
+\end{proof}
 
 We record a number-theoretic fact which describes the density of the integer multiples of an irrational $x$ modulo $1$ in the unit interval: its proof relies on continued fraction expansions and the Ostrowski numeration system \cite{bourla2016ostrowski,berthe2022dynamics}, and is deferred to Appendix \ref{appendix:ostrowski}.
 \begin{lemma}
@@ -46,7 +58,16 @@ The familiar density theorem is an immediate corollary of the above powerful res
 Let $x$ be irrational, and $y \in [0, 1)$. For every $\varepsilon > 0$, there exist infinitely many even $n$, and infinitely many odd $n$ such that $[nx - y] < \varepsilon$.
 \end{lemma}
 
-The computation of the constants $L(t)$ and $L_\infty(t)$ discussed above is reduced to the non-robust variants of Positivity problems for LRS of order 6 in \cite[Section 5]{joeljames3}. We refer the reader to this source for a cursory survey of the history of relevant developments in the field of Diophantine approximation. We note that despite the observations and results mentioned in the preceding discussion, the Diophantine approximation type and Lagrange constant of most transcendental numbers are unknown. For instance, computing $L_\infty(\pi)$ is a longstanding and mathematically interesting open problem. In this paper, we prove analogous hardness results for robust Positivity problems. To that end, we define a similar class of transcendental numbers relevant to our reduction.
+We apply the density theorem as follows.
+\begin{lemma}
+Suppose $\theta$ is not a rational multiple of $2\pi$. Let $h_1(t)$ be continuous with period $2\pi$. Then
+\begin{equation}
+\label{eq:liminfmin}
+\liminf_n \left(h_1(n\theta) + h_2(-1^n)\right) = \min_{t \in [0, 2\pi], b\in \{-1, 1\}} \left(h_1(t) + h_2(b)\right)
+\end{equation}
+\end{lemma}
+
+We note that despite the observations and results mentioned in the preceding discussion, the Diophantine approximation type and Lagrange constant of most transcendental numbers are unknown. For instance, computing $L_\infty(\pi)$ is a longstanding and mathematically interesting open problem. We refer the reader to \cite[Section 5]{joeljames3} for a cursory survey of the history of relevant developments in the field of Diophantine approximation. This source reduces the computation of the constants $L(t)$ and $L_\infty(t)$ discussed above is to the non-robust variants of Positivity problems for LRS of order 6. In \S\ref{section:hardness}, we prove analogous hardness results for robust Positivity problems. To that end, we define a similar class of transcendental numbers relevant to our reduction.
 \begin{equation}
 \mathcal A=\{p+q i \in \mathbb{C} \mid p,q \in \mathbb{A}, p^2+q^2=1, \forall n.~(p + qi)^n \ne 1\}
 \end{equation}
