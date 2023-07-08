@@ -9,7 +9,20 @@
  % each entry in the generator set is polynomially bounded in the sizes of the representations of $e^{i \theta_1},...,e^{i \theta_k}$.
  % \end{theorem}
 
- Considering the state of the art, the following lemma is rather immediate. 
+In this section, we prove Theorem \ref{thm:decide} by showing that we can implement Step 3 of the overview: constructively decide whether there exists $N_2$ such that for all $n > N_2$,
+\begin{equation}
+\label{eq:criticalcopy}
+(\mathbf{e_1}^T \mathbf{A}^n \mathbf{c})^2 - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_1})^2 - \dots - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_4})^2 \ge 0.
+\end{equation}
+We treat order $4$ LRS: our techniques naturally apply to lower orders too. We make extensive use of the exponential polynomial closed form \ref{eq:realexppoly} and the surrounding discussion. The key lies in expressing the above critical inequality as
+\begin{equation}
+\seq{\mathbf{p}, \mathbf{q_n}}^2 - \seq{\mathbf{b_1}, \mathbf{q_n}}^2 - \dots - \seq{\mathbf{b_4}, \mathbf{q_n}}^2 \ge 0 ~~\Leftrightarrow~~ \seq{\mathbf{x}, \mathbf{r_n}} \ge 0
+\end{equation} 
+and choosing $\{\mathbf{q_n}\}_{n\in\naturals}$ judiciously. We can thus see that constructively checking the inequality is an instance of constructively deciding (Ultimate) Positivity for a restricted class of higher order LRS. In particular, if all the characteristic roots of the original LRS are real, then $\mathbf{q_n}$ is free of trigonometric terms, and hence so is $\mathbf{r_n}$. Thus $\seq{\mathbf{x}, \mathbf{r_n}}$ is also an LRS with all real characteristic roots, and constructively deciding Ultimate Positivity is easily done through elementary growth arguments. We shall thus assume the presence of a pair of complex conjugates among the characteristic roots. As discussed through Proposition \ref{prop:folklore}, any decision regarding Ultimate Positivity is NO in the absence of a real positive dominant root. At order $4$, this means that there is exactly one pair of complex conjugates among the roots. We further assume, without loss of generality, that the real positive dominant root is $1$. 
+
+We shall also assume \textit{non-degeneracy}, i.e. the ratio of any pair of distinct roots of the characteristic polynomial is not a root of unity. This can be detected, courtesy Lemma \ref{lemma:rootofunity}. In our restricted setting, degeneracy can arise because: (a) $-1$ is a characteristic root; (b) a characteristic root is of the form $\rho e^{2\pi i \cdot \frac{\ell}{k}}$, i.e. a scaled $k^{th}$ root of unity. In this case, any LRS $\seq{\mathbf{v}, \mathbf{q_n}}$ with roots $\{1, \alpha, \rho e^{\pm 2\pi i \cdot \frac{\ell}{k}}\}$ can be decomposed as the interleaving of $2k$ real LRS, each with characteristic roots $\{1, \rho^{2k}\} \cup \{\alpha^{2k}\}$.
+
+Considering the state of the art, the following lemma is rather immediate. 
 \begin{lemma}[Decidability for Simple LRS]
 Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable for simple LRS of order four.
 \end{lemma}

@@ -1,10 +1,10 @@
 \section{Diophantine Approximation}
 \label{section:diophantine}
-We justify the inability of our techniques to generalise to LRS of higher order by establishing a connection to a number-theoretic hurdle: that of Diophantine Approximation. Diophantine Approximation is a vast and active number-theoretic field of research, one of whose concerns is the approximation of reals by rational numbers. A key tool in this regard is the partial fraction expansion $[0; a_1, a_2, \dots]$ of an irrational $t \in (0, 1)$:
+We justify the inability of our techniques to generalise to LRS of higher order by establishing a connection to a number-theoretic hurdle: that of Diophantine Approximation. Diophantine Approximation is a vast and active number-theoretic field of research, one of whose concerns is the approximation of reals by rational numbers. A key tool in this regard is the partial fraction expansion $[a_0; a_1, a_2, \dots]$ of an irrational $t$:
 $$
-t = \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots}}}}
+t = a_0 + \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{\dots}}}
 $$
-where $a_1, a_2, a_3, \dots \in \naturals$. Truncating this expansion at progressively greater depths yields a series of increasingly accurate approximations. The quality of the rational approximation depends not only on its accuracy but also on the size of the denominator. As discussed in the Introduction, evaluating the quality of the approximation, or that of the convergence, seems inaccessible to contemporary number theory.
+where $a_0, a_1, a_2, \dots \in \naturals$. Truncating this expansion at progressively greater depths yields a series of increasingly accurate approximations. The quality of the rational approximation depends not only on its accuracy but also on the size of the denominator. As discussed in the Introduction, evaluating the quality of the approximation, or that of the convergence, seems inaccessible to contemporary number theory.
 
 The above intuition about the quality of the approximation is captured in the following definition of $L(t)$, the (homogenous) Diophantine approximation type:
 \begin{equation}
@@ -58,7 +58,7 @@ The familiar density theorem is an immediate corollary of the above powerful res
 Let $x$ be irrational, and $y \in [0, 1)$. For every $\varepsilon > 0$, there exist infinitely many even $n$, and infinitely many odd $n$ such that $[nx - y] < \varepsilon$.
 \end{lemma}
 
-We apply the density theorem as follows.
+The following application of the density theorem is central to the computation of the discrete $\mu(\mathbf{c}) = \liminf_{n\in \naturals}\seq{\mathbf{p}, \mathbf{q_n}}$ using the continuous First Order Theory of the Reals.
 \begin{lemma}
 Suppose $\theta$ is not a rational multiple of $2\pi$. Let $h_1(t)$ be continuous with period $2\pi$. Then
 \begin{equation}
