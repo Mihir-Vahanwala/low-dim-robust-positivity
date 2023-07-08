@@ -22,18 +22,20 @@ There are, of course, broader approaches to model and reason about imprecision: 
 \subsubsection*{Our contribution}
 We address the gap in the robustness state of the art by exploring the frontiers of decidability when the neighbourhood is given as input. Concretely, our input consists of a linear recurrence relation $\mathbf{a}$ and a neighbourhood of initialisations centred around $\mathbf{c}$. Our problem is to decide whether all initialisations in the \textbf{given} neighbourhood result in (Ultimately) Positive sequences. 
 
-When neighbourhoods are expressly given as input, their geometry plays a critical role in the decision procedure. The notion of neighbourhoods that we primarily focus on is based on the $\ell^2$-norm. We seek to slightly generalise the Euclidean $\varepsilon$-ball. More specifically, we use the Mahalanobis distance to define neighbourhoods. Our parameter is the positive definite matrix $\mathbf{S}$, and the neighbourhood of $\mathbf{c}$ it specifies is the set of all points $\mathbf{c'} \in \reals^{\kappa}$ such that $(\mathbf{c'} - \mathbf{c})^T\mathbf{S}(\mathbf{c'} - \mathbf{c}) \le 1$. The size of neighbourhoods is usually parametrised by an $\varepsilon$: in our case, we can account for it by simply scaling $\mathbf{S}$. In the statistical context, $\mathbf{S}$ is the inverse of a covariance matrix; and thus, our formulation is a rather natural way of capturing noise and measurement errors in the input, whose components may often be correlated. Our \textbf{novelty}, to the best of our knowledge, lies in identifying a general and practical way of explicitly specifying neighbourhoods, and establishing the \textbf{first decidability results} in such a setting, albeit at low orders. 
+When neighbourhoods are expressly given as input, their geometry plays a critical role in the decision procedure. The notion of neighbourhoods that we primarily focus on is based on the $\ell^2$-norm. We seek to slightly generalise the Euclidean $\varepsilon$-ball. More specifically, we use the Mahalanobis distance to define neighbourhoods. Our parameter is the positive definite matrix $\mathbf{S}$, and the neighbourhood of $\mathbf{c}$ it specifies is the set of all points $\mathbf{c'} \in \reals^{\kappa}$ such that $(\mathbf{c'} - \mathbf{c})^T\mathbf{S}(\mathbf{c'} - \mathbf{c}) \le 1$. The size of neighbourhoods is usually parametrised by an $\varepsilon$: in our case, we can account for it by simply scaling $\mathbf{S}$. In the statistical context, $\mathbf{S}$ is the inverse of a covariance matrix; and thus, our formulation is a rather natural way of capturing noise and measurement errors in the input, whose components may often be correlated. Our \textbf{novelty}, to the best of our knowledge, lies in identifying a general and practical way of explicitly specifying neighbourhoods, and establishing the \textbf{first decidability results} in such a setting, albeit at low orders or subject to spectral constraints.
 
 As first discussed in \cite[Section 5]{joeljames3}, solving decision problems on Linear Recurrence Sequences in full generality is an endeavour fraught with number-theoretic hardness. Decision procedures for Positivity problems for LRS of higher order would allow number theorists to compute properties of irrational numbers that are considered inaccessible to contemporary techniques. These include the Diophantine approximation type, which intuitively describes the quality of the ``best'' rational approximation of a given irrational number, and the Lagrange constant, which intuitively describes how well rational approximations converge to a given irrational number. We justify the inability of our techniques to handle LRS of higher orders by \textbf{reducing the computation of Diophantine approximation types and Lagrange constants} to robust Positivity problems for LRS of lower orders than ever before.
 
 \begin{table}[H]
-\begin{tabular}{|l|r|r|}
+\begin{tabular}{|l|r|r|r|}
   \hline
-   \textbf{Problem:} $\mathbf{S}$-\textbf{Robust}& \textbf{Decidability }& {\bf Hardness} \\
+  & \multicolumn{2}{c|}{\bf Decidability Proof} &  \\
   \hline
-  Positivity & \S\ref{section:decidability}, Up to order 4 & \S\ref{section:hardness}, Diophantine hard at order 5\\
-  Uniform Ultimate Positivity & \S\ref{section:decidability}, Up to order 4 & \S\ref{section:hardness}, Lagrange hard at order 5 \\
-  Non-uniform Ultimate Positivity & \S\ref{section:decidability2}, Up to order 4 & \cite{joeljames3,originalarxiv}, Lagrange hard at order 6 
+   \textbf{Problem:} $\mathbf{S}$-\textbf{Robust}& \textbf{General}& {\bf Simple} &{\bf Hardness} \\
+  \hline
+  Positivity & order $\le 4$ & order $\le 5$ &Diophantine hard at order 5\\
+  Uniform Ultimate Positivity & order $\le 4$ & \textbf{all orders} & Lagrange hard at order 5 \\
+  Non-uniform Ultimate Positivity & order $\le 4$ & order $\le 4$ & \cite{joeljames3,originalarxiv}: Lagrange hard at order 6 
   \\
   \hline
 \end{tabular}
@@ -47,7 +49,7 @@ For the purposes of discussing robustness, we shall use $\ball$ to denote the un
 
 Throughout this paper,  $\naturals$, $\integers$, $\rationals$, $\reals$, and $\complexes$ respectively denote the natural numbers, integers, rationals, reals, and complex numbers. $\alpha \in \complexes$ is said to be algebraic if it is a root of a polynomial with integer coefficients. Algebraic numbers form an algebraically closed field, denoted by $\algebraics$. We denote the field of real algebraic numbers by $\realalgebraics$.
 
-\textbf{In this paper, we assume our input consists of real algebraic numbers.} Appendix \ref{appendix:prelims} contains a brief initiation to this number field. The key takeaways are that the usual arithmetic can be carried out with perfect precision, and that the First Order Theory of the Reals $\seq{\reals; +, \cdot, \ge, 0, 1}$ is a decidable logical system powerful enough to fit our purposes.
+\textbf{In this paper, we assume our input consists of real algebraic numbers.} Appendix \ref{appendix:prelims} contains a brief initiation to this number field. The key takeaways are that the usual arithmetic as well as polynomial root computation can be carried out with perfect precision, and that the First Order Theory of the Reals $\seq{\reals; +, \cdot, \ge, 0, 1}$ is a decidable logical system powerful enough to fit our purposes.
 
 \begin{theorem}[Renegar \cite{renegar}]
 \label{thm:renegar}

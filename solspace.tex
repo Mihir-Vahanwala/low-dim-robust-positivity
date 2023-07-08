@@ -1,6 +1,17 @@
 \section{The exponential polynomial closed form}
 \label{section:solspace}
-We begin by discussing the exponential polynomial closed form, a perspective that is routinely leveraged to study the behaviour of Linear Recurrence Sequences. One can encode a linear recurrence $\mathbf{a}$ as a $\kappa \times \kappa$ companion matrix $\mathbf{A}$, and interpret the initialisation $\mathbf{c}$ as a vector. Then, $u_n$ is given by the first coordinate of $\mathbf{A}^n\mathbf{c}$, i.e.
+We begin by discussing the exponential polynomial closed form, a perspective that is routinely leveraged to study the behaviour of Linear Recurrence Sequences. Simple LRS (no repeated characteristic roots) have the closed form
+\begin{equation}
+\label{eq:exppoly}
+u_n = \sum_j w_j \rho_j^n + \sum_j (z_j \gamma_j^n + \bar{z_j}\bar{\gamma_j}^n)
+\end{equation}
+where each $\rho_j, \gamma_j, \bar{\gamma_j}$ are distinct roots of the characteristic polynomial. By straightforward arithmetic on the above expression, we can see that if $\seq{u_n}_{n\in \naturals}, \seq{v_n}_{n\in \naturals}$ are simple LRS with sets of characteristic roots $U$ and $V$ respectively, then
+\begin{itemize}
+\item $r_n = u_n + v_n$ is a simple LRS, whose set of roots is $U \cup V$.
+\item $r_n = u_n \cdot v_n$ is a simple LRS, whose set of roots is $\{\gamma_1\gamma_2: \gamma_1 \in U, \gamma_2 \in V\}$.
+\end{itemize}
+
+In general, one can encode a linear recurrence $\mathbf{a}$ as a $\kappa \times \kappa$ companion matrix $\mathbf{A}$, and interpret the initialisation $\mathbf{c}$ as a vector. Then, $u_n$ is given by the first coordinate of $\mathbf{A}^n\mathbf{c}$, i.e.
 \begin{equation}
 \label{eq:companion}
 \begin{bmatrix}
@@ -72,6 +83,8 @@ Decide whether for all $\mathbf{c'}$ with $(\mathbf{c'} - \mathbf{c})^T\mathbf{S
 
 The attentive reader might have already noticed that we depart from convention and specify neighbourhoods as \textit{closed} balls. Although \cite{originalarxiv} does not solve the problems we consider in this paper, it makes crucial observations about the geometry: for Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}, there is no difference between open and closed balls. On the other hand, Problem \ref{prob:rrobnonuniultpos} becomes considerably easier with open balls, and its decidability in this case is tackled in \cite{originalarxiv} itself. 
 
+\subsection{Uniform Variants: The foundation}
+
 In general, an arbitrary point $\mathbf{c'}$ is expressed as $\mathbf{c} + \mathbf{d}$, where $\mathbf{d} \in \mathcal{P}$, a full-dimensional neighbourhood symmetric about the origin. Observe equation \ref{eq:companion}. The $n^{th}$ term of the LRS is non-negative throughout the neighbourhood if and only if for all $d \in \mathcal{P}$,
 $
 \mathbf{e_1}^T \mathbf{A}^n (\mathbf{c + d}) \ge 0.
@@ -81,37 +94,38 @@ We can use the symmetry of $\mathcal{P}$ about the origin to rewrite the above a
 \label{eq:illustrate}
 \mathbf{e_1}^T \mathbf{A}^n \mathbf{c}\ge \max_{\mathbf{d} \in \mathcal{P}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d} \ge 0.
 \end{equation}
+As a simple illustration, assume that the neighbourhood is defined by a polytope rather than a positive definite matrix. This situation arises, for instance, when the metric is based on the $\ell^1$- or $\ell^\infty$-norm, as opposed to the $\ell^2$-norm.  In this simple example, $\mathcal{P}$ is a polytope, hence $\mathbf{e_1}^T\mathbf{A}^n\mathbf{d}$ is maximised at one of the finitely many corners $\{\mathbf{d_1}, \dots, \mathbf{d_k}\}$. Thus, Robust (Uniform Ultimate) Positivity is decided by using the state of the art \cite{joeljames3} to check the (Ultimate) Positivity of each of the LRS $(\mathbf{a}, \mathbf{c+d_i})$. The geometry of our setting is not simple enough to allow such a straightforward approach.
 \textbf{The overview of our approach to Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} is as follows.}
 \begin{enumerate}
-\item Constructively decide whether there exists an $N_1$ such that $\mathbf{e_1}^T \mathbf{A}^n \mathbf{c} \ge 0$ for all $n > N_1$. Given the LRS $(\mathbf{a}, \mathbf{c})$ as input, this is precisely the core capability of decision procedures for Positivity problems for LRS up to order 5, presented in \cite{joeljames3}.
-\item Use linear-algebraic arguments to define LRS $(v_n)_{n=0}^\infty$, such that $v_n \ge 0$ if and only if $|\mathbf{e_1}^T \mathbf{A}^n \mathbf{c}|\ge \max_{\mathbf{d} \in \mathcal{P}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d}$.
-\item Constructively decide whether there exists $N_2$ such that $v_n \ge 0$ for all $n > N_2$. Positivity throughout the neighbourhood is thus guaranteed beyond step $N = \max(N_1, N_2)$.
-\item Explicitly check inequality \ref{eq:illustrate} for $n \le N$.
+\item Decide (constructively for Problem \ref{prob:rrobpos}) whether there exists an $N_1$ such that $\mathbf{e_1}^T \mathbf{A}^n \mathbf{c} \ge 0$ for all $n > N_1$. If $N_1$ is explicitly required, the state of the art is able to tackle LRS of order $\le 5$ \cite{joeljames3} and Simple LRS of order $\le 9$ \cite{ouaknine2014positivity}. In the non-constructive case, it can further handle all simple LRS \cite{ouaknine2014ultimate}.
+\item Use linear-algebraic arguments to define a real algebraic LRS $(v_n)_{n=0}^\infty$, such that $v_n \ge 0$ if and only if $|\mathbf{e_1}^T \mathbf{A}^n \mathbf{c}|\ge \max_{\mathbf{d} \in \mathcal{P}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d}$.
+\item Decide (constructively for Problem \ref{prob:rrobpos}) whether there exists $N_2$ such that $v_n \ge 0$ for all $n > N_2$. Positivity throughout the neighbourhood is thus guaranteed beyond step $N = \max(N_1, N_2)$. If either $N_1$ or $N_2$ does not exist, then Robust Ultimate Positivity, and hence Robust Positivity, does not hold.
+\item \textbf{Only for Problem \ref{prob:rrobpos}:} Explicitly check inequality \ref{eq:illustrate} for $n \le N$.
 \end{enumerate}
 
-Step 2 and the executability of Step 3 in low dimensions form the crux of our novelty. As a simple illustration, assume that the neighbourhood is defined by a polytope rather than a positive definite matrix. This situation arises, for instance, when the metric is based on the $\ell^1$- or $\ell^\infty$-norm, as opposed to the $\ell^2$-norm.  In this simple example, $\mathcal{P}$ is a polytope, hence $\mathbf{e_1}^T\mathbf{A}^n\mathbf{d}$ is maximised at one of the finitely many corners $\{\mathbf{d_1}, \dots, \mathbf{d_k}\}$. Thus, steps 2 and 3 amount to using \cite{joeljames3} again to check the (Ultimate) Positivity of each of the low-order LRS $(\mathbf{a}, \mathbf{c+d_i})$.
-
-We now discuss how we perform Step 2 when $\mathcal{P} = \mathcal{B}_\mathbf{S}$, a neighbourhood of vectors $\mathbf{d}$ such that $\mathbf{d}^T\mathbf{S}\mathbf{d} \le 1$. The defining parameter $\mathbf{S}$ is a real algebraic positive definite matrix. We note that since $\mathbf{S}$ is positive definite, it can be factored as $\mathbf{G}^T\mathbf{G}$, where $\mathbf{G}$ is a real algebraic invertible matrix. We denote $\mathbf{Gd} = \mathbf{f}$. We argue that $\mathbf{G}^{-1}$ bijectively maps the Euclidean unit ball $\mathcal{B}$ to $\mathcal{B}_\mathbf{S}$. The bijection is clear from the invertibility of the matrix. Suppose $\mathbf{d} = \mathbf{G}^{-1}\mathbf{f}$, where $\mathbf{f} \in \mathcal{B}$, i.e. $\mathbf{f}^T\mathbf{f} \le 1$. Then $\mathbf{d}^T\mathbf{Sd} = \mathbf{d}^T\mathbf{G}^T\mathbf{Gd} = \mathbf{f}^T\mathbf{f} \le 1.$
-Therefore,
+Our novelty lies in Step 2 and identifying when Step 3 can be implemented. We now discuss how we perform Steps 2 and 4 when $\mathcal{P} = \mathcal{B}_\mathbf{S}$, a neighbourhood of vectors $\mathbf{d}$ such that $\mathbf{d}^T\mathbf{S}\mathbf{d} \le 1$. The defining parameter $\mathbf{S}$ is a real algebraic positive definite matrix. We note that since $\mathbf{S}$ is positive definite, it can be factored as $\mathbf{G}^T\mathbf{G}$, where $\mathbf{G}$ is a real algebraic invertible matrix. We denote $\mathbf{Gd} = \mathbf{f}$. We argue that $\mathbf{G}^{-1}$ bijectively maps the Euclidean unit ball $\mathcal{B}$ to $\mathcal{B}_\mathbf{S}$. The bijection is clear from the invertibility of the matrix. Suppose $\mathbf{d} = \mathbf{G}^{-1}\mathbf{f}$, where $\mathbf{f} \in \mathcal{B}$, i.e. $\mathbf{f}^T\mathbf{f} \le 1$. Then $\mathbf{d}^T\mathbf{Sd} = \mathbf{d}^T\mathbf{G}^T\mathbf{Gd} = \mathbf{f}^T\mathbf{f} \le 1.$
+Hence,
 \begin{equation}
 \max_{\mathbf{d} \in \mathcal{B}_\mathbf{S}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d} = \max_{\mathbf{f} \in \mathcal{B}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{G}^{-1}\mathbf{f}.
 \end{equation}
-$\mathcal{B}$ is a convex set; thus a linear function will necessarily be maximised at its boundary, i.e. when $||\mathbf{f}|| = 1$. The linear function $\mathbf{h}^T\mathbf{f}$ is maximised over the unit Euclidean ball when $\mathbf{f}$ is aligned along $\mathbf{h}$; the maximum value is $||\mathbf{h}||$. Thus
+$\mathcal{B}$ is a convex set; thus a linear function will necessarily be maximised at its boundary, i.e. when $||\mathbf{f}|| = 1$. The linear function $\mathbf{h}^T\mathbf{f}$ is maximised over the unit Euclidean ball when $\mathbf{f}$ is aligned along $\mathbf{h}$; the maximum value is $||\mathbf{h}||$. We can thus perform Step 4 because
 \begin{equation}
 \max_{\mathbf{d} \in \mathcal{B}_\mathbf{S}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d} = \left|\left|\left( \mathbf{e_1}^T\mathbf{A}^n\mathbf{G}^{-1} \right)^T\right|\right|.
 \end{equation}
 
-In order to express a necessary and sufficient condition for $|\mathbf{e_1}^T \mathbf{A}^n \mathbf{c}|\ge \max_{\mathbf{d} \in \mathcal{P}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d}$ to hold in terms of the positivity of an LRS at step $n$, we simply square both sides of the inequality, and transfer all terms to the left: 
+For Step 2, we need a necessary and sufficient condition for $|\mathbf{e_1}^T \mathbf{A}^n \mathbf{c}|\ge \max_{\mathbf{d} \in \mathcal{P}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d}$, in terms of the positivity of an LRS at iterate $n$. We simply square both sides of the inequality, and transfer all terms to the left: 
 \begin{equation}
 \label{eq:critical}
 (\mathbf{e_1}^T \mathbf{A}^n \mathbf{c})^2 - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_1})^2 - \dots - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_\kappa})^2 \ge 0.
 \end{equation}
-Crucially, $\mathbf{g_1}, \dots, \mathbf{g_\kappa}$ are the linearly independent columns of the invertible $\mathbf{G}^{-1}$. In \S\ref{section:decidability}, we give the technical details of how Step 3 of the above plan can be implemented, thus proving our first main decidability result.
+Crucially, $\mathbf{g_1}, \dots, \mathbf{g_\kappa}$ are the linearly independent columns of the invertible $\mathbf{G}^{-1}$. Only Step 3 remains to be addressed: we must (constructively) decide whether there exists $N_2$ such that the previous inequality holds for all $n > N_2$. In \S\ref{section:decidability}, we give the technical details, thus proving our first main decidability result.
 
 \begin{theorem}[First Main Decidability Result]
 \label{thm:decide}
-Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable up to order 4.
+Problem \ref{prob:rrobuniultpos} is decidable for simple LRS. Problem \ref{prob:rrobpos} is decidable for simple LRS up to order 5. Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable for general LRS up to order 4.
 \end{theorem}
+
+\subsection{The non-uniform variant: An overview}
 
 As discussed at length in \cite{originalstacs,originalarxiv}, $\mu(\mathbf{c'})= \liminf_{n \in \naturals} \seq{\mathbf{p'}, \mathbf{q_n}}_{dom} \ge 0$ is necessary for the Ultimate Positivity of $\mathbf{c'}$; $\mu(\mathbf{c'}) > 0$ is sufficient.
 

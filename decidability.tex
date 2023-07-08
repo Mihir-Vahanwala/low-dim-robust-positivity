@@ -1,4 +1,4 @@
-\section{Uniform Robustness: Decidability at order four}
+\section{Decidability of Uniform Robustness}
 \label{section:decidability}
 
 %\begin{theorem}[Masser \cite{Masser}]
@@ -9,108 +9,92 @@
  % each entry in the generator set is polynomially bounded in the sizes of the representations of $e^{i \theta_1},...,e^{i \theta_k}$.
  % \end{theorem}
 
-In this section, we prove Theorem \ref{thm:decide} by showing that we can implement Step 3 of the overview: constructively decide whether there exists $N_2$ such that for all $n > N_2$,
+In this section, we prove Theorem \ref{thm:decide} by showing that we can implement Step 3 of the overview: (constructively) decide whether there exists $N_2$ such that for all $n > N_2$,
 \begin{equation}
 \label{eq:criticalcopy}
 (\mathbf{e_1}^T \mathbf{A}^n \mathbf{c})^2 - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_1})^2 - \dots - (\mathbf{e_1}^T \mathbf{A}^n \mathbf{g_4})^2 \ge 0.
 \end{equation}
-We treat order $4$ LRS: our techniques naturally apply to lower orders too. We make extensive use of the exponential polynomial closed form \ref{eq:realexppoly} and the surrounding discussion. The key lies in expressing the above critical inequality as
+
+\begin{theorem}[First Main Decidability Result, restated]
+\label{thm:decidecopy}
+Problem \ref{prob:rrobuniultpos} (Robust Uniform Ultimate Positivity) is decidable for simple LRS. Problem \ref{prob:rrobpos} (Robust Positivity) is decidable for simple LRS up to order 5. Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable for general LRS up to order 4.
+\end{theorem}
+
+\subsection{Simple LRS}
+We begin by treating simple LRS. The goal is to show that the current state of the art is equipped to handle instances relevant to this setting. Recall the discussion on the point-wise sums of products of simple LRS, surrounding equation \ref{eq:exppoly}. If the original LRS is simple, then inequality \ref{eq:criticalcopy} is also an instance of Ultimate Positivity for simple LRS; indeed, its input can be seen to be real algebraic. In case we are only interested in Robust Ultimate Positivity, the non-constructive decision procedure \cite{ouaknine2014ultimate} suffices, because it completely solves Ultimate Positivity for simple LRS. 
+
+As a corollary of the proof of the decidability of Positivity of simple LRS up to order 9 \cite{ouaknine2014positivity}, Ultimate Positivity for simple LRS is \textit{constructively} decidable if one of the following holds: \textbf{(a)} all characteristic roots have the same modulus; {\bf(b)} there are at most three pairs of complex conjugates among the dominant (maximal modulus) characteristic roots. 
+
+We argue that for the original simple LRS $(u_n)_n$, $5$ is the highest order that guarantees that at least one of the conditions holds for the resulting simple LRS $(v_n)_n$ in inequality \ref{eq:criticalcopy}. For this, we recall the property discussed after equation \ref{eq:exppoly}: if $U$ is the set of characteristic roots of $(u_n)_n$, then the set of characteristic roots of $v_n = u_n^2$ is $V = \{\lambda_1\lambda_2: \lambda_1, \lambda_2 \in U\}$. By Proposition \ref{prop:folklore}, $U$ contains a real positive dominant root $\rho$. It is clear that the dominant roots of $V$ result from, and only from multiplying together pairs of dominant roots from $U$. If $U$ does not have complex dominant roots, neither does $V$. If $\lambda \in U$ is a dominant complex root, then $\lambda\bar\lambda = \rho^2$. If $U = \{\rho, \lambda_1, \lambda_2, \bar{\lambda_1}, \bar{\lambda_2}\}$, all dominant, then all roots of $V$ are dominant, and condition \textbf{(a)} is met. The only remaining case is that $U$ has one pair of complex conjugates among its dominant roots: the scenario that results in most dominant roots in V is $U_{dom} = \{\rho, -\rho, \lambda, \bar{\lambda}\}$. Then, the dominant roots in $V$ are $\{\rho^2, -\rho^2, \lambda^2, \bar\lambda^2, \pm \rho\lambda, \pm \rho\bar\lambda\}$: three conjugate pairs, and condition \textbf{(b)} is met. Finally, we record that order 5 is maximal: consider $U = \{\rho, \lambda_1, \lambda_2, \bar{\lambda_1}, \bar{\lambda_2}, \alpha\}$ with $\alpha$ non-dominant. Then $V$ has five pairs of complex conjugates among its dominant roots, along with the presence of non-dominant roots.
+
+\subsection{Non-simple LRS}
+We treat order $4$ LRS: our techniques naturally apply to lower orders too. We make extensive use of the real exponential polynomial closed form \ref{eq:realexppoly} and the surrounding discussion. The key lies in expressing the critical inequality \ref{eq:criticalcopy} as
 \begin{equation}
+\label{eq:start}
 \seq{\mathbf{p}, \mathbf{q_n}}^2 - \seq{\mathbf{b_1}, \mathbf{q_n}}^2 - \dots - \seq{\mathbf{b_4}, \mathbf{q_n}}^2 \ge 0 ~~\Leftrightarrow~~ \seq{\mathbf{x}, \mathbf{r_n}} \ge 0
 \end{equation} 
-and choosing $\{\mathbf{q_n}\}_{n\in\naturals}$ judiciously. We can thus see that constructively checking the inequality is an instance of constructively deciding (Ultimate) Positivity for a restricted class of higher order LRS. In particular, if all the characteristic roots of the original LRS are real, then $\mathbf{q_n}$ is free of trigonometric terms, and hence so is $\mathbf{r_n}$. Thus $\seq{\mathbf{x}, \mathbf{r_n}}$ is also an LRS with all real characteristic roots, and constructively deciding Ultimate Positivity is easily done through elementary growth arguments. We shall thus assume the presence of a pair of complex conjugates among the characteristic roots. As discussed through Proposition \ref{prop:folklore}, any decision regarding Ultimate Positivity is NO in the absence of a real positive dominant root. At order $4$, this means that there is exactly one pair of complex conjugates among the roots. We further assume, without loss of generality, that the real positive dominant root is $1$. 
+and choosing $\{\mathbf{q_n}\}_{n\in\naturals}$ judiciously. If all the characteristic roots of the original LRS are real, then $\mathbf{q_n}$ is free of trigonometric terms, and hence so is $\mathbf{r_n}$. Thus $\seq{\mathbf{x}, \mathbf{r_n}}$ is also an LRS with all real characteristic roots, and constructively deciding the existence of $N_2$ is easily done through elementary growth arguments. We shall thus assume the presence of a pair of complex conjugates among the characteristic roots. As discussed through Proposition \ref{prop:folklore}, any decision regarding Ultimate Positivity is NO in the absence of a real positive dominant root. At order $4$, this means that there is \textbf{exactly one pair of complex conjugates} among the roots. We further assume, without loss of generality, that \textbf{the real positive dominant root is unity}. We shall also assume \textbf{non-degeneracy}, i.e.\ the ratio of any pair of distinct roots of the characteristic polynomial is not a root of unity. This can be detected, courtesy Lemma \ref{lemma:rootofunity}. In our restricted setting, degeneracy can arise because: (a) $-1$ is a characteristic root; (b) a characteristic root is of the form $\rho e^{2\pi i \cdot \frac{\ell}{k}}$, i.e. a scaled $k^{th}$ root of unity. In this case, any LRS $\seq{\mathbf{v}, \mathbf{q_n}}$ with roots $\{1, \alpha, \rho e^{\pm 2\pi i \cdot \frac{\ell}{k}}\}$ can be decomposed as the interleaving of $2k$ real LRS, each with characteristic roots $\{1, \rho^{2k}\} \cup \{\alpha^{2k}\}$.
 
-We shall also assume \textit{non-degeneracy}, i.e. the ratio of any pair of distinct roots of the characteristic polynomial is not a root of unity. This can be detected, courtesy Lemma \ref{lemma:rootofunity}. In our restricted setting, degeneracy can arise because: (a) $-1$ is a characteristic root; (b) a characteristic root is of the form $\rho e^{2\pi i \cdot \frac{\ell}{k}}$, i.e. a scaled $k^{th}$ root of unity. In this case, any LRS $\seq{\mathbf{v}, \mathbf{q_n}}$ with roots $\{1, \alpha, \rho e^{\pm 2\pi i \cdot \frac{\ell}{k}}\}$ can be decomposed as the interleaving of $2k$ real LRS, each with characteristic roots $\{1, \rho^{2k}\} \cup \{\alpha^{2k}\}$.
+The only possibility, therefore, is that the characteristic roots are $1, 1, \gamma, \bar{\gamma}$. Let $0 < |\gamma| = \rho \le 1$, where $\gamma = \rho e^{i\theta}$ is not a scaled root of unity. We take inequality \ref{eq:start} as the starting point for our computations. Let $\mathbf{q_n} = \begin{bmatrix} n & 1 & \rho^n\cos(n\theta - \varphi) & \rho^n\sin(n\theta -\varphi) \end{bmatrix}^T$. Let $\mathbf{u_1}^T, \dots, \mathbf{u_4}^T$ be the rows of the \textbf{invertible} matrix $\begin{bmatrix} \mathbf{b_1}& \dots & \mathbf{b_4}\end{bmatrix}$. The table below shows the terms and coefficients on simplifying inequality \ref{eq:start}.
 
-Considering the state of the art, the following lemma is rather immediate. 
-\begin{lemma}[Decidability for Simple LRS]
-Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos} are decidable for simple LRS of order four.
-\end{lemma}
-\begin{proof}
-Let the distinct characteristic roots be $1, \alpha, \gamma, \bar{\gamma}$. Indeed, any inner product $\seq{\mathbf{v}, \mathbf{q_n}}$ may also expressed as $f_1 + f_2\alpha^n + f_3 \gamma^n + \bar{f_3}\bar{\gamma}^n$. On squaring throughout after the initial Positivity check, and transferring all terms to the LHS, we get a Positivity (Problem \ref{prob:pos}) instance for a new simple LRS, this time of order at most $10$. This time, the characteristic roots are $1, \alpha^2, \gamma^2, \bar{\gamma}^2, \alpha, \gamma, \bar{\gamma}, \alpha\gamma, \alpha\bar{\gamma}, \gamma\bar{\gamma}$: these are precisely the bases of the exponents in $(f_1 + f_2\alpha^n + f_3 \gamma^n + \bar{f_3}\bar{\gamma}^n)^2$.
-
-We assume $\alpha \ne -1$: if it were, the resulting LRS could be decomposed into two LRS of lower order, and both Ultimate Positivity \cite{ouaknine2014ultimate} and Positivity  \cite{ouaknine2014positivity} for simple LRS is known to be decidable for order up to nine. For the same reason, we can also assume $\gamma/\bar{\gamma}$ is not a root of unity: this can be efficiently detected, see Theorem \ref{thm:abelian}. Thus, depending on whether $|\gamma| < 1$ or $= 1$, the resulting LRS either has only $1$ as a dominant root, and nine non-dominant roots, or has five dominant roots, $1, \gamma, \bar{\gamma}, \gamma^2, \bar{\gamma}^2$ ($\gamma\bar{\gamma} = 1$) and four non-dominant roots. The former case is trivial, while the latter is handled by \cite{ouaknine2014positivity}.
-\end{proof}
-
-The only remaining possibility, therefore, is that the characteristic roots are $1, 1, \gamma, \bar{\gamma}$. Let $0 < |\gamma| = \rho \le 1$, and we again assume that $\gamma/\bar{\gamma}$ is not a root of unity, for reasons described above. On squaring after the initial check, our LRS is of the form
-\begin{align*}
-&z_2n^2 + z_1n + z_0  \\
-&+ x_2 n \rho^n \cos n\theta + y_2 n \rho^n \sin n\theta  \\
-&+ x_1\rho^n\cos n\theta + y_1\rho^n\sin n\theta  \\
-&+ x_0 \rho^{2n}\cos 2n\theta + y_0 \rho^{2n} \sin 2n\theta + w\rho^{2n} \ge 0
-\end{align*}
-If $\rho < 1$, the above can trivially be resolved with growth arguments, or is an easy order $3$ LRS. Thus, we assume $\rho = 1$. If $z_2 \ne 0$, then decidability is trivial; hence we assume $z_2 = 0$. In this case, our inequality can be arranged as
-\begin{equation}
-\label{eq:groundtruth}
-{\color{red!70!black} n(z_1 + x_2\cos n\theta + y_2\sin n\theta)} + (z_0 + x_1\cos n\theta + y_1\sin n\theta + x_0\cos 2n\theta + y_0\sin 2n\theta) \ge 0
-\end{equation}
-Decidability is most clearly seen through a slight shift in perspective: for any $x, y, \phi$, there exist $x', y'$ such that $x\cos \alpha + y\sin\alpha = x'\cos(\alpha - \phi) + y'\sin (\alpha - \phi)$ is an identity in $\alpha$. Thus, note that for a convenient choice of $\varphi$, inequality \ref{eq:groundtruth} can easily be rewritten as (we use $t_n$ as shorthand for $n\theta - \varphi$, and choose $\varphi$ such that $x_2' \le 0$)
-\begin{equation}
-\label{eq:groundtruthrewrite}
-{\color{red!70!black}n(z_1 + x_2' \cos t_n)} + (z_0 + x_1'\cos t_n + y_1'\sin t_n + x_0'\cos 2t_n + y_0'\sin 2t_n) \ge 0
-\end{equation}
-
-Observe that there is nothing special about the particular representation of inequality \ref{eq:groundtruth}. The common proposition that both \ref{eq:groundtruth} and \ref{eq:groundtruthrewrite} convey is that 
-$$
-\left(\mathbf{e_1}^T\mathbf{A}^n\mathbf{c}\right)^2 - \left(\max_{\mathbf{d} \in \ball_{\mathbf{S}}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d}\right)^2 \ge 0
-$$
-
-On retracing our steps back to the discussion surrounding equation \ref{eq:innerprod}, we could well have chosen our basis of solutions to be $\mathbf{x_n'}\begin{bmatrix}n & 1 & \cos(n\theta - \varphi) & \sin(n\theta - \varphi) \end{bmatrix}$. This would have given us different $\mathbf{V'}, \mathbf{M'}$, and hence $\mathbf{B'}$ in equation \ref{eq:crux}, but importantly, it would generate inequality \ref{eq:groundtruthrewrite} for the same original input.
-
-Since we assume $\theta$ is not a rational multiple of $2\pi$, we can argue by Theorem \ref{thm:kronecker} (Kronecker) that $\{(n\theta - \varphi)$ modulo ${2\pi}\}_{n\in\naturals}$ is dense in $[0, 2\pi]$. 
-We define 
-\begin{align}
-f(t) &= z_1 + x_2'\cos t  \\
-g(t) &= z_0 + x_1'\cos t + y_1'\sin t + x_0'\cos 2t + y_0'\sin 2t
-\end{align}
-Since we chose $x_2' \le 0$, it is clear that $f$ attains its minima at $0$. If $z + x_2' < 0$, then the inequality will be violated for infinitely many $n$ for which $[n\theta - \varphi]_{2\pi}$ is close enough to $0$; on the other hand, if $z + x_2' > 0$, then it is guaranteed to hold beyond a computable threshold index $N$.
-
-Thus, we assume, $z_1 + x_2' = 0$, i.e.\ the minimal $f(0) = 0$. If $g(0) > 0$, we are done: we can easily get a positive lower bound on $f$ for values where $g < 0$, and get an $N$ beyond which the validity of inequality \ref{eq:groundtruthrewrite} is guaranteed. On the other hand, if $g < 0$, we argue that inequality \ref{eq:groundtruthrewrite} is violated for infinitely many $n$. Recall inequality \ref{eq:quadraticdecay}. It tells us that there are infinitely many $n$ for which $f(n\theta - \varphi) < c/n^2$. Thus, the terms in red are infinitely often lower bounded by $c/n$, while the terms in black, for the same $n$, would be close to a negative constant. Thus, we can return NO for robust Ultimate Positivity.
-
-The final case that remains is $g(0) = 0$. We argue that remarkably, it does not arise at all!
-\begin{lemma}
-The scenario where $z_2 = 0$, $z_1 + x_2' = 0$, and $z_0 + x_1'+ x_0' = 0$ is impossible.
-\end{lemma}
-\begin{proof}
-Suppose that $\mathbf{b_1}^T, \dots, \mathbf{b_4}^T$ are the rows of the matrix $(\mathbf{B'})^{-1}$, and $\mathbf{u_1}, \dots, \mathbf{u_4}$ are the columns. Our inequality is:
-\begin{align*}
-(p_1 n + p_2 + p_3\cos(n\theta - \varphi) + p_4\sin(n\theta - \varphi))^2 \\
-- \left( \dots + (b_{i1} n + b_{i2} + b_{i3}\cos(n\theta - \varphi) + b_{i4}\sin(n\theta - \varphi))^2 + \dots \right) \ge 0
-\end{align*}
-In the table, we explicitly give each coefficient of inequality \ref{eq:groundtruthrewrite}.
 \begin{table}[H]
 \begin{tabular}{|l|l|l|}
   \hline
    \textbf{Term}& \textbf{Coefficient}& {\bf Explicitly} \\
   \hline
-  $n^2$ & $z_2 = 0$ & $p_1^2 - \seq{\mathbf{u_1}, \mathbf{u_1}}$ \\
+  $n^2$ & $z_2$ & $p_1^2 - \seq{\mathbf{u_1}, \mathbf{u_1}}$ \\
    \hline
   $n$ & $z_1$ & $2p_1p_2 - 2\seq{\mathbf{u_1}, \mathbf{u_2}}$ \\
    \hline
-  $n\cos (n\theta - \varphi)$ & $x_2'$ & $2p_1p_3 - 2\seq{\mathbf{u_1}, \mathbf{u_3}}$ \\
+   $1$ & $z_0$ & $p_2^2 - \seq{\mathbf{u_2}, \mathbf{u_2}} $ \\
+  \hline
+  $n\rho^n\cos (n\theta - \varphi)$ & $x_2$ & $2p_1p_3 - 2\seq{\mathbf{u_1}, \mathbf{u_3}}$ \\
    \hline
-  $n\sin (n\theta - \varphi)$ & $y_2' = 0$ & $2p_1p_4 - 2\seq{\mathbf{u_1}, \mathbf{u_4}}$ \\
+  $n\rho^n\sin (n\theta - \varphi)$ & $y_2$ & $2p_1p_4 - 2\seq{\mathbf{u_1}, \mathbf{u_4}}$ \\
    \hline
-  $1$ & $z_0$ & $p_2^2 + \frac{1}{2}(p_3^2 + p_4^2) - \seq{\mathbf{u_2}, \mathbf{u_2}} - \frac{1}{2}
+   $\rho^n\cos (n\theta-\varphi)$ & $x_1$ & $2p_2p_3 - 2\seq{\mathbf{u_2}, \mathbf{u_3}}$ \\
+   \hline
+  $\rho^n\sin (n\theta-\varphi)$ & $y_1$ & $2p_2p_4 - 2\seq{\mathbf{u_2}, \mathbf{u_4}}$ \\
+   \hline
+   $\rho^{2n}$ & $w$ & $\frac{1}{2}(p_3^2 + p_4^2) - \frac{1}{2}
  (\seq{\mathbf{u_3}, \mathbf{u_3}} + \seq{\mathbf{u_4}, \mathbf{u_4}})$ \\
   \hline
-  $\cos (n\theta-\varphi)$ & $x_1'$ & $2p_2p_3 - 2\seq{\mathbf{u_2}, \mathbf{u_3}}$ \\
+  $\rho^{2n}\cos (2n\theta - 2\varphi)$ & $x_0$ & $\frac{1}{2}(p_3^2 - p_4^2) - \frac{1}{2}(\seq{\mathbf{u_3}, \mathbf{u_3}} - \seq{\mathbf{u_4}, \mathbf{u_4}})$ \\
    \hline
-  $\sin (n\theta-\varphi)$ & $y_1'$ & $2p_2p_4 - 2\seq{\mathbf{u_2}, \mathbf{u_4}}$ \\
-   \hline
-  $\cos (2n\theta - 2\varphi)$ & $x_0'$ & $\frac{1}{2}(p_3^2 - p_4^2) - \frac{1}{2}(\seq{\mathbf{u_3}, \mathbf{u_3}} - \seq{\mathbf{u_4}, \mathbf{u_4}})$ \\
-   \hline
-  $\sin (2n\theta - 2\varphi)$ & $y_0'$ & $2p_3p_4 - 2\seq{\mathbf{u_3}, \mathbf{u_4}}$ \\
+  $\rho^{2n}\sin (2n\theta - 2\varphi)$ & $y_0$ & $2p_3p_4 - 2\seq{\mathbf{u_3}, \mathbf{u_4}}$ \\
   \hline
 \end{tabular}
 \end{table}
-Suppose, for the sake of contradiction, the scenario actually occurs. We then respectively have
+
+If $\rho < 1$, then the dominant growth rate for the problem to be non-trivial is $n^2, n, 1, $ or $\rho^{2n}$. The former case can be solved with straightforward growth arguments, while the latter case results in an order 3 LRS that can easily be dealt with \cite{ouaknine2014positivity,joeljames3}. We thus assume $\rho = 1$. Again, if $z_2 \ne 0$, then decidability is trivial because the dominant growth rate of $n^2$ is dictated by a single term; hence we assume $z_2 = 0$. In this case, there are two groups of terms, based on growth rate: one with $n$, the other with $1$. To study these groups, we define
+\begin{align}
+f(t) &= z_1 + x_2 \cos(t -\varphi) + y_2\sin(t - \varphi) \\
+g(t) &= z_0 + w + x_1\cos(t - \varphi) + y_1\sin(t - \varphi) + x_0 \cos(2t - 2\varphi) + y_0\sin(2t-2\varphi)
+\end{align}
+Since $\theta$ is not a rational multiple of $2\pi$, $\{n\theta \text{ mod } 2\pi\}$ is dense in $[0, 2\pi]$, and we invoke Lemma \ref{eq:liminfmin} to deduce
+\begin{equation}
+\liminf_{n\in \naturals} f(n\theta) = \min_{t \in [0, 2\pi]} f(t) = z_1 -\sqrt{x_2^2 + y_2^2} = \mu.
+\end{equation}
+If $\mu < 0$, then the critical inequality $nf(n\theta) + g(n\theta) \ge 0$ will be violated infinitely often. If $\mu > 0$, we can compute an $N_2$ beyond which it is guaranteed to be satisfied. We thus concern ourselves with the case where $\mu = 0$. Recall the discussion around $\mu$ when its concept was first defined after Proposition \ref{prop:folklore}: it is an intrinsic property of the problem itself, and invariant under the ``phase'' $\varphi$ chosen in the basis of solutions. We thus assume that $\varphi$ is chosen in such a way that the minima is $\varphi$, i.e. $f(\varphi) = 0$. This choice can be made by applying the trigonometric identity $\cos(a - b) = \cos a \cos b + \sin a \sin b$ to $f(t)$. This means that $y_2 = 0$, and we choose $-z_1 = x_2 < 0$.
+
+Now, if $g(\varphi) > 0$, we compute a positive lower bound on $f(t)$ for $t$ such that $g(t) < 0$. This then results in an $N_2$ beyond which $nf(n\theta) + g(n\theta) \ge 0$ is guaranteed. If $g(\varphi) < 0$, then the inequality has infinitely many violations. This is due to Lemma \ref{eq:quadraticdecay}, which asserts that there are infinitely many $n$ for which $f(n\theta) \le 2\pi^2z_1/5n^2$. These $n$ are necessarily such that $n\theta$ is close to $\varphi$, and the negativity of $g(n\theta)$ is thus decisive.
+
+The final case that remains is $g(\varphi) = 0$. We argue that remarkably, it does not arise at all!
+\begin{lemma}
+If $z_2 = \mu=0$, it cannot be the case that $f(\varphi) = g(\varphi) = 0$.
+\end{lemma}
+\begin{proof}
+Suppose, for the sake of contradiction, the scenario actually occurs. This means that \\
+$
+z_2 = z_1 + x_2 = z_0 + w + x_1 + x_0 = 0.
+$
+From the table, these respectively imply
 \begin{align*}
-p_1^2 &= \seq{\mathbf{u_1}, \mathbf{u_1}} \\
-p_1(p_2 + p_3) &= \seq{\mathbf{u_1}, \mathbf{u_2} + \mathbf{u_3}} \\
-(p_2 + p_3)^2 &= \seq{\mathbf{u_2} + \mathbf{u_3}, \mathbf{u_2} + \mathbf{u_3}}
+p_1^2 &= \seq{\mathbf{u_1}, \mathbf{u_1}}, \\
+p_1(p_2 + p_3) &= \seq{\mathbf{u_1}, \mathbf{u_2} + \mathbf{u_3}}, \\
+(p_2 + p_3)^2 &= \seq{\mathbf{u_2} + \mathbf{u_3}, \mathbf{u_2} + \mathbf{u_3}}.
 \end{align*}
-This implies that $|\seq{\mathbf{u_1}, \mathbf{u_2} + \mathbf{u_3}}| = ||\mathbf{u_1}||\cdot||\mathbf{u_2} + \mathbf{u_3}||$, i.e. $\mathbf{u_1}$ is a scaled multiple of $\mathbf{u_2} + \mathbf{u_3}$. This contradicts the fact that the columns of the invertible $(\mathbf{B'})^{-1}$ are linearly independent, and we're done.
+This implies that $|\seq{\mathbf{u_1}, \mathbf{u_2} + \mathbf{u_3}}| = ||\mathbf{u_1}||\cdot||\mathbf{u_2} + \mathbf{u_3}||$, i.e. $\mathbf{u_1}$ is a scaled multiple of $\mathbf{u_2} + \mathbf{u_3}$. This contradicts the fact that the rows of the invertible $\begin{bmatrix} \mathbf{b_1}& \dots & \mathbf{b_4}\end{bmatrix}$ are linearly independent, and we're done.
 \end{proof}
 
 
