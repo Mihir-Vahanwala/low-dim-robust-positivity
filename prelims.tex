@@ -1,5 +1,10 @@
-\section{Appendix: Prerequisites}
+\section{Appendix: Notation and Prerequisites}
 \label{appendix:prelims}
+For the purposes of discussing robustness, we shall use $\ball$ to denote the unit Euclidean ball in $\reals^\kappa$, centred at the origin. Similarly, we use $\ball_{\mathbf{S}}$ to denote the set of $\mathbf{d}$ such that $\mathbf{d}^T\mathbf{Sd} \le 1$. For real column vectors $\mathbf{x}, \mathbf{y}$, we use $\seq{\mathbf{x}, \mathbf{y}}$ to denote the inner product $\mathbf{x}^T\mathbf{y} = \mathbf{y}^T\mathbf{x}$. The notation $||\mathbf{x}||$ denotes the standard $\ell^2$-norm $\sqrt{\seq{\mathbf{x}, \mathbf{x}}}$.
+
+Throughout this paper,  $\naturals$, $\integers$, $\rationals$, $\reals$, and $\complexes$ respectively denote the natural numbers, integers, rationals, reals, and complex numbers. $\alpha \in \complexes$ is said to be algebraic if it is a root of a polynomial with integer coefficients. Algebraic numbers form an algebraically closed field, denoted by $\algebraics$. We denote the field of real algebraic numbers by $\realalgebraics$.
+
+This Appendix contains a brief initiation to this number field $\realalgebraics$ and $\algebraics$. The key takeaways are that the usual arithmetic as well as polynomial root computation can be carried out with perfect precision, and that the First Order Theory of the Reals $\seq{\reals; +, \cdot, \ge, 0, 1}$ is a decidable logical system powerful enough to fit our purposes.
 
 \subsection{Algebraic Numbers: Arithmetic}
 For an algebraic number $\alpha$, its defining polynomial $p_\alpha$ is the unique polynomial in $\integers[X]$ of least degree such that the GCD of its coefficients is $1$ and $\alpha$ is one of its roots.
@@ -15,6 +20,6 @@ This logical theory reasons about the universe of real numbers, and is denoted $
 
 Variables are either quantified or free. Remarkably, the First Order Theory of the Reals admits quantifier elimination: for any formula $\chi(\mathbf{x})$, whose free variables are $\mathbf{x}$, there exists an \textbf{equivalent} formula $\psi(\mathbf{x})$ that does not contain any quantified variables. The following result is relevant to us.
 \begin{theorem}[Renegar \cite{renegar}]
-\label{thm:renegar2}
+\label{thm:renegar}
 Let $M \in \naturals$ be fixed. Let $\chi(\mathbf{x})$ be a formula with fewer than $M$ variables in total. There exists a procedure that returns an equivalent quantifier-free formula $\psi(\mathbf{x})$ in disjunctive normal form. This procedure runs in time polynomial in the size of the representation of $\chi$.
 \end{theorem} 

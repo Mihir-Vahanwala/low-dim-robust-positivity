@@ -5,7 +5,7 @@ We begin by discussing the exponential polynomial closed form, a perspective tha
 \label{eq:exppoly}
 u_n = \sum_j w_j \rho_j^n + \sum_j (z_j \gamma_j^n + \bar{z_j}\bar{\gamma_j}^n)
 \end{equation}
-where each $\rho_j, \gamma_j, \bar{\gamma_j}$ are distinct roots of the characteristic polynomial. By straightforward arithmetic on the above expression, we can see that if $\seq{u_n}_{n\in \naturals}, \seq{v_n}_{n\in \naturals}$ are simple LRS with sets of characteristic roots $U$ and $V$ respectively, then
+where each $\rho_j, \gamma_j, \bar{\gamma_j}$ are distinct roots of the characteristic polynomial. By straightforward arithmetic on the above expression, we can see that if $(u_n)_{n\in \naturals}, (v_n)_{n\in \naturals}$ are simple LRS with sets of characteristic roots $U$ and $V$ respectively, then
 \begin{itemize}
 \item $r_n = u_n + v_n$ is a simple LRS, whose set of roots is $U \cup V$.
 \item $r_n = u_n \cdot v_n$ is a simple LRS, whose set of roots is $\{\gamma_1\gamma_2: \gamma_1 \in U, \gamma_2 \in V\}$.
@@ -39,7 +39,7 @@ Let $\mathbf{e_1}^T$ denote the row vector $\begin{bmatrix}1 & 0 & \dots & 0\end
 \label{eq:realexppoly}
 u_n = \left(\sum_{j=1}^{k_1}\sum_{\ell = 0}^{m_j-1} z_{j\ell}\rho_j^n n^\ell\right) + \left(\sum_{j=k_1 + 1}^{k_2} \sum_{\ell = 0}^{m_j-1} (x_{j\ell} \cos n\theta_j + y_{j\ell}\sin n\theta_j)\rho_j^n n^\ell\right)
 \end{equation}
-where $\rho_j$ (alternately, $\rho_j e^{i\theta_j}$) are roots of the characteristic polynomial defined by $\mathbf{a}$, each with multiplicity $m_j$. The coefficients $z_{j\ell}, x_{j\ell}, y_{j\ell}$ each depend linearly on $\mathbf{c}$. $u_n$ can thus be equivalently expressed as $\seq{\mathbf{p}, \mathbf{q_n}}$ where $\{\mathbf{q_n}\}_{n\in \naturals}$ is the sequence of vectors of terms that occur in the exponential polynomial expression, and $\mathbf{p}$ is the vector of corresponding coefficients. The choice of $\{\mathbf{q_n}\}_{n\in \naturals}$ can differ in ``phase'': one can replace $\cos n\theta, \sin n\theta$ by $\cos (n\theta-\varphi), \sin(n\theta-\varphi)$ for some choice of $\varphi$, and adjust the coefficients in $\mathbf{p}$ accordingly.
+where $\rho_j$ (alternately, $\rho_j e^{i\theta_j}$) are roots of the characteristic polynomial defined by $\mathbf{a}$, each with multiplicity $m_j$. The coefficients $z_{j\ell}, x_{j\ell}, y_{j\ell}$ each depend linearly on $\mathbf{c}$. $u_n$ can thus be equivalently expressed as the inner (dot) product $\seq{\mathbf{p}, \mathbf{q_n}}$ where $\{\mathbf{q_n}\}_{n\in \naturals}$ is the sequence of vectors of terms that occur in the exponential polynomial expression, and $\mathbf{p}$ is the vector of corresponding coefficients. The choice of $\{\mathbf{q_n}\}_{n\in \naturals}$ can differ in ``phase'': one can replace $\cos n\theta, \sin n\theta$ by $\cos (n\theta-\varphi), \sin(n\theta-\varphi)$ for some choice of $\varphi$, and adjust the coefficients in $\mathbf{p}$ accordingly.
 
 Roots such that $|\rho_j|$ is the largest are called \textbf{dominant}. The growth rate of a term in the above expression is governed by $\rho_j^n n^\ell$. Terms with the fastest growth are called \textbf{dominant terms}, and they drive the asymptotic behaviour of the LRS. A standard, intuitive prerequisite for Ultimate Positivity is that the leading terms in the exponential polynomial expression must include one that is real and strictly positive, otherwise their dominant contribution oscillates between positive and negative. It is formalised by applying \cite[Lemma 4]{Braverman06} to the dominant terms in expression \ref{eq:realexppoly} and arguing that the contribution from the remaining terms vanishes asymptotically. 
 \begin{proposition}
@@ -63,7 +63,7 @@ Note that $\mu$ is an intrinsic property of the initialisation $\mathbf{c}$ and 
 \section{Robust Positivity Problems}
 \label{section:problems}
 
-In this paper, we shall focus on defining and tackling Robust Positivity problems. Our input consists of a linear recurrence relation $\mathbf{a}$, an initialisation $\mathbf{c}$, and a positive definite matrix $\mathbf{S}$ that is used to define a neighbourhood around $\mathbf{c}$. All input is real algebraic.
+In this paper, we shall focus on defining and tackling Robust Positivity problems. Our input consists of a linear recurrence relation $\mathbf{a}$, an initialisation $\mathbf{c}$, and a positive definite matrix $\mathbf{S}$ that is used to define a neighbourhood around $\mathbf{c}$. \textbf{All input is real algebraic.}
 
 \begin{problem}[$\mathbf{S}$-Robust Positivity]
 \label{prob:rrobpos}
@@ -106,6 +106,7 @@ As a simple illustration, assume that the neighbourhood is defined by a polytope
 Our novelty lies in Step 2 and identifying when Step 3 can be implemented. We now discuss how we perform Steps 2 and 4 when $\mathcal{P} = \mathcal{B}_\mathbf{S}$, a neighbourhood of vectors $\mathbf{d}$ such that $\mathbf{d}^T\mathbf{S}\mathbf{d} \le 1$. The defining parameter $\mathbf{S}$ is a real algebraic positive definite matrix. We note that since $\mathbf{S}$ is positive definite, it can be factored as $\mathbf{G}^T\mathbf{G}$, where $\mathbf{G}$ is a real algebraic invertible matrix. We denote $\mathbf{Gd} = \mathbf{f}$. We argue that $\mathbf{G}^{-1}$ bijectively maps the Euclidean unit ball $\mathcal{B}$ to $\mathcal{B}_\mathbf{S}$. The bijection is clear from the invertibility of the matrix. Suppose $\mathbf{d} = \mathbf{G}^{-1}\mathbf{f}$, where $\mathbf{f} \in \mathcal{B}$, i.e. $\mathbf{f}^T\mathbf{f} \le 1$. Then $\mathbf{d}^T\mathbf{Sd} = \mathbf{d}^T\mathbf{G}^T\mathbf{Gd} = \mathbf{f}^T\mathbf{f} \le 1.$
 Hence,
 \begin{equation}
+\label{eq:bijectivemap}
 \max_{\mathbf{d} \in \mathcal{B}_\mathbf{S}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{d} = \max_{\mathbf{f} \in \mathcal{B}} \mathbf{e_1}^T\mathbf{A}^n\mathbf{G}^{-1}\mathbf{f}.
 \end{equation}
 $\mathcal{B}$ is a convex set; thus a linear function will necessarily be maximised at its boundary, i.e. when $||\mathbf{f}|| = 1$. The linear function $\mathbf{h}^T\mathbf{f}$ is maximised over the unit Euclidean ball when $\mathbf{f}$ is aligned along $\mathbf{h}$; the maximum value is $||\mathbf{h}||$. We can thus perform Step 4 because

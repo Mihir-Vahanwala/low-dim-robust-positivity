@@ -1,94 +1,59 @@
 \section{Uniform Robustness: Hardness at order five}
 \label{section:hardness}
-We shall prove Theorem \ref{thm:hardness} in this section. That is, given $\theta \in \mathcal{T}$ as defined in equation \ref{eq:keyset}, we shall give rational $\mathbf{a}, \mathbf{c}$ such that varying $\mathbf{S}$ while invoking $\mathbf{S}$-Robust Positivity decision procedures will enable us to approximate $L(t)$ and $L_\infty(t)$ to arbitrary precision.
+We shall prove Theorem \ref{thm:hardness} in this section. That is, given $t \in \mathcal{T}, s$ as defined in equation \ref{eq:keyset}, we shall give rational $\mathbf{a}, \mathbf{c}$ such that varying $\mathbf{S} =\mathbf{G}^T\mathbf{G}$ while invoking $\mathbf{S}$-Robust Positivity decision procedures will enable us to approximate $L(t, s)$ and $L_\infty(t, s)$ to arbitrary precision.
 
-\subsection{The hard sequence}
-We assume $\theta$ is specified by $c \in \algebraics$, $0 < |p| < 1$, such that $\theta = \frac{\arccos c}{2\pi}$. Our LRR $\mathbf{a}$ is such that the roots of the characteristic polynomial are $1, 1, 1, e^{2\pi i\theta}, e^{-2\pi i \theta}$, i.e. the characteristic polynomial is 
+We assume $t, s$ are specified by $\cos \theta, \cos \varphi \in \realalgebraics$, such that $2\pi t = \theta, 2\pi s = \varphi$. Our LRR $\mathbf{a}$ is such that the roots of the characteristic polynomial are $1, 1, 1, e^{2\pi it}, e^{-2\pi i t}$, i.e. the characteristic polynomial is 
 $
-(X- 1)^3(X^2 - 2cX + 1)
+(X- 1)^3(X^2 - 2X\cos\theta + 1)
 $.
 
 Here, 
 $
-u_n = \begin{bmatrix}
-n^2 & n & 1 & \cos 2\pi n\theta & \sin 2\pi n\theta
-\end{bmatrix}
-\mathbf{p}
-$, and we choose the input $\mathbf{S} = \frac{1}{r^2}(\mathbf{V}^{-1})^T\mathbf{V}^{-1}$ such that its translation $\mathbf{M}$ to the solution space is $1/r^2$ times the identity matrix.
-
-We note that since both $c, s$ from the root $c + si$ are algebraic, the linear map $\mathbf{V}^{-1}$ from the space of initialisations to the space of real exponential polynomial coefficients is also algebraic. In the solution space, we consider a ball of radius $r$ around $(r, 0, 1+\frac{r}{2}, -1, 0)$, i.e. by equation \ref{eq:crux}, we ask whether for all (but finitely many) $n$
-\begin{align*}
-rn^2 + \frac{r}{2} + 1 - \cos 2\pi n\theta \ge r\sqrt{n^4 + n^2 + 2} 
-&\Leftrightarrow \frac{r}{2} + 1 - \cos 2\pi n\theta \ge r\left(\frac{n^2 + 2}{n^2 + \sqrt{n^4 + n^2 + 2}}\right) \\
-&\Leftrightarrow 1 - \cos 2\pi n\theta \ge \frac{r}{2}\left(\frac{n^2 + 4 - \sqrt{n^4 + n^2 + 2}}{n^2 + \sqrt{n^4 + n^2 + 2}}\right)
-\end{align*}
-Simplifying to a slightly more indicative form, we ask whether for all (but finitely many) $n$
+u_n = \mathbf{e_1}^T\mathbf{A}^n\mathbf{c} = \seq{\mathbf{p}, \mathbf{q_n}}
+$. For the problem instance we create in our reduction, we choose $\mathbf{p} = \begin{bmatrix}r & 0 & 1+\frac{r}{2} & -1 & 0 \end{bmatrix}^T$, where $r$ is a parameter we use to tune our guess for $L(t, s)$ and $L_\infty(t, s)$; we choose $\mathbf{q_n}^T = \mathbf{e_1}^T\mathbf{A}^n\mathbf{V} = \begin{bmatrix}n^2 & n & 1 & \cos(2\pi(nt-s)) & \sin(2\pi(nt-s))\end{bmatrix}$. We choose $\mathbf{S} = \mathbf{G}^T\mathbf{G}/r^2$, where $\mathbf{G} = \mathbf{V}^{-1}$. Thus, our critical inequality is
 \begin{equation}
-\label{eq:pivotal}
-1 - \cos 2\pi n\theta \ge \frac{r}{2}\left(\frac{7n^2 + 14}{(n^2 + \sqrt{n^4 + n^2 + 2})(n^2 +4+  \sqrt{n^4 + n^2 + 2})}\right) = r\cdot Q(n)
+\label{eq:corereduction}
+\seq{\mathbf{p}, \mathbf{q_n}} = \mathbf{e_1}^T\mathbf{A}^n\mathbf{c} \ge \max_{d \in \mathcal{B}_\mathbf{S}}  \mathbf{e_1}^T\mathbf{A}^n\mathbf{d} = ||r(\mathbf{e_1}^T\mathbf{A}^n\mathbf{G}^{-1})^T|| = r||\mathbf{q_n}||.
 \end{equation}
 
-\subsection{Numerical analysis}
-Inequality \ref{eq:pivotal} is pivotal to our reduction. We note that in the limit, the ratio of $Q(n)$ to $7/8n^2$ tends to $1$ from below. On the other hand, for small values of $[2\pi n\theta]_{2\pi}$, we shall approximate $1 -\cos 2\pi n \theta$ by $\frac{[2\pi n\theta]_{2\pi}^2}{2}$, which itself is tightly lower bounded by a constant multiple of $L(\theta)/n^2$. Thus, the universal validity of inequality \ref{eq:pivotal} hinges on how $r$ relates to $L$. We capture the crucial interdependence in the following technical lemma.
+Let $\Psi(n, r)$ denote the proposition $ \seq{\mathbf{p}, \mathbf{q_n}} \ge r||\mathbf{q_n}||$. Our reduction works by proving that for any guess $r>0$, given $\varepsilon>0$, we can compute an $N$ such that for all $n \ge N$
+\begin{align}
+\label{eq:property1}
+&\Psi(n, r) \Rightarrow n[nt - s] > \frac{(1-\varepsilon)\sqrt{7r}}{4\pi}. \\
+\label{eq:property2}
+\neg &\Psi(n, r) \Rightarrow n[nt - s] < \frac{\sqrt{7r}}{(1-\varepsilon)4\pi}.
+\end{align}
+To compute $L_\infty(t, s) = \liminf_{n \in \naturals} n[nt-s]$ by increasingly precise approximations, we query Robust Uniform Ultimate Positivity: does $\Psi(n,r)$ hold for all but finitely many $n$? If the decision is YES, then we use property \ref{eq:property1} to argue that for any $\varepsilon$, $n[nt-s]$ exceeds $\frac{(1-\varepsilon)\sqrt{7r}}{4\pi}$ for all but finitely many $n$, hence $L_\infty(t, s)$ must be at least $\frac{\sqrt{7r}}{4\pi}$. Conversely, if the decision is NO, we use property \ref{eq:property2} to deduce that for any $\varepsilon$, $n[nt-s]$ falls short of $\frac{\sqrt{7r}}{(1-\varepsilon)4\pi}$ for infinitely many $n$, hence $L_\infty(t, s)$ must be at most $\frac{\sqrt{7r}}{4\pi}$.
+
+By definition, $L(t,s) = \inf_{n\in\naturals}n[nt-s]$. Given the guess $r$, precision $\varepsilon$, the corresponding $N$, and oracle access to whether $\Psi(n, r)$ holds for all $n \ge N$, it follows from properties \ref{eq:property1} and \ref{eq:property2} that we can resolve the dichotomy between $\inf_{n \ge N}n[nt-s] \ge \frac{(1-\varepsilon)\sqrt{7r}}{4\pi}$ and $\inf_{n \ge N}n[nt-s] \le \frac{\sqrt{7r}}{(1-\varepsilon)4\pi}$. By explicitly computing $n[nt-s]$ for the prefix $n < N$ to arbitrary precision, one has a procedure for approximating $L(t, s)$. We now explain how we use Robust Positivity as an oracle to decide whether $\Psi(n, r)$ holds for all $n \ge N$. Note that as it is, this problem specifies a recurrence $\mathbf{a}$, an initialisation $\mathbf{c}$, a neighbourhood defined by $\mathbf{S}$ asks for the Robust Positivity of a \textit{suffix} of the sequence, as opposed to the entire sequence. We create a new instance with updated $\mathbf{c'}$ and $\mathbf{S'}$ to implement the shift:
+\begin{align}
+\forall n\ge N.~ \mathbf{e_1}^T\mathbf{A}^n\mathbf{c} \ge \max_{\mathbf{d} \in \mathcal{B}_\mathbf{S}}\mathbf{e_1}^T\mathbf{A}^n\mathbf{d} ~&\Leftrightarrow~ \forall n.~ \mathbf{e_1}^T\mathbf{A}^n(\mathbf{A}^N\mathbf{c}) \ge \max_{\mathbf{d} \in \mathcal{B}_\mathbf{S}}\mathbf{e_1}^T\mathbf{A}^n(\mathbf{A}^N\mathbf{d}) \\
+&\Leftrightarrow~ \forall n.~ \mathbf{e_1}^T\mathbf{A}^n(\mathbf{c'}) \ge \max_{\mathbf{d} \in \mathcal{B}_\mathbf{S'}}\mathbf{e_1}^T\mathbf{A}^n(\mathbf{d'}).
+\end{align}
+It is clear that $\mathbf{c'} = \mathbf{A}^n\mathbf{c}$. Using the same reasoning as we did in the derivation of equation \ref{eq:bijectivemap}, we argue $\mathbf{S'} = (\mathbf{A}^{-N})^T\mathbf{S}\mathbf{A}^{-N}$. The reduction is thus complete, but for the proof of properties \ref{eq:property1} and \ref{eq:property2}.
+
+By definition, $\Psi(n, r)$ holds if and only if $rn^2 + \frac{r}{2} + 1 - \cos 2(\pi(nt-s)) \ge r\sqrt{n^4 + n^2 + 2} $. Through elementary algebraic manipulations, we can alternately group the terms as
+\begin{equation}
+\label{eq:pivotal}
+1 - \cos (2\pi (nt-s)) \ge \frac{r}{2}\left(\frac{7n^2 + 14}{(n^2 + \sqrt{n^4 + n^2 + 2})(n^2 +4+  \sqrt{n^4 + n^2 + 2})}\right) = r\cdot Q(n)
+\end{equation}
+
+We note that in the limit, the ratio of $Q(n)$ to $7/8n^2$ tends to $1$ from below. On the other hand, for small values of $x$, the expression $x^2/2$ is a close over-approximation for $1 -\cos x$. We capture the crucial interdependence in the following technical lemma.
 
 \begin{lemma}
 \label{lemma:numerical}
-Let $r < 100$. For every $\varepsilon > 0$, we can compute $N$ such that for all $n \ge N$,
+Let $r > 0$. For every $\varepsilon > 0$, we can compute $N$ such that
 \begin{enumerate}
-\item $Q(n) > \frac{7(1-\varepsilon)^2}{8n^2}$
-\item $1 - \cos x < \frac{7r}{8n^2} < \frac{700}{8N^2}  \Rightarrow 1- \cos x \ge (1 - \varepsilon)^2\frac{x^2}{2}$
+\item For all $n\ge N$, $Q(n) > {7(1-\varepsilon)^2}/{8n^2}$.
+\item $1 - \cos x < 7r/{8N^2}  ~\Rightarrow~ 1- \cos x \ge (1 - \varepsilon)^2x^2/2$.
 \end{enumerate}
 \end{lemma}
 
-\subsection{Computing the Lagrange constant}
-We use the purported decidability of $\mathbf{S}$-Robust Uniform Ultimate Positivity (does inequality \ref{eq:pivotal} hold for all but finitely many $n$?) to approximate $L_\infty(\theta)$ to arbitrary precision. 
-
-\textbf{Case YES:} \\
-Suppose indeed, for all but finitely many $n$,
-$
-1 - \cos 2\pi n\theta \ge r \cdot Q(n)
-$ \\
-$1 - \cos 2\pi n\theta$ is always upper bounded by $\frac{[2\pi n\theta]_{2\pi}^2}{2}$. In this case, we use Part 1 of Lemma \ref{lemma:numerical} to argue that for every $\varepsilon$, there exists an $N$ such that for all $n \ge N$,
-$$
-\frac{[2\pi n \theta]_{2\pi}^2}{2} > \frac{7r(1 - \varepsilon)^2}{8n^2} \Leftrightarrow n[n\theta] > (1 - \varepsilon)\frac{\sqrt{7r}}{4\pi}
-$$
-This allows us to conclude that $L_\infty(\theta) \ge \frac{\sqrt{7r}}{4\pi}$.
-
-\textbf{Case NO:} \\
-Suppose there exist infinitely many $n$ such that 
-$
-1 - \cos 2\pi n\theta < r \cdot Q(n)
-$. \\
-$r \cdot Q(n)$ is always upper bounded by $7r/8n^2$. In this case, we use the second part of Lemma \ref{lemma:numerical} on the infinitely many times $1 - \cos 2\pi n\theta$ is small enough. Here, for any $\varepsilon$, we will have infinitely many $n$ such that
-$$
-(1 - \varepsilon)^2 \frac{[2\pi n \theta]_{2\pi}^2}{2} < \frac{7r}{8n^2} \Leftrightarrow n[n\theta] < \left(\frac{1}{1-\varepsilon}\right)\frac{\sqrt{7r}}{4\pi}
-$$ 
-Thus, we can conclude that $L_\infty(\theta) \le \frac{\sqrt{7r}}{4\pi}$.
-
-\subsection{Computing the Diophantine approximation type}
-Here, we choose a precision $\varepsilon$, and compute the $N$ in Lemma \ref{lemma:numerical}. We use this $N$ to get an appropriate instance of $\mathbf{S}$-Robust Positivity for the hard LRS. 
-
-Our goal is to be able to reason as follows, similar to the previous subsection, 
-$$
-\text{YES} \Rightarrow \inf_{n \ge N} n[n\theta] \ge (1 - \varepsilon)\frac{\sqrt{7r}}{4\pi}
-$$
-and
-$$
-\text{NO} \Rightarrow \inf_{n \ge N} n[n\theta] \le \left(\frac{1}{1-\varepsilon}\right)\frac{\sqrt{7r}}{4\pi}
-$$
-For the finite prefix $1$ to $N-1$, we can compute $n[n\theta]$ to arbitrary precision and compare with the purported lower/upper bounds for $L(\theta) = \inf_{n \in \naturals} n[n\theta]$.
-
-Our query, therefore is
-$$
-\forall n \ge N.~ \mathbf{x_n}^T\mathbf{p} \ge r\sqrt{\seq{\mathbf{x_n}, \mathbf{x_n}}} 
-$$
-which, on taking $\mathbf{S} = r^2(\mathbf{V}^{-1})^T\mathbf{V}^{-1}$, is equivalent to
-$$
-\forall n \ge 0.~ \mathbf{A}^n(\mathbf{A}^N\mathbf{c}) \ge \max_{\mathbf{d} \in \ball_\mathbf{S}} \mathbf{A}^n(\mathbf{A}^N\mathbf{d})
-$$
-Let $\mathbf{c'} = \mathbf{A}^N\mathbf{c}$, $\mathbf{S'} = (\mathbf{A}^{-N})^T\mathbf{S}\mathbf{A}^{-N}$. Thus, our instance of robust Positivity is:
-$$
-\forall n \ge 0.~ \mathbf{A}^n\mathbf{c'} \ge \max_{\mathbf{d'} \in \ball_\mathbf{S'}} \mathbf{A}^n\mathbf{d'}
-$$
-
-Finally, we note that by replacing the coefficients $(r, 0, 1 + \frac{r}{2}, -1, 0)$ with  $(r, 0, 1 + \frac{r}{2}, \cos 2\pi\varphi, \sin 2\pi\varphi)$, the same reduction allows us to compute \textbf{inhomogeneous} Langrange constants and Diophantine approximation types.
+For some $r, \varepsilon$, let $N$ be computed by Lemma \ref{lemma:numerical}. Consider $n \ge N$. In case $\Psi(n, r)$ holds, property \ref{eq:property1} follows by considering the beginning and end of the chain of inequalities
+\begin{equation}
+{2\pi^2[nt-s]^2} = \frac{[2\pi(nt-s)]^2_{2\pi}}{2} \ge 1 - \cos(2\pi(nt-s)) \ge r\cdot Q(n) > \frac{7r(1-\varepsilon)^2}{8n^2}.
+\end{equation}
+Similarly, if $\neg\Psi(n, r)$ holds, we can use Lemma \ref{lemma:numerical} to construct the chain
+\begin{equation}
+2\pi^2(1-\varepsilon)^2 [nt-s]^2= \frac{(1-\varepsilon)^2 [2\pi(nt-s)]_{2\pi}^2}{2} \le 1 - \cos(2\pi(nt-s)) < r\cdot Q(n) < \frac{7r}{8N^2}.
+\end{equation}
