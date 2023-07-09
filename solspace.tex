@@ -84,7 +84,7 @@ Decide whether for all $\mathbf{c'}$ with $(\mathbf{c'} - \mathbf{c})^T\mathbf{S
 The attentive reader might have already noticed that we depart from convention and specify neighbourhoods as \textit{closed} balls. Although \cite{originalarxiv} does not solve the problems we consider in this paper, it makes crucial observations about the geometry: for Problems \ref{prob:rrobpos} and \ref{prob:rrobuniultpos}, there is no difference between open and closed balls. On the other hand, Problem \ref{prob:rrobnonuniultpos} becomes considerably easier with open balls, and its decidability in this case is tackled in \cite{originalarxiv} itself. 
 
 \subsection{Uniform Variants: The foundation}
-
+\label{section:uniformfoundation}
 In general, an arbitrary point $\mathbf{c'}$ is expressed as $\mathbf{c} + \mathbf{d}$, where $\mathbf{d} \in \mathcal{P}$, a full-dimensional neighbourhood symmetric about the origin. Observe equation \ref{eq:companion}. The $n^{th}$ term of the LRS is non-negative throughout the neighbourhood if and only if for all $d \in \mathcal{P}$,
 $
 \mathbf{e_1}^T \mathbf{A}^n (\mathbf{c + d}) \ge 0.
@@ -126,7 +126,7 @@ Problem \ref{prob:rrobuniultpos} is decidable for simple LRS. Problem \ref{prob:
 \end{theorem}
 
 \subsection{The non-uniform variant: An overview}
-
+\label{section:nonuniformoverview}
 As discussed at length in \cite{originalstacs,originalarxiv}, $\mu(\mathbf{c'})= \liminf_{n \in \naturals} \seq{\mathbf{p'}, \mathbf{q_n}}_{dom} \ge 0$ is necessary for the Ultimate Positivity of $\mathbf{c'}$; $\mu(\mathbf{c'}) > 0$ is sufficient.
 
 \textbf{Our strategy for Problem \ref{prob:rrobnonuniultpos} is as follows.}
