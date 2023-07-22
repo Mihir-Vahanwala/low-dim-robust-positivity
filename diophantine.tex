@@ -19,7 +19,7 @@ For technical purposes, we use an equivalent definition that relates to the cont
 
 \begin{definition}[Diophantine Approximation Type]
 \label{def:L}
-The homogenous Diophantine approximation type $L(t)$ is defined to be $\inf_{n \in \naturals \backslash{0}} n[nt]$. The inhomogeneous Diophantine approximation type $L(t, s)$ is defined to be $\inf_{n \in \naturals \backslash{0}} n[nt - s]$, $s \notin \integers + t\integers$. 
+The homogenous Diophantine approximation type $L(t)$ is defined to be $\inf_{n \in \naturals_{>0}} n[nt]$. The inhomogeneous Diophantine approximation type $L(t, s)$ is defined to be $\inf_{n \in \naturals_{>0}} n[nt - s]$, $s \notin \integers + t\integers$. 
 \end{definition} 
 
 \begin{definition}[Lagrange constant]
@@ -27,7 +27,7 @@ The homogenous Diophantine approximation type $L(t)$ is defined to be $\inf_{n \
 The homogenous Lagrange constant $L_\infty(t)$ is defined to be $\liminf_{n \in \naturals} n[nt]$. The inhomogeneous Lagrange constant $L_\infty(t, s)$ is defined to be\\ $\liminf_{n \in \naturals} n[nt - s]$, $s \notin \integers + t\integers$.
 \end{definition} 
 
-From the definitions, it is clear that $0 \le L(t) \le L_\infty(t)$. Due to the work of Khintchine \cite{khintchine}, it is known that these constants lie between $0$ and $\frac{1}{\sqrt{5}}$. In our setting, the irrational $t$ comes from the argument $\theta$ of the characteristic root $\rho e^{i\theta}$ of the LRS: $t = \theta/2\pi$. The following observation hints at how the correspondence could further extend to Positivity problems.
+From the definitions, it is clear that $0 \le L(t) \le L_\infty(t)$. Due to the work of Khintchine \cite{khintchine}, it is known that these constants lie between $0$ and ${1}/{\sqrt{5}}$. In our setting, the irrational $t$ comes from the argument $\theta$ of the characteristic root $\rho e^{i\theta}$ of the LRS: $t = \theta/2\pi$. The following observation hints at how the correspondence could further extend to Positivity problems. It is pivotal to our novel low-dimensional decidability result for Uniform Robustness.
 \begin{lemma}
 \label{eq:quadraticdecay}
 For all $\theta$ that are not rational multiples of $2\pi$, and all $\varphi$, there exist infinitely many $n\in \naturals$ such that
@@ -46,7 +46,7 @@ Let $\alpha$ be an algebraic number of degree $d$. Then if $\alpha$ is a $k^{th}
 The degree of the $k^{th}$ root of unity is precisely $\Phi(k)$, where $\Phi$ denotes the Euler totient function. $\Phi(k) \ge \sqrt{k/2}$. The desired inequality follows.
 \end{proof}
 
-We record a number-theoretic fact which describes the density of the integer multiples of an irrational $x$ modulo $1$ in the unit interval: its proof relies on continued fraction expansions and the Ostrowski numeration system \cite{bourla2016ostrowski,berthe2022dynamics}, and is deferred to Appendix \ref{appendix:ostrowski}.
+We record a number-theoretic fact which describes the density of the integer multiples of an irrational $x$ modulo $1$ in the unit interval: its proof relies on continued fraction expansions and the Ostrowski numeration system \cite{bourla2016ostrowski,berthe2022dynamics}, and is deferred to Appendix \ref{appendix:ostrowski}. This result is decisive when considering Non-Uniform Robustness.
 \begin{lemma}
 \label{lemma:existsreal}
 For every irrational number $x$, strictly decreasing real positive function $\psi$, and interval $\mathcal{I} = [a, b] \subset [0, 1], ~ a \ne b$, there exists $y_0 \in \mathcal{I}$ such that $[nx - y_0] < \psi(n)$ for infinitely many even $n$, and $y_1 \in \mathcal{I}$ such that $[nx - y_1] < \psi(n)$ for infinitely many odd $n$.
@@ -67,7 +67,7 @@ $
 $
 \end{lemma}
 
-We note that despite the observations and results mentioned in the preceding discussion, the Diophantine approximation type and Lagrange constant of most transcendental numbers are unknown. For instance, computing $L_\infty(\pi)$ is a longstanding and mathematically interesting open problem. We refer the reader to \cite[Section 5]{joeljames3} for a cursory survey of the history of relevant developments in the field of Diophantine approximation. This source reduces the computation of the constants $L(t)$ and $L_\infty(t)$ discussed above is to the non-robust variants of Positivity problems for LRS of order 6. In \S\ref{section:hardness}, we prove analogous hardness results for robust Positivity problems. To that end, we define a similar class of transcendental numbers relevant to our reduction.
+We note that despite the observations and results mentioned in the preceding discussion, the Diophantine approximation type and Lagrange constant of most transcendental numbers are unknown. For instance, computing $L_\infty(\pi)$ is a longstanding and mathematically interesting open problem. We refer the reader to \cite[Section 5]{joeljames3} for a cursory survey of the history of relevant developments in the field of Diophantine approximation. This source reduces the computation of the constants $L(t)$ and $L_\infty(t)$ discussed above to the non-robust variants of Positivity problems for LRS of order 6. In \S\ref{section:hardness}, we prove analogous hardness results for robust Positivity problems of order 5. To that end, we define a similar class of transcendental numbers relevant to our reduction. Let
 \begin{equation}
 \mathcal A=\{p+q i \in \mathbb{C} \mid p,q \in \mathbb{A}, p^2+q^2=1, \forall n.~(p + qi)^n \ne 1\}
 \end{equation}
@@ -76,7 +76,7 @@ i.e., the set $\mathcal A$ consists of algebraic numbers on the unit circle in $
 \label{eq:keyset}
 \mathcal{T} = \left\{ \theta \in (- 1/2, 1/2] \mid e^{2 \pi i \theta} \in \mathcal{A}\right\}.
 \end{equation}
-The set $\mathcal{T}$ is dense in $(- \frac 1 2, \frac 1 2]$. In general, we don't have a method to compute $L(\theta)$ or $L_\infty(\theta)$ for $\theta \in \mathcal{T}$, or approximate them with arbitrary precision.
+The set $\mathcal{T}$ is dense in $(- \frac 1 2, \frac 1 2]$. In general, we don't have a method to compute $L(\theta)$ or $L_\infty(\theta)$ for $\theta \in \mathcal{T}$, or approximate them to arbitrary precision.
 
 \begin{definition}[Number-theoretic hardness]
 \label{def:hardness}
@@ -88,7 +88,7 @@ Let $\mathcal{T}$ be as above. A decision problem is said to be $\mathcal{T}$-Di
 Problem \ref{prob:rrobpos} (resp.\ Problem \ref{prob:rrobuniultpos}) is $\mathcal{T}$-Diophantine hard (resp.\ $\mathcal{T}$-Lagrange hard) at order 5. 
 \end{theorem}
 
-As noted in \cite{originalarxiv}, in view of the Lagrange hardness (Definition \ref{def:hardness}) of Ultimate Positivity at order 6 \cite{joeljames3}, Problem \ref{prob:rrobnonuniultpos}, which asks whether the given neighbourhood consists entirely of initialisations that produce an Ultimately Positive sequence, is also Lagrange hard at order 6. The idea is to extend the existing reduction from the computation of Lagrange constants to Ultimate Positivity. One simply constructs a neighbourhood of initialisations that has the hard instance of Ultimate Positivity on its surface, but otherwise lies entirely in the region where Ultimate Positivity is guaranteed.
+As noted in \cite{originalarxiv}, in view of the Lagrange hardness (Definition \ref{def:hardness}) of Ultimate Positivity at order 6 \cite{joeljames3}, Problem \ref{prob:rrobnonuniultpos}, which asks whether the given neighbourhood consists entirely of initialisations that produce an Ultimately Positive sequence, is also Lagrange hard at order 6. The idea is to use the existing reduction from the computation of Lagrange constants to Ultimate Positivity, and extend it to the robust variant: one simply constructs a neighbourhood of initialisations that has the hard instance of Ultimate Positivity on its surface, but otherwise lies entirely in the region where Ultimate Positivity is guaranteed.
 
 \begin{theorem}
 \label{thm:hardness2}
